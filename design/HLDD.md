@@ -93,3 +93,8 @@ Editing abilities: GM can edit or delete abilities from the game\
 _Stretch goal: streamlining data upload_\
 Uploading abilities: GM can export from GameTeX and batch upload abilities\
 Accounts: GMs have accounts
+
+## Stakeholder List
+
+- **Players**: This is primarily a player-facing app, and players are the core stakeholders whose game experience this application is designed to improve. This entails reducing the menial tedium surrounding information collection as much as possible.
+- **Gamemasters**: GMs are necessary stakeholders who generate the game experience for the players, so this app must not alter the game production process enough as to inconvenience the GM team. Barriers to production must at worst remain where they are, and ideally they would decrease significantly if data upload can be streamlined.
