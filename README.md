@@ -1,13 +1,22 @@
 # Bag of Holding (6.1040)
 
+\[insert pitch here]
+
+## User Journey
+
 ## Repository Structure
 
-## Problem Framing & Stakeholders
+```
+/
+|- README.md
+|- design/
+|  |- concept-design.md
+|  |- ui-design.md
+|  |- problem-framing.md
+```
 
-## Application pitch
+## Problem Framing & Stakeholders
 
 ## Concept Specifications
 
 ## UI Sketches
-
-## User Journey
