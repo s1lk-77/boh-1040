@@ -8,13 +8,13 @@ Live action roleplay (LARP) claims its standing as a one-of-a-kind genre in the 
 
 _Bag of Holding_ is an attempt to convert a universal gadget we call the phone into a digital pocket for your ability cards. It won't be as cool as the physcial ones, we know, but we hope to get as close as we can while saving you all the trouble!
 
-Here in this wonderous bag, you can:
+Here in this wonderous Bag, you can:
 
 - **Collect** the goodies you find in game by entering their _lookup code_ and retrieving a digital copy of your rewards! They stay with you as long as you log back in with the same player name.
 - **Filter** your abilities and scroll through them in a list so you can find them fast!
 - **Display** any ability as a card on your screen, which you can flip and show to other players just like you would normally!
 
-And for you lovely GMs: all you have to do is create a game and upload your abilities into the Bag with lookup codes _you_ designate so our behind-the-stage magic can find them again in the demiplane when your players ask!
+And for you lovely GMs: all you have to do is create a game and upload your abilities into the Bag with whatever lookup codes _you_ designate so our behind-the-stage magic can find them again in the demiplane when your players ask!
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
