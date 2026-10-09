@@ -1,6 +1,6 @@
 # Bag of Holding (6.1040)
 
-_Tired of holding 50 pieces of paper in your sweaty hands and emptying out four pockets worth of stuff just to find that one elusive ability card you really wished you knew where you put? Fear no more. The Wizard of the Court hath forth with an offering. A Bag of Holding. The price, you ask? Only that you use your powers for good and **never for evil.**_
+_Tired of holding 50 pieces of paper in your sweaty hands and emptying out four pockets worth of stuff just for that one elusive ability card you really wished you knew where you put? Fear no more. The Wizard of the Court hath forth with an offering. A Bag of Holding, if you may. The price, you ask? Only that you use your powers for good and **never for evil.**_
 
 ---
 
