@@ -40,3 +40,5 @@ And for you lovely GMs:
 ## Concept Specifications
 
 ## UI Sketches
+
+[UI Designs](design/UI-design.md)
