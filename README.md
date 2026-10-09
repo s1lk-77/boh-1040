@@ -12,9 +12,11 @@ Here in this wonderous Bag, you can:
 
 - **Collect** the goodies you find in game by entering their _lookup code_ and retrieving a digital copy of your rewards! They stay with you as long as you log back in with the same player name.
 - **Filter** your abilities and scroll through them in a list so you can find them fast!
-- **Display** any ability as a card on your screen, which you can flip and show to other players just like you would normally!
+- **Display** any of your abilities as a card on your screen, which you can flip over and show other players just like you would normally!
 
-And for you lovely GMs: all you have to do is create a game and upload your abilities into the Bag with whatever lookup codes _you_ designate so our behind-the-stage magic can find them again in the demiplane when your players ask!
+And for you lovely GMs:
+
+- All you have to do is create a game and upload your abilities into the Bag with whatever lookup codes _you_ designate so our behind-the-stage magic can find them again in the demiplane when your players ask!
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
