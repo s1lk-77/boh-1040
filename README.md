@@ -22,11 +22,11 @@ And for you lovely GMs:
 
 ## What is the Bag? <sub>User Journey</sub>
 
-You may have seen a sign that looks like this
+So you may have seen a sign that looks like this:
 
 <img src="./design/images/sTM.png" width="600">
 
-Or worse, one that looks like this
+Or worse, one that looks like this:
 
 <img src="./design/images/sTMEther.png" width="600">
 
