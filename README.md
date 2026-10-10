@@ -24,15 +24,15 @@ And for you lovely GMs:
 
 So you might have encountered a sign that told you this:
 
-<img src="./design/images/sTM.png" width="600">
+<img src="./documentations/images/sTM.png" width="600">
 
 Or this:
 
-<img src="./design/images/sTMEther.png" width="600">
+<img src="./documentations/images/sTMEther.png" width="600">
 
 Or maybe when you had finally completed your glorious evolution and opened the last page of your notebook...
 
-<img src="./design/images/nScienturgy.png" width="600">
+<img src="./documentations/images/nScienturgy.png" width="600">
 
 You're 3 buildings away and busy unlocking the powers of the universe, thank you very much.
 
@@ -40,33 +40,33 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 **Step 1: Click button**
 
-<img src="./design/images/Demo1.png" height="400">
+<img src="./documentations/images/Demo1.png" height="400">
 
 **Step 2: Enter lookup code**
 
-<img src="./design/images/Demo2.png" height="400">
+<img src="./documentations/images/Demo2.png" height="400">
 
 **Step 3: Profit**
 
 <p>
-<img src="./design/images/Demo3.png" height="400">
-<img src="./design/images/DemoAbil.png" height="400">
+<img src="./documentations/images/Demo3.png" height="400">
+<img src="./documentations/images/DemoAbil.png" height="400">
 </p>
 
 Notice how you did 0 walking and got ahold of your cookie much, much faster? All you need is your phone and the internet, which lucky for you is supported everywhere at MIT!
 
 The Bag is super easy to acquire too. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just go to `[placeholder-link]`, type in a (GM provided) game code, pick any player name you choose, and the Bag is yours!
 
-<img src="./design/images/DemoMain.png" height="400">
+<img src="./documentations/images/DemoMain.png" height="400">
 
-[I'm a GM, how do I set this up?](/design/GM-demo.md)
+[I'm a GM, how do I set this up?](/documentations/GM-demo.md)
 
 ## Repository Structure
 
 ```
 /
 |- README.md
-|- design/
+|- documentations/
 |  |- images/
 |  |  |- ...
 |  |- concept-design.md
@@ -76,7 +76,7 @@ The Bag is super easy to acquire too. It's completely free, unlike all those Mac
 
 ## High Level Design Doc
 
-[Problem Framing & Stakeholders](/design/HLDD.md)
+[Problem Framing & Stakeholders](/documentations/HLDD.md)
 
 ## Concept Specifications
 
