@@ -1,18 +1,20 @@
 # Bag of Holding - GM Guide
 
+Open Bag of Holding on a laptop (wide screen), and click the "I'm a GM" button to open the GM interface.
+<img src="images/Main.png" height="400">
+
 ## Creating a Game
 
-1. Click the "I'm a GM button"
-   <img src="images/Main.png" height="400">
-2. Click enter any alphanumeric game code and click "Create game."
-   <img src="images/GMMain.png" height="400">
-   - You will also be asked to enter a name for your game, which you can edit later.
+1. Enter any alphanumeric game code and click "Create this game." (If your game code is already taken, you will be prompted to change it.)
+2. Pick a name for your game and confirm.
 
-## Navigating the Dashboard
+<img src="images/GMMain.png" height="400">
+
+## The Dashboard
 
 <img src="images/DashboardView.png" height="400">
 
-- A list of abilities (and other lookup supported items) appears in the right panel. There is a alternate tab to see a list of players.
+- A list of lookup-supported items appears in the right panel. There is a alternate tab to see a list of players.
 - When you click on a list entry, a preview of its content displays on the left panel
   - Click "Edit" to edit its contents
   - Click "Add New" to add a new entry
