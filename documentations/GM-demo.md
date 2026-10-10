@@ -1,6 +1,7 @@
 # Bag of Holding - GM Guide
 
 Open Bag of Holding on a laptop (wide screen), and click the "I'm a GM" button to open the GM interface.
+
 <img src="images/Main.png" height="400">
 
 ## Creating a Game
