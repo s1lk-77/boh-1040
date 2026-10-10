@@ -44,9 +44,9 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 **Step 2: Enter lookup code**
 
-<img src="./documentations/images/Demo2.png" height="400">
-
 \*If the GMs wrote their game correctly, the game will tell you what the code is.
+
+<img src="./documentations/images/Demo2.png" height="400">
 
 **Step 3: Profit**
 
