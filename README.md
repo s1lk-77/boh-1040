@@ -40,20 +40,20 @@ With your personalized Bag of Holding, this is what your trip to the GM room loo
 
 **Step 1: Click a button**
 
-<img src="./design/images/Demo1.png" width="400">
+<img src="./design/images/Demo1.png" height="400">
 
 **Step 2: Type in a lookup code**
 
-<img src="./design/images/Demo2.png" width="400">
+<img src="./design/images/Demo2.png" height="400">
 
 **Step 3: Profit**
 
 <p>
-<img src="./design/images/Demo3.png" width="400">
-<img src="./design/images/DemoAbil.png" width="400">
+<img src="./design/images/Demo3.png" height="400">
+<img src="./design/images/DemoAbil.png" height="400">
 </p>
 
-Notice how you did 0 walking and got your cookie much, much faster? All you need is your phone and the internet, which is supported everywhere at MIT!
+Notice how you did 0 walking and got ahold of your cookie much, much faster? All you need is your phone and the internet, which lucky for you is supported everywhere at MIT!
 
 ## Repository Structure
 
