@@ -64,7 +64,9 @@ Then refer to it in game documents as you would any other field.
 
 If you'd like to go the extra mile, here's how to configure GameTeX to print out lookup codes on every ability card.
 
-In `./LaTeX/gametex.sty`, c. line 3622, in the `\DeclareGameSubOption{abils}{cardsheet}` block, make the following changes:
+In `./LaTeX/gametex.sty`, ~ line 3622, in the `\DeclareGameSubOption{abils}` block, make the following changes:
+
+---
 
 Line 3643: add `\MYlookup` to the abil macro mapping.
 
@@ -80,7 +82,7 @@ Line 3643: add `\MYlookup` to the abil macro mapping.
 
 ---
 
-Line 3690: adjustment the argument count to `\newcommand{\AbilityCard}` to match.
+Line 3690: adjust the argument count to `\newcommand{\AbilityCard}` to match.
 
 ```
 \newcommand{\AbilityCard}[4][]{% ...
@@ -114,6 +116,8 @@ So your code should now look like this:
 3722    \texttt{#5}%
 3723    \break
 ```
+
+---
 
 These commands should be sufficient to print out ability cards with a lookup code.
 
