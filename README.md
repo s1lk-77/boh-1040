@@ -22,19 +22,19 @@ And for you lovely GMs:
 
 ## What is the Bag? <sub>User Journey</sub>
 
-You may have seen a sign that looks like this:
+You may have seen a sign that looks like this
 
-<img src="./design/images/sTM.png" width="300">
+<img src="./design/images/sTM.png" width="600">
 
-Or worse, one that looks like this:
+Or worse, one that looks like this
 
-<img src="./design/images/sTMEther.png" width="300">
+<img src="./design/images/sTMEther.png" width="600">
 
-Or maybe you were told to do this by the last page of your notebook:
+Or maybe you were told to do this by the last page of your notebook
 
-<img src="./design/images/nScienturgy.png" width="300">
+<img src="./design/images/nScienturgy.png" width="600">
 
-When you're 3 buildings away from the GM room.
+when you're 3 buildings away from the GM room.
 
 ## Repository Structure
 
