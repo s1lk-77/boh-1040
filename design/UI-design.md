@@ -10,7 +10,7 @@
 
 ### Join Screen
 
-<img src="./images/Main.png" style="height: 60%">
+<img src="./images/Main.png" height="300">
 
 ### Player Home Screen
 
