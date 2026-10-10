@@ -20,7 +20,21 @@ And for you lovely GMs:
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
-## User Journey
+## What is the Bag? <sub>User Journey</sub>
+
+You may have seen a sign that looks like this:
+
+<img src="./design/images/sTM.png" width="300">
+
+Or worse, one that looks like this:
+
+<img src="./design/images/sTMEther.png" width="300">
+
+Or maybe you were told to do this by the last page of your notebook:
+
+<img src="./design/images/nScienturgy.png" width="300">
+
+When you're 3 buildings away from the GM room.
 
 ## Repository Structure
 
@@ -28,6 +42,8 @@ And for you lovely GMs:
 /
 |- README.md
 |- design/
+|  |- images/
+|  |  |- ...
 |  |- concept-design.md
 |  |- UI-design.md
 |  |- HLDD.md
