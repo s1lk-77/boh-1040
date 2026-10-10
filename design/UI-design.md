@@ -10,24 +10,24 @@
 
 ### Join Screen
 
-<img src="./images/Main.png" height="60%">
+<img src="./images/Main.png" style="height: 60%">
 
 ### Player Home Screen
 
-<img src="./images/Home.png" height="60%">
+<img src="./images/Home.png" style="height: 60%">
 
 ### Collect
 
-<img src="./images/Home.png" height="60%">
+<img src="./images/Home.png" style="height: 60%">
 
 ### Ability Card Display
 
-<img src="./images/AbilBack.png" height="60%">
-<img src="./images/AbilFront.png" height="60%">
+<img src="./images/AbilBack.png" style="height: 60%">
+<img src="./images/AbilFront.png" style="height: 60%">
 
 ### \[Stretch Goal\] Settings
 
-<img src="./images/Settings.png" height="60%">
+<img src="./images/Settings.png" style="height: 60%">
 
 Player can change the Ability Card display color by clicking on the colored square next to "Ability." Commonly used colors in the Guild are yellow and pink, and it would be nice to offer more options than just yellow.
 
@@ -38,13 +38,13 @@ Player can change the Ability Card display color by clicking on the colored squa
 
 ### GM Home Page & Game Creation
 
-<img src="./images/GMMain.png" height="60%">
-<img src="./images/CreateGame.png" height="60%">
+<img src="./images/GMMain.png" style="height: 60%">
+<img src="./images/CreateGame.png" style="height: 60%">
 
 ### Dashboard (Viewing)
 
-<img src="./images/DashboardView.png" height="60%">
+<img src="./images/DashboardView.png" style="height: 60%">
 
 ### Dashboard (Editing)
 
-<img src="./images/DashboardEdit.png" height="60%">
+<img src="./images/DashboardEdit.png" style="height: 60%">
