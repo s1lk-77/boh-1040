@@ -36,8 +36,8 @@ The following guide shows how to integrate a `MYlookup` field for the `abils` ma
 In `./Lists/abil-LIST.tex`, at line 9, add the following entry to the `PRESET` block to declare the field and its default value.
 
 ```
-\F\MYtext	%% text of ability, read by user
-\F\MYeffect %% effect text of ability, read by recipient(s)
+\F\MYtext
+\F\MYeffect
 \FD\MYlookup {} %% <-- ADD THIS LINE
 ```
 
@@ -66,22 +66,35 @@ If you'd like to go the extra mile, here's how to configure GameTeX to print out
 
 In `./LaTeX/gametex.sty`, c. line 3622, in the `\DeclareGameSubOption{abils}{cardsheet}` block, make the following changes:
 
-Line 3643: add `\MYlookup` to the abil macro mapping.\
-`\@elementmapping{Abil}{\@numopt\AbilityCard{\MYname}{\MYtext}{\MYeffect}}`\
--->\
-`\@elementmapping{Abil}{\@numopt\AbilityCard{\MYname}{\MYtext}{\MYeffect}{\MYlookup}}`
+Line 3643: add `\MYlookup` to the abil macro mapping.
 
-Line 3690: adjustment the argument count to `\newcommand{\AbilityCard}` to match.\
-`\newcommand{\AbilityCard}[4][]{% ...`\
--->\
-`\newcommand{\AbilityCard}[5][]{% ...`
+```
+\@elementmapping{Abil}{\@numopt\AbilityCard{\MYname}{\MYtext}{\MYeffect}}
+```
 
-Line 3690: adjustment the argument count to `\newcommand{\AbilityCard}` to match.\
-`\newcommand{\AbilityCard}[4][]{% ...`\
--->\
-`\newcommand{\AbilityCard}[5][]{% ...`
+-->
 
-Line 3720: insert the following 3 lines after line 3720 to actually format the text\
+```
+\@elementmapping{Abil}{\@numopt\AbilityCard{\MYname}{\MYtext}{\MYeffect}{\MYlookup}}
+```
+
+---
+
+Line 3690: adjustment the argument count to `\newcommand{\AbilityCard}` to match.
+
+```
+\newcommand{\AbilityCard}[4][]{% ...
+```
+
+-->
+
+```
+\newcommand{\AbilityCard}[5][]{% ...
+```
+
+---
+
+Line 3720: insert the following 3 lines after line 3720 to actually format the text
 
 ```
 \vskip\whitespace
@@ -89,7 +102,7 @@ Line 3720: insert the following 3 lines after line 3720 to actually format the t
 \break
 ```
 
-So your code should now look like this:\
+So your code should now look like this:
 
 ```
 3716    \bfseries%
@@ -104,7 +117,7 @@ So your code should now look like this:\
 
 These commands should be sufficient to print out ability cards with a lookup code.
 
-<img src="images/GameTeXDemo.png" height="400">
+<img src="images/GameTeXDemo.png" height="300">
 
 This is helpful for inclusion in a character packet for the abilities assigned to a player at game start.
 
