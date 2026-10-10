@@ -10,32 +10,30 @@
 
 ### Join Screen
 
-<p>
 <img src="./images/Main.png" height="400">
+
 This is the player join screen and the initial render. A player can enter a gamecode and a name, then select "Open" to join for the first time or "Reopen" to rejoin. The former checks that the entered name does not exist and the latter checks that it does. A GM navigates from this page to the GM home screen.
-</p>
 
 ### Player Home Screen
 
-<p>
 <img src="./images/Home.png" height="400">
+
 Player homescreen displaying a list of abilities with their names (left) and lookup codes (right). Each entry can be clicked to open its corresponding display view. The <b>Collect</b> button opens the collect panel, and the <b>Settings</b> button opens the settings page. Players can filter abilities list by typing in key strings.
-</p>
 
 ### Collect
 
-<p>
 <img src="./images/Collect.png" height="400">
+
 Player can type lookup codes into the @ search bar and add new abilities.
-</p>
 
 ### Ability Card Display
 
 <p>
     <img src="./images/AbilBack.png" height="400">
     <img src="./images/AbilFront.png" height="400">
-    GameTeX accurate, flippable ability card. Left and right arrows index through the ability list. Navigation bar on the bottom for returning to home, opening the Collect panel, and opening the settings page.
 </p>
+
+GameTeX accurate, flippable ability card. Left and right arrows index through the ability list. Navigation bar on the bottom for returning to home, opening the Collect panel, and opening the settings page.
 
 ### \[Stretch Goal\] Settings
 
