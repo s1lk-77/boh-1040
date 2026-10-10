@@ -21,17 +21,17 @@ Open Bag of Holding on a laptop (wide screen), and click the "I'm a GM" button t
   - Click "Add New" to add a new entry
   - Click "Delete" to delete the current entry
 
-## How do I write a game with Bag support?
+## How do I write a game with Bag of Holding support?
 
-Mostly, you just need to make sure that anywhere your game mentions something that has a lookup code, it also mentions the code. For example:
+Mostly, you just need to ensure that anywhere your game mentions something that has a lookup code, it also mentions the code. For example:
 
-> You just unlocked ability Summon Cthulhu! (lookup: 589017)
+> **You just unlocked ability Summon Cthulhu! (lookup: 589017)**
 
-If you'd like a better user interface to manage lookup codes than our GM Dashboard (which we admit is not as good as say, Google Sheets), you could keep your own tabs. Also, if you're any comfortable with the LaTeX part of GameTeX, we suggest adding lookup code as a field of `abils` (or whatever else you want lookup support for).
+If you'd like a better user interface than our GM Dashboard to manage lookup codew, you could keep your own tabs in, say, Google Sheets. Also, if you're any comfortable with the LaTeX side of GameTeX, we recommend adding lookup code as a field of `abils` (or whatever else you want lookup support for).
 
-The following guide shows how to integrate a `MYlookup` field for the `abils` macro to store lookup codes:
+The following guide shows how to integrate a `MYlookup` field for the `abils` macro.
 
-### Declaring the field
+### Field Declaration
 
 In `./Lists/abil-LIST.tex`, at line 9, add the following entry to the `PRESET` block to declare the field and its default value.
 
@@ -43,7 +43,7 @@ In `./Lists/abil-LIST.tex`, at line 9, add the following entry to the `PRESET` b
 
 Note we declare `\FD` as opposed to `\F`, which sets `\MYlookup` to the empty string for every ability by default.
 
-### Using `\MYlookup` for abilities
+### Field Assignment & Reference
 
 Use `\s` to declare, as usual:
 
@@ -60,7 +60,7 @@ Then refer to it in game documents as you would any other field.
 
 `You just unlocked ability \aSummon{}! (lookup: \aSummon{\MYlookup{}})`
 
-### Formatting the default ability card
+### Formatting the Default Printout
 
 If you'd like to go the extra mile, here's how to configure GameTeX to print out lookup codes on every ability card.
 
