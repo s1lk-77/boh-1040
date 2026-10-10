@@ -46,6 +46,8 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 <img src="./documentations/images/Demo2.png" height="400">
 
+\*If the GMs wrote their game correctly, the game will tell you what the code is.
+
 **Step 3: Profit**
 
 <p>
