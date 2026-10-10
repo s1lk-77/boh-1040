@@ -70,8 +70,9 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 |  |- images/
 |  |  |- ...
 |  |- concept-design.md
-|  |- UI-design.md
+|  |- GM-guide.md
 |  |- HLDD.md
+|  |- UI-design.md
 ```
 
 ## High Level Design Doc
@@ -80,6 +81,8 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 
 ## Concept Specifications
 
+[Concept Designs](documentations/concept-design.md)
+
 ## UI Sketches
 
-[UI Designs](design/UI-design.md)
+[UI Designs](documentations/UI-design.md)
