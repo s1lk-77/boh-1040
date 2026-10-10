@@ -20,21 +20,21 @@ And for you lovely GMs:
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
-## What is the Bag? <sub>User Journey</sub>
+## Why the Bag? <sub>User Journey</sub>
 
-So you may have seen a sign that looks like this:
+So you might have encountered a sign that told you this:
 
 <img src="./design/images/sTM.png" width="600">
 
-Or worse, one that looks like this:
+Or this:
 
 <img src="./design/images/sTMEther.png" width="600">
 
-Or maybe you were told to do this by the last page of your notebook
+Or maybe when you had finally completed your glorious evolution and opened the last page of your notebook...
 
 <img src="./design/images/nScienturgy.png" width="600">
 
-when you're 3 buildings away from the GM room.
+You're 3 buildings away and busy unlocking the powers of the universe, thank you very much.
 
 ## Repository Structure
 
