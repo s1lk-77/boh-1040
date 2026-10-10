@@ -44,8 +44,6 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 **Step 2: Enter lookup code**
 
-\*If the GMs wrote their game correctly, the game will tell you what the code is.
-
 <img src="./documentations/images/Demo2.png" height="400">
 
 **Step 3: Profit**
@@ -57,7 +55,7 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 Notice how you did 0 walking and got ahold of your cookie much, much faster? All you need is your phone and the internet, which lucky for you is supported everywhere at MIT!
 
-The Bag is super easy to acquire too. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just go to `[placeholder-link]`, type in a (GM provided) game code, pick any player name you choose, and the Bag is yours!
+The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just go to `[placeholder-link]`, type in a (GM provided) game code, pick any player name you choose, and the Bag is yours!
 
 <img src="./documentations/images/DemoMain.png" height="400">
 
