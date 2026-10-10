@@ -1,13 +1,11 @@
 # Bag of Holding - GM Guide
 
-Open Bag of Holding on a laptop (wide screen), and click the "I'm a GM" button to open the GM interface.
-
-<img src="images/Main.png" height="400">
-
 ## Creating a Game
 
-1. Enter any alphanumeric game code and click "Create this game." (If your game code is already taken, you will be prompted to change it.)
-2. Pick a name for your game and confirm.
+1. Open Bag of Holding on a laptop (wide screen), and click the "I'm a GM" button to open the GM interface.
+2. Enter any alphanumeric game code and click "Create this game." (If your code is already taken, you will be prompted to change it.)
+3. Pick a name for your game and confirm.
+4. Share your game code with your players. As long as they have opened a bag with your game code, they can query all your lookup codes.
 
 <img src="images/GMMain.png" height="400">
 
