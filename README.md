@@ -36,7 +36,7 @@ Or maybe when you had finally completed your glorious evolution and opened the l
 
 You're 3 buildings away and busy unlocking the powers of the universe, thank you very much.
 
-With your personalized Bag of Holding, this is what your trip to the GM room looks like:
+But now, armed with your personalized Bag of Holding, this is what your trip to the GM room looks like:
 
 **Step 1: Click a button**
 
