@@ -22,8 +22,10 @@
 
 ### Ability Card Display
 
-<img src="./images/AbilBack.png" height="400">
-<img src="./images/AbilFront.png" height="400">
+<p>
+    <img src="./images/AbilBack.png" height="400">
+    <img src="./images/AbilFront.png" height="400">
+</p>
 
 ### \[Stretch Goal\] Settings
 
