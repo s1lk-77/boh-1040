@@ -36,6 +36,25 @@ Or maybe when you had finally completed your glorious evolution and opened the l
 
 You're 3 buildings away and busy unlocking the powers of the universe, thank you very much.
 
+With your personalized Bag of Holding, this is what your trip to the GM room looks like:
+
+**Step 1: Click a button**
+
+<img src="./design/images/Demo1.png" width="400">
+
+**Step 2: Type in a lookup code**
+
+<img src="./design/images/Demo2.png" width="400">
+
+**Step 3: Profit**
+
+<p>
+<img src="./design/images/Demo3.png" width="400">
+<img src="./design/images/DemoAbil.png" width="400">
+</p>
+
+Notice how you did 0 walking and got your cookie much, much faster? All you need is your phone and the internet, which is supported everywhere at MIT!
+
 ## Repository Structure
 
 ```
