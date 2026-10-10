@@ -29,8 +29,8 @@ And for you lovely GMs:
 |- README.md
 |- design/
 |  |- concept-design.md
-|  |- ui-design.md
-|  |- problem-framing.md
+|  |- UI-design.md
+|  |- HLDD.md
 ```
 
 ## High Level Design Doc
