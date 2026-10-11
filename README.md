@@ -69,7 +69,9 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 |- documentations/
 |  |- images/
 |  |  |- ...
-|  |- concept-design.md
+|  |- concepts/
+|  |  |- concept-designs.md
+|  |  |- ...
 |  |- GM-guide.md
 |  |- HLDD.md
 |  |- UI-design.md
