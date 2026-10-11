@@ -24,6 +24,10 @@ A set of Contexts with\
 &emsp; **where** context with id exists\
 &emsp; **then** return the context name
 
+\_getMember(id Identifier, member Member) : (member Member)\
+&emsp; **where** context with id exists and member is in that context\
+&emsp; **then** return the member
+
 **Actions**\
 create(id Identifier, name String) : (context Context)\
 &emsp; **where** context with id does not exist\
