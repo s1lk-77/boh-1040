@@ -81,7 +81,7 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 
 ## Concept Specifications
 
-[Concept Designs](documentations/concept-design.md)
+[Concept Designs](documentations/concepts/concept-design.md)
 
 ## UI Sketches
 
