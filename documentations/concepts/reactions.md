@@ -1,8 +1,14 @@
 # Reactions
 
+### preface
+
 Assume:\
 Serializing.define(rule)\
 Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
+
+For this application, there will only be one type of serialization, which is operated on arrays of strings by performing a concatenation with some non-alpanumeric delimiter. We can initialize the serialization context at "compile time." I.e. we will assume the serializing concept is initialized with the desired rule and ready to go. Also, in general, we assume all requests containing a `playerName` or a `lookup` will have these values serialized with the `gameCode` before they are fed into other operations, so we have handwaved the `serializing.serialize` calls a bit in the reactions below (because it is called most everywhere). Furthermore, as the Bag of Holding MVP only aims to support digitally storing Abilities, we can pre-initialize the standard Assassins' Guild ability card features into a catalog that we can then use universally in this application.
+
+---
 
 **reaction** serialize\
 **when**\
