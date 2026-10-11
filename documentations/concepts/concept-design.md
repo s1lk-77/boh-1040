@@ -6,4 +6,4 @@ A player has an Inventory of abilities. A game has an Inventory of abilities. Th
 
 The **cataloging** concept, as the name suggests, maintains a catalog of abilities and what they do. That is, it catalogs all the entries who has the features that an ability has. Each entry can be updated and deleted. And new entries can be added. So this concept binds Entries to ability lookup codes and Features to the schema of an ability.
 
-The **serializing** concept binds game codes as its context and players/abilities as its suffix, and generates globally unique identifiers for the system to internally work when interacting with the other concepts.
+**Serializing** is a tiny concept that packages the bundle of (gameCode, playerName) or (gameCode, abilityLookup) into a string. For the purposes of what it does in this app, the serializing concept generates globally unique identifiers for the system to internally work with and helps the other concepts maintain their uniqueness invariants.
