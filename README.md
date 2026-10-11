@@ -22,6 +22,12 @@ And for you lovely GMs:
 
 ## Why the Bag? <sub>User Journey</sub>
 
+_Alpha Version Note:_
+
+_In the alpha, we aim to focus on supporting the player, as this is a player-facing app. Players will be able to join and rejoin a game with a self-defined username. Once they are redirected to their home page, they can see a list of abilities they own with their names, lookup codes. They can click on an ability to see its description. On the GM side, time permitting, a GM will be able to create a game with a game code or reopen a game that they previously created. If time does not permit, we may instead have a dummy one-for-all game for the alpha MVP. Our primary focus is on players. A GM will be able to add abilities to either their created game or the dummy placeholder via the GM interface. Features not included in the MVP: filtering the ability list, previewing list entries as a GM, editing and deleting abilities._
+
+---
+
 So you might have encountered a sign that told you this:
 
 <img src="./documentations/images/sTM.png" width="600">
