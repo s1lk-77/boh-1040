@@ -1,6 +1,6 @@
 # Joining
 
-**Concept**: Joining\[Identifier, Member\]
+**Concept**: Joining\[Identifier, Member\]\
 **purpose** Provides an entity the agency to partake in a congregation or convention for some shared purpose; prevents not being able to participate and not being able to congregate\
 **principles** A host defines a shared context. Others with references to or knowledge of the context opts in to (and opts out of) being part of the shared context.
 
