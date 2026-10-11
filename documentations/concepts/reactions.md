@@ -8,14 +8,14 @@ Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 **when**\
 &emsp;Requesting.open(gameCode, playerName)\
 **then**\
-&emsp;Serializing.serialize(data: [gameCode, playerName]) : (serial)\
+&emsp;Serializing.serialize(data: [gameCode, playerName]) : (serial)
 
 **reaction** lookupSerialize\
 **when**\
 &emsp;Requesting.lookup(gameCode, playerName, lookup)\
 **then**\
 &emsp;Serializing.serialize(data: [gameCode, lookup]) : (serial)\
-&emsp;Serializing.serialize(data: [gameCode, playerName]) : (serial)\
+&emsp;Serializing.serialize(data: [gameCode, playerName]) : (serial)
 
 **reaction** addPlayer\
 **when**\
@@ -25,7 +25,7 @@ Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 &emsp;Joining.\_isContext(id: gameCode)\
 &emsp;not Joining.\_isMember(id: gameCode, member: serial)\
 **then**\
-&emsp;Joining.addMember(id: gameCode, member: serial) : (member: serial)\
+&emsp;Joining.addMember(id: gameCode, member: serial) : (member: serial)
 
 **reaction** reopen\
 **when**\
@@ -35,7 +35,7 @@ Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 &emsp;Joining.\_isContext(id: gameCode)\
 &emsp;Joining.\_isMember(id: gameCode, member: serial)\
 **then**\
-&emsp;Joining.addMember(id: gameCode, member: serial) : (member: serial)\
+&emsp;Joining.addMember(id: gameCode, member: serial) : (member: serial)
 
 **reaction** playerInventory\
 **when**\
@@ -104,7 +104,7 @@ Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 **when**\
 &emsp;Requesting.createGame(gameCode, gameName)\
 **where**\
-&emsp;not Joining.isContext(identifier: gameCode)\
+&emsp;not Joining.isContext(id: gameCode)\
 **then**\
 &emsp;Joining.create(id: gameCode, name: gameName)
 
@@ -112,6 +112,6 @@ Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 **when**\
 &emsp;Requesting.reopenGame(gameCode)\
 **where**\
-&emsp;not Joining.isContext(identifier: gameCode)\
+&emsp;not Joining.isContext(id: gameCode)\
 **then**\
 &emsp;Joining.\_getName(id: gameCode) : (name)
