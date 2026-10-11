@@ -32,7 +32,7 @@ remove(owner Owner, item Item)\
 &emsp;**where** owner exists in Owner\
 &emsp;**then** checks if owner's items has item
 
-\_getAll(owner Owner) : (many(items Item))
+\_getAll(owner Owner) : (many(items Item))\
 &emsp;**where** owner exists in Owner\
 &emsp;**then** return all of owner's items
 
