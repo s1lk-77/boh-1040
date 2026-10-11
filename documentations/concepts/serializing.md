@@ -1,6 +1,7 @@
-# Rostering
+# Serializing
 
-A Game has a roster of Players.
+MAYBE
 
-Rostering\
-// Game has a roster of players
+prevents duplicate values by serializing them based on their context
+
+parameterizes off of a context and a specific member and returns a globally unique identifier

@@ -2,7 +2,7 @@
 
 **concept** Inventorying \[Owner, Item\]\
 **purpose** keep track of the things you own; prevents not being able to find the things you own or know what they are\
-**principle** Owner makes an inventory. Owner adds things they own to the inventory. Owner can check what's in the inventory
+**principle** Owner makes an inventory. Owner adds things to and removes things from the inventory. Owner can check if they own a particular item and what's in the inventory
 
 **states**\
 a set of Owners\
