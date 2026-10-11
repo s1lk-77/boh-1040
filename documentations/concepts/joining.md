@@ -20,6 +20,10 @@ A set of Contexts with:\
 &emsp; **where** context with id exists and member in context\
 &emsp; **then** return member
 
+\_getName(id Identifier) : (name String)\
+&emsp; **where** context with id exists\
+&emsp; **then** return the context name
+
 **Actions**\
 create(id Identifier, name String) : (context Context)\
 &emsp; **where** context with id does not exist
