@@ -6,9 +6,9 @@
 
 **States**\
 A set of Contexts with:\
-&emsp;an identifier Identifier
-&emsp;a name String
-&emsp;a set of Members
+&emsp;an identifier Identifier\
+&emsp;a name String\
+&emsp;a set of Members\
 &emsp;(maybe) a host Member
 
 **Queries**
@@ -26,7 +26,7 @@ A set of Contexts with:\
 
 **Actions**\
 create(id Identifier, name String) : (context Context)\
-&emsp; **where** context with id does not exist
+&emsp; **where** context with id does not exist\
 &emsp; create a new Context with the given id and name, and no Member. Return it.
 
 join(id Identifier, member Member) : (Member)\
@@ -35,4 +35,4 @@ join(id Identifier, member Member) : (Member)\
 
 ### Note
 
-We leave Identifier as a generic parameter because it could be a string, a number, or anything
+We leave Identifier as a generic parameter because it could be a string, a number, or anything. In our case it will be strings.
