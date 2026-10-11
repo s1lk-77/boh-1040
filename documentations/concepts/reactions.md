@@ -1,20 +1,21 @@
 # Reactions
 
-### preface
+### Preface
 
 Assume:\
-Serializing.define(rule)\
 Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 
-For this application, there will only be one type of serialization, which is operated on arrays of strings by performing a concatenation with some non-alpanumeric delimiter. We can initialize the serialization context at "compile time." I.e. we will assume the serializing concept is initialized with the desired rule and ready to go. Also, in general, we assume all requests containing a `playerName` or a `lookup` will have these values serialized with the `gameCode` before they are fed into other operations, so we have handwaved the `serializing.serialize` calls a bit in the reactions below (because it is called most everywhere). Furthermore, as the Bag of Holding MVP only aims to support digitally storing Abilities, we can pre-initialize the standard Assassins' Guild ability card features into a catalog that we can then use universally in this application.
+In general, we assume all requests containing a `playerName` or a `lookup` call the **Naming** concept with their `gameCode` before they are fed into other operations. Similarly, we assume all responses containing a uniquified id calls **Naming** to retrieve the (context, suffix) pair right before being returned to the frontend. So we have handwaved the `Naming` context reactions a bit below (because they are called so ubiquitously). Furthermore, as the Bag of Holding MVP only aims to support digitally storing Abilities, we can pre-initialize the standard Assassins' Guild ability card features into a catalog that we can then use universally in this application. We will assume all `cataloging` concept calls use the "Abilities" catalog as defined above.
 
 ---
 
-**reaction** serialize\
+### Naming concept reactions
+
+**reaction** uniquify\
 **when**\
 &emsp;Requesting.open(gameCode, playerName)\
 **then**\
-&emsp;Serializing.serialize(data: [gameCode, playerName]) : (serial)
+&emsp;Naming.uniquify(data: [gameCode, playerName]) : (serial)
 
 **reaction** lookupSerialize\
 **when**\
@@ -22,6 +23,8 @@ For this application, there will only be one type of serialization, which is ope
 **then**\
 &emsp;Serializing.serialize(data: [gameCode, lookup]) : (serial)\
 &emsp;Serializing.serialize(data: [gameCode, playerName]) : (serial)
+
+---
 
 **reaction** addPlayer\
 **when**\

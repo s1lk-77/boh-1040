@@ -5,7 +5,7 @@
 **principles** A host defines a shared context. Others with references to or knowledge of the context opts in to (and opts out of) being part of the shared context.
 
 **States**\
-A set of Contexts with:\
+A set of Contexts with\
 &emsp;an identifier Identifier\
 &emsp;a name String\
 &emsp;a set of Members\

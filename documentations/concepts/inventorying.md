@@ -5,8 +5,8 @@
 **principle** Owner makes an inventory. Owner adds things to and removes things from the inventory. Owner can check if they own a particular item and what's in the inventory
 
 **states**\
-a set of Owners\
-&emsp;with a set of Items
+a set of Owners with\
+&emsp;a set of Items
 
 **actions**
 
