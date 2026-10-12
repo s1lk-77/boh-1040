@@ -95,3 +95,5 @@ const Reopen = endpoint(
     input: { required: ["gameCode"] },
   },
 );
+
+export const portalCmp = { Join, Rejoin, Create, Reopen };
