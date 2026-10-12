@@ -34,7 +34,13 @@ export class JoiningConcept {
    * @returns the promise of a Context
    * @throws error if ID already exists
    */
-  async create({ id, name }: { id: string; name: string }): Promise<string> {
+  async create({
+    id,
+    name,
+  }: {
+    id: string;
+    name: string;
+  }): Promise<{ id: string }> {
     // set up the index
     if (!this.indexed) {
       this.contexts.createIndex({ identifier: 1 });
@@ -50,7 +56,7 @@ export class JoiningConcept {
       throw error;
     }
 
-    return id;
+    return { id };
   }
 
   /**
@@ -91,7 +97,7 @@ export class JoiningConcept {
    * @param id
    * @returns true iff id is a context
    */
-  async _isContext(id: string): Promise<boolean> {
+  async _isContext({ id }: { id: string }): Promise<boolean> {
     return (
       (await this.contexts.countDocuments({ identifier: id }, { limit: 1 })) > 0
     );
@@ -103,7 +109,13 @@ export class JoiningConcept {
    * @param member the member to check
    * @returns true iff member in context
    */
-  async _isMember(id: string, member: string): Promise<boolean> {
+  async _isMember({
+    id,
+    member,
+  }: {
+    id: string;
+    member: string;
+  }): Promise<boolean> {
     const contextObj: Context | null = await this.contexts.findOne({
       identifier: id,
     });
@@ -121,7 +133,7 @@ export class JoiningConcept {
    * @param id the context
    * @returns its name, if it exists, else null
    */
-  async _getName(id: string): Promise<string | null> {
+  async _getName({ id }: { id: string }): Promise<string | null> {
     const contextObj: Context | null = await this.contexts.findOne({
       identifier: id,
     });

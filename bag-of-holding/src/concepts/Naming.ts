@@ -112,9 +112,11 @@ export class NamingConcept {
    * @param key the key
    * @returns the context and suffix matched, or null if key does not exist
    */
-  async _getValue(
-    key: string,
-  ): Promise<{ context: string; suffix: string } | null> {
+  async _getValue({
+    key,
+  }: {
+    key: string;
+  }): Promise<{ context: string; suffix: string } | null> {
     const keyObj: Key | null = await this.keys.findOne({ _id: key });
     if (keyObj !== null) {
       return { context: keyObj.context, suffix: keyObj.suffix };
