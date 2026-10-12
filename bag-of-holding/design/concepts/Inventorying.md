@@ -70,7 +70,7 @@ delete(owner: Owner)
 ## Queries
 
 ```queries
-_owns(owner: Owner, item: Item) : (isOwner Boolean)
+_owns(owner: Owner, item: Item) : returns (isOwner Boolean)
     Returns true if owner exists and owns item, false otherwise
 
 _getAll(owner: Owner) : many (items: Item)

@@ -50,10 +50,10 @@ delete(context: Context, suffix: Suffix)
 ## Queries
 
 ```queries
-_getKey(context: Context, suffix: Suffix) : (key Key)
+_getKey(context: Context, suffix: Suffix) : returns (key Key)
     Returns the key with context and suffix, or nothing if key does not exist.
 
-_getValue(key: Key) : (context: Context, suffix: Suffix)
+_getValue(key: Key) : returns (context: Context, suffix: Suffix)
     Returns the suffix and context of this key, or nothing if key does not exist.
 
 ```

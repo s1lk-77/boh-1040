@@ -1,50 +1,86 @@
 # Cataloging
 
-**Concept:** Cataloging\[Entry, Feature, Value\]\
-**Purpose:** Maintain a highly organized record of entries that are attributed the same set of features, allows easy mapping between an entry and its features; prevents not being able to recognize things or not being able to distinguish what features something has\
-**Princples:** User creates a catalog and specifies a set of features. User adds Entries with this set of features to the catalog. User can search through the catalog by entry or for entries with a specific feature.
+## Purpose
 
-**States**\
-A set of Catalogs with\
-&emsp;A name String\
-&emsp;A set of features Features\
-&emsp;A set of Entries
+Maintain a highly organized record of entries that are attributed the same set of features, allows easy mapping between an entry and its features; prevents not being able to recognize things or not being able to distinguish what features something has.
 
-A set of Entries with\
-&emsp;A set of Bindings
+## Principle
 
-A set of Bindings with\
-&emsp;A Feature\
-&emsp;A Value\
+User creates a catalog and specifies a set of features. User adds Entries with this set of features to the catalog. User can search through the catalog by entry or for entries with a specific feature.
 
-**Queries**\
-\_get(catalog Catalog, entry Entry) : (entry Entry, {feature Feature, value Value}[])\ // TODO
-&emsp;**where** entry exists in catalog\
-&emsp;**then** return the entry and its bindings as an object of feature-value pairs
+## Types
 
-\_exists(catalog Catalog, entry Entry) : (Boolean)\
-&emsp;**where** entry exists in catalog\
-&emsp;**then** return true\
-&emsp;**where** entry does not exist in catalog\
-&emsp;**then** return false
+```types
+external Entry
+    An entry in a catalog.
 
-**Actions**\
-catalog(name String, features Features) : (catalog Catalog)\
-&emsp;**where** name does not exist in Catalogs\
-&emsp;**then** create a Catalog with that name and the given set of features with no entries
+external Feature
+    A feature shared by all entries in a catalog
 
-log(catalog Catalog, entry Entry, bindings {feature: Feature, value: Value}[]) : (entry Entry)\
-&emsp;**where** entry does not exist in catalog and the features in bindings match this catalog's features\
-&emsp;**then** create a Binding for each object in bindings and associate them with this entry. Add this entry to the catalog
+external Value
+    A particular value for a feature
+```
 
-update(catalog Catalog, entry Entry, feature Feature, value Value) : (entry Entry)\
-&emsp;**where** entry exists in catalog and the feature is in this catalog's features\
-&emsp;**then** find this Entry's binding for this feature and replace its value with value
+## State
 
-delete(catalog Catalog, entry Entry)\
-&emsp;**where** entry exists in catalog\
-&emsp;**then** delete this entry
+```state
+a set of Catalogs with
+    a name String
+    a set of Features
+    a set of Entries
 
-deleteCatalog(catalog Catalog)\
-&emsp;**where** catalog exists in Catalogs\
-&emsp;**then** delete this catalog
+a set of Entries with
+    a set of Bindings
+
+a set of Bindings with
+    a Feature
+    a Value
+```
+
+## Actions
+
+```actions
+catalog(name: String, features: Features) : (catalog: Catalog)
+    where a catalog with name exists
+    then
+        refuses ALREADY_EXISTS "Catalog with this name already exists"
+    where a catalog with name does not exist
+    then
+        add a new catalog with name, the given set of features, and no entries
+
+log(catalog: Catalog, entry: Entry, bindings: {feature: Feature, value: Value}[]) : returns (entry: Entry)
+    where catalog exists and entry does not exist in catalog and the features in bindings match this catalog's features
+    then
+        add a new binding with feature and value for each object in bindings and add this binding to this entry
+        add this entry to the catalog
+        return entry
+    where catalog does not exist or entry exists in catalog or the features in bindings do not match this catalog's features
+    then
+        refuses FAILED_LOG "Could not add entry to catalog"
+
+update(catalog: Catalog, entry: Entry, feature: Feature, value: Value) : returns (entry: Entry)
+    where catalog exists and entry exists in catalog and feature is in this catalog's features
+    then
+        for this entry's binding with this feature, replace the binding's value with this value
+    where catalog does not exist or entry does not exist in catalog or feature is not in catalog
+    then
+        refuses FAILED_UPDATE "Could not update catalog entry"
+
+delete(catalog: Catalog, entry: Entry)
+    where catalog exists and entry exists in catalog
+    then
+        remove this entry
+    where catalog does not exist or entry does not exist in catalog
+    then
+        refuses FAILED_DELETIE "Could not delete entry from catalog"
+```
+
+## Queries
+
+```queries
+_get(catalog: Catalog, entry: Entry) : returns (entry Entry, {feature: Feature, value: Value}[])
+    Returns the entry and the features and values of its bindings as an array of features and values, or nothing if catalog doesn't exist or entry does not exist in catalog
+
+_exists(catalog: Catalog, entry: Entry) : returns (exists: Boolean)
+    Returns true if catalog exists and entry is in catalog, false otherwise
+```
