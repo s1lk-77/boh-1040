@@ -74,7 +74,7 @@ delete(owner: Owner) : returns (owner: Owner)
 ## Queries
 
 ```queries
-_owns(owner: Owner, item: Item) : one (isOwner: Boolean)
+_owns(owner: Owner, item: Item) : one (isOwner: Flag)
     Returns true if owner exists and owns item, false otherwise
 
 _getAll(owner: Owner) : many (items: Item)

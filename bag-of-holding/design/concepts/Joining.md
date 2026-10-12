@@ -55,10 +55,10 @@ join(id: Identifier, member: Member) : returns (member: Member)
 ## Queries
 
 ```queries
-_isContext(id: Identifier) : one (isContext: Boolean)
+_isContext(id: Identifier) : one (isContext: Flag)
     Returns true if a context with this id exists
 
-_isMember(id: Identifier, member: Member) : one (isMember: Boolean)
+_isMember(id: Identifier, member: Member) : one (isMember: Flag)
     Returns true if a context with this id exists and the context has this member
 
 _getName(id: Identifier) : one (name: String)

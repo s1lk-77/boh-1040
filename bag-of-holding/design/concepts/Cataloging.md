@@ -88,6 +88,6 @@ _get(catalog: Catalog, entry: Entry, feature: Feature) : one (value: Value)
 _getFeatures(catalog: Catalog) : many (feature: Feature)
     Returns all feature associated with this catalog, or nothing if catalog does not exist
 
-_exists(catalog: Catalog, entry: Entry) : one (exists: Boolean)
+_exists(catalog: Catalog, entry: Entry) : one (exists: Flag)
     Returns true if catalog exists and entry is in catalog, false otherwise
 ```
