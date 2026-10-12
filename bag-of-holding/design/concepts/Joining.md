@@ -33,7 +33,7 @@ a set of Contexts with
 create(id: Identifier, name: String) : returns (context: Context)
     where context with id already exists
     then
-        refuses ALREADY_EXISTS "That id is already in use."
+        refuses DUPLICATE_CONTEXT "That id is already in use."
     where context with id does not exist
     then
         add a new context with the given id and name, and no Members
@@ -45,7 +45,7 @@ join(id: Identifier, member: Member) : returns (member: Member)
         refuses NO_SUCH_CONTEXT "The given id is not a context"
     where context with id exists and has member
     then
-        refuses ALREADY_A_MEMBER "Cannot add a member that is already in the context"
+        refuses DUPLICATE_MEMBER "Cannot add a member that is already in the context"
     where context with id exists and has member
     then
         adds member to the context with id
