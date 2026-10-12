@@ -38,10 +38,11 @@ uniquify(context: Context, suffix: Suffix) : returns (key: Key)
         add a new key with the given context and suffix
         returns key
 
-delete(context: Context, suffix: Suffix)
+delete(context: Context, suffix: Suffix) : returns (key: Key)
     where key with context and suffix exists
     then
         remove key
+        returns key
     where key with context and suffix does not exist
     then
         refuses DOES_NOT_EXIST "Key does not exist"
@@ -50,10 +51,10 @@ delete(context: Context, suffix: Suffix)
 ## Queries
 
 ```queries
-_getKey(context: Context, suffix: Suffix) : returns (key Key)
+_getKey(context: Context, suffix: Suffix) : one (key: Key)
     Returns the key with context and suffix, or nothing if key does not exist.
 
-_getValue(key: Key) : returns (context: Context, suffix: Suffix)
+_getValue(key: Key) : one (context: Context, suffix: Suffix)
     Returns the suffix and context of this key, or nothing if key does not exist.
 
 ```

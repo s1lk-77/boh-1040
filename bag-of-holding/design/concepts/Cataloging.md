@@ -26,6 +26,7 @@ external Value
 ```state
 a set of Catalogs with
     a name String
+    a default Value
     a set of Features
     a set of Entries
 
@@ -40,36 +41,39 @@ a set of Bindings with
 ## Actions
 
 ```actions
-catalog(name: String, features: Features) : (catalog: Catalog)
+catalog(name: String, features: Features, default: Value) : returns (catalog: Catalog)
     where a catalog with name exists
     then
         refuses ALREADY_EXISTS "Catalog with this name already exists"
     where a catalog with name does not exist
     then
-        add a new catalog with name, the given set of features, and no entries
+        add a new catalog with name, the given set of features, the default value, and no entries
+        returns catalog
 
-log(catalog: Catalog, entry: Entry, bindings: {feature: Feature, value: Value}[]) : returns (entry: Entry)
-    where catalog exists and entry does not exist in catalog and the features in bindings match this catalog's features
+addEntry(catalog: Catalog, entry: Entry) : returns (entry: Entry)
+    where catalog exists and entry not in catalog
     then
-        add a new binding with feature and value for each object in bindings and add this binding to this entry
-        add this entry to the catalog
-        return entry
-    where catalog does not exist or entry exists in catalog or the features in bindings do not match this catalog's features
+        add a new entry to this catalog
+        add a new binding to the entry with the catalog's default value for each feature in this catalog
+        returns entry
+    where catalog does not exist or entry in catalog
     then
-        refuses FAILED_LOG "Could not add entry to catalog"
+        refuses FAILED "failed to add entry to catalog"
 
 update(catalog: Catalog, entry: Entry, feature: Feature, value: Value) : returns (entry: Entry)
     where catalog exists and entry exists in catalog and feature is in this catalog's features
     then
         for this entry's binding with this feature, replace the binding's value with this value
+        returns entry
     where catalog does not exist or entry does not exist in catalog or feature is not in catalog
     then
         refuses FAILED_UPDATE "Could not update catalog entry"
 
-delete(catalog: Catalog, entry: Entry)
+delete(catalog: Catalog, entry: Entry) : returns (entry: Entry)
     where catalog exists and entry exists in catalog
     then
         remove this entry
+        returns entry
     where catalog does not exist or entry does not exist in catalog
     then
         refuses FAILED_DELETIE "Could not delete entry from catalog"
@@ -78,9 +82,12 @@ delete(catalog: Catalog, entry: Entry)
 ## Queries
 
 ```queries
-_get(catalog: Catalog, entry: Entry) : returns (entry Entry, {feature: Feature, value: Value}[])
-    Returns the entry and the features and values of its bindings as an array of features and values, or nothing if catalog doesn't exist or entry does not exist in catalog
+_get(catalog: Catalog, entry: Entry, feature: Feature) : one (value: Value)
+    Returns the value of entry's feature in this catalog, or nothing if catalog does not exist or entry not in catalog or feature not in catalog
 
-_exists(catalog: Catalog, entry: Entry) : returns (exists: Boolean)
+_getFeatures(catalog: Catalog) : many (feature: Feature)
+    Returns all feature associated with this catalog, or nothing if catalog does not exist
+
+_exists(catalog: Catalog, entry: Entry) : one (exists: Boolean)
     Returns true if catalog exists and entry is in catalog, false otherwise
 ```

@@ -28,49 +28,53 @@ a set of Owners with
 ## Actions
 
 ```actions
-make(owner: Owner)
+make(owner: Owner) : returns (owner: Owner)
     where owner does not exist
     then
         add a new owner with an no items
+        returns owner
     where owner already exists
     then
         refuses ALREADY_EXISTS "Owner already exists"
 
-add(owner: Owner, item: Item)
+add(owner: Owner, item: Item) : returns (item: Item)
     where owner does not exist
     then
         refuses DOES_NOT_EXIST "Owner does not exist"
     where owner exists and does not have item
     then
         add item to owner
+        returns item
     where owner exists and has item
     then
         refuses ALREADY_EXISTS "Owner already owns item"
 
-remove(owner: Owner, item: Item)
+remove(owner: Owner, item: Item) : returns (item: Item)
     where owner does not exist
     then
         refuses DOES_NOT_EXIST "Owner does not exist"
     where owner exists and has item
     then
         remove item from owner
+        returns item
     where owner exists and does not have item
     then
-        refuses DOES_NOT_EXIST "Owner does not own item"
+        refuses FAILED "Owner does not own item"
 
-delete(owner: Owner)
+delete(owner: Owner) : returns (owner: Owner)
     where owner does not exist
     then
         refuses DOES_NOT_EXIST "Owner does not exist"
     where owner exists
     then
         remove owner
+        returns owner
 ```
 
 ## Queries
 
 ```queries
-_owns(owner: Owner, item: Item) : returns (isOwner Boolean)
+_owns(owner: Owner, item: Item) : one (isOwner: Boolean)
     Returns true if owner exists and owns item, false otherwise
 
 _getAll(owner: Owner) : many (items: Item)
