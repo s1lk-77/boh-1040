@@ -82,8 +82,8 @@ delete(catalog: Catalog, entry: Entry) : returns (entry: Entry)
 ## Queries
 
 ```queries
-_get(catalog: Catalog, entry: Entry, feature: Feature) : one (value: Value)
-    Returns the value of entry's feature in this catalog, or nothing if catalog does not exist or entry not in catalog or feature not in catalog
+_get(catalog: Catalog, entry: Entry) : many (feature: Feature, value: Value)
+    Returns objects of features and values in all bindings of the entry, or no objects if catalog or entry does not exist
 
 _getFeatures(catalog: Catalog) : many (feature: Feature)
     Returns all feature associated with this catalog, or nothing if catalog does not exist
