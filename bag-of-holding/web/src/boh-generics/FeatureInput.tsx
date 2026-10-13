@@ -35,6 +35,8 @@ const FeatureInput = ({ feature, onChange, ...props }: FeatureInputProps) => {
           w="100%"
           placeholder={`${feature.name}...`}
           value={value}
+          autosize
+          minRows={4}
           onChange={changeHandler}
         />
       ) : (
