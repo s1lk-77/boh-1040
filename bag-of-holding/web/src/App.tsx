@@ -32,9 +32,9 @@ function AppContent() {
       <Box w="100vw" h="100dvh" pos="relative">
         <Routes>
           <Route index element={<HomePage />} />
-          <Route path="portal" element={<GMLoginPage />} />
-          <Route path="demiplane/:gameCode" element={<GMPage />} />
-          <Route path="bag/:bagId" element={<PlayerPage />} />
+          <Route path="/portal" element={<GMLoginPage />} />
+          <Route path="/demiplane/:gameCode" element={<GMPage />} />
+          <Route path="/bag/:bagId" element={<PlayerPage />} />
         </Routes>
       </Box>
     </Suspense>

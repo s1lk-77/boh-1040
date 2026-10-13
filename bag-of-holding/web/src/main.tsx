@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { BrowserRouter } from "react-router";
+import { HashRouter } from "react-router";
 import { createRoot } from "react-dom/client";
 import { ClientProvider } from "./ClientProvider";
 
@@ -9,10 +9,10 @@ import "@mantine/core/styles.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <ClientProvider>
         <App />
       </ClientProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
 );

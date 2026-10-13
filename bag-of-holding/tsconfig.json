@@ -20,6 +20,7 @@
     "web",
     "generated.config.ts",
     "generated",
-    "declarations.d.ts"
+    "declarations.d.ts",
+    "shared"
   ]
 }

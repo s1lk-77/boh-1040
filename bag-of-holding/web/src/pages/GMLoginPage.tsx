@@ -3,7 +3,7 @@ import CenterLayout from "../components/CenterLayout";
 import { useState, useCallback, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../ClientProvider";
-import { GAME_CODE_REGEX } from "../constants";
+import { GAME_CODE_REGEX } from "../../../shared/constants";
 
 /**
  * The GM login page
@@ -83,7 +83,7 @@ function GMLoginPage() {
         </Stack>
         <Group>
           <Button>README</Button>
-          <Button onClick={openPlayerView}>I'm a GM</Button>
+          <Button onClick={openPlayerView}>I'm a player</Button>
         </Group>
       </Stack>
     </CenterLayout>

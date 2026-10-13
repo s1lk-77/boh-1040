@@ -1,6 +1,7 @@
 import { endpoint, receive, respond } from "@mit-sdg/sync-engine/boundary";
 import { where } from "@mit-sdg/sync-engine/language";
 import { concepts } from "../concepts.ts";
+import { ABIL_FEATURES, BASE_FEATURES } from "../../shared/constants.ts";
 
 const { Naming, Joining, Inventorying, Cataloging } = concepts;
 
@@ -11,7 +12,7 @@ const Start = endpoint("/portal/start", () =>
       .then(
         Cataloging.catalog({
           name: "abils",
-          features: ["myDesc", "myEffect", "myName"],
+          features: BASE_FEATURES.concat(ABIL_FEATURES).map((f) => f.name),
           default_: "",
         }).responds({ catalog: "abils" }),
       )

@@ -1,7 +1,7 @@
 import { useClient } from "../ClientProvider";
 import { useState, useCallback, type ChangeEvent } from "react";
 import { Button, Stack, Group, Input, Title, Text } from "@mantine/core";
-import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../constants";
+import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../../../shared/constants";
 import { useNavigate } from "react-router";
 import CenterLayout from "../components/CenterLayout";
 
