@@ -17,5 +17,5 @@ instantiate Naming with
 
 instantiate Joining with
     Identifier is GameCode
-    Member is Naming.Key
+    Member is Name
 ```
