@@ -10,9 +10,16 @@
     "skipLibCheck": true,
     "jsx": "react-jsx",
     "types": ["bun", "node"],
+    "noUncheckedSideEffectImports": true,
     "paths": {
       "@design/*": ["./design/*"]
     }
   },
-  "include": ["src", "web", "generated.config.ts", "generated"]
+  "include": [
+    "src",
+    "web",
+    "generated.config.ts",
+    "generated",
+    "declarations.d.ts"
+  ]
 }
