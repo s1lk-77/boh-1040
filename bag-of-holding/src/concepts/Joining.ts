@@ -48,7 +48,7 @@ export class JoiningConcept {
     }
 
     try {
-      this.contexts.insertOne({ identifier: id, name, members: [] });
+      await this.contexts.insertOne({ identifier: id, name, members: [] });
     } catch (error) {
       if (error instanceof MongoServerError && error.code === 11000) {
         throw new DuplicateContext("Key already exists.");
