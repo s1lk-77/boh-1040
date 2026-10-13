@@ -1,7 +1,7 @@
-import { Suspense, lazy, useEffect, useRef } from "react";
+import { Suspense, lazy, useCallback, useEffect, useRef } from "react";
 import { Route, Routes } from "react-router";
 import { Box, MantineProvider } from "@mantine/core";
-import { useClient } from "./ClientProvider";
+import { type BoHClient, useClient } from "./ClientProvider";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GMLoginPage = lazy(() => import("./pages/GMLoginPage"));
@@ -15,10 +15,16 @@ function AppContent() {
   // call the application start endpoint
   const startedRef = useRef<boolean>(false);
   const client = useClient();
+
+  const start = useCallback(async (client: BoHClient) => {
+    await client["/portal/start"]({});
+    startedRef.current = true;
+    console.log("Demiplane located");
+  }, []);
+
   useEffect(() => {
     if (client === null || startedRef.current) return;
-    client["/portal/start"]({});
-    startedRef.current = true;
+    start(client);
   }, [client]);
 
   return (
