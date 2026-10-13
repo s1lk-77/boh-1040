@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Box } from "@mantine/core";
-import CenterLayout from "./centerLayout";
+import CenterLayout from "./CenterLayout";
+
+// TODO CITE MIT STEP PSims FOR PROVIDING THIS CODE
 
 interface MobileViewportProps {
   children: ReactNode;

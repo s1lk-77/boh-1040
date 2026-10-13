@@ -1,7 +1,6 @@
 import { MongoServerError, WithId, type Collection, type Db } from "mongodb";
 
 export class BadCatalogOperation extends Error {}
-export class BadCatalogQuery extends Error {}
 
 interface Catalog {
   name: string;
@@ -153,19 +152,26 @@ export class CatalogingConcept {
 
   /* ******* Queries ******** */
 
-  public async _isCatalog(name: string): Promise<{ isCatalog: boolean }> {
+  public async _isCatalog({
+    name,
+  }: {
+    name: string;
+  }): Promise<{ isCatalog: boolean }> {
     return { isCatalog: (await this.catalogs.countDocuments({ name })) > 0 };
   }
 
-  public async _get(
-    catalog: string,
-    entry: string,
-  ): Promise<{ feature: string; value: string }[]> {
+  public async _get({
+    catalog,
+    entry,
+  }: {
+    catalog: string;
+    entry: string;
+  }): Promise<{ feature: string; value: string }[]> {
     const catalogObj: WithId<Catalog> | null = await this.catalogs.findOne({
       name: catalog,
     });
     if (!catalogObj) {
-      throw new BadCatalogOperation();
+      return [];
     }
 
     const thisEntry = catalogObj.entries.find((e) => e.entry === entry);
@@ -175,15 +181,18 @@ export class CatalogingConcept {
     return thisEntry.bindings;
   }
 
-  public async _exists(
-    catalog: string,
-    entry: string,
-  ): Promise<{ exists: boolean }> {
+  public async _exists({
+    catalog,
+    entry,
+  }: {
+    catalog: string;
+    entry: string;
+  }): Promise<{ exists: boolean }> {
     const catalogObj: WithId<Catalog> | null = await this.catalogs.findOne({
       name: catalog,
     });
     if (!catalogObj) {
-      throw new BadCatalogOperation();
+      return { exists: false };
     }
 
     return { exists: catalogObj.entries.some((e) => e.entry === entry) };

@@ -1,8 +1,6 @@
 import { MongoServerError, WithId, type Collection, type Db } from "mongodb";
 
 export class BadInventoryOperation extends Error {}
-export class BadInventoryQuery extends Error {}
-export class InventoryNotFound extends Error {}
 
 interface Inventory {
   owner: string;
@@ -112,23 +110,17 @@ export class InventoryingConcept {
       owner,
     });
     if (!inventory) {
-      throw new BadInventoryQuery();
+      return { owns: false };
     }
     return { owns: inventory.items.includes(item) };
   }
 
-  async _getAll({
-    owner,
-    item,
-  }: {
-    owner: string;
-    item: string;
-  }): Promise<{ item: string }[]> {
+  async _getAll({ owner }: { owner: string }): Promise<{ item: string }[]> {
     const inventory: WithId<Inventory> | null = await this.inventories.findOne({
       owner,
     });
     if (!inventory) {
-      throw new BadInventoryQuery();
+      return [];
     }
     return inventory.items.map((thisItem) => {
       return { item: thisItem };

@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Center, type CenterProps } from "@mantine/core";
 
+// TODO CITE MIT STEP PSims FOR PROVIDING THIS CODE
+
 interface CenterLayoutProps extends CenterProps {
   asOverlay?: boolean;
   fullWidth?: boolean;

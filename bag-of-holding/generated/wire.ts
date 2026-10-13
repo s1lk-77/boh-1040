@@ -13,35 +13,58 @@ export type Json = null | boolean | number | string | Json[] | { [key: string]: 
 export type AppWideError = never;
 
 export type BoHWire = {
+  "/edit/add-entry": {
+    input: {
+      "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["add"]>[0], ["owner"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
+      "lookup": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>]>>;
+    };
+    output: {
+      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["add"]>[0], ["owner"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
+    };
+    error: { error: AppWideError | "ALREADY_EXISTS" | "BAD_CATALOG_OP" | "BAD_INVENTORY_OP" | "INVALID_INPUT" };
+  };
+  "/edit/update-entry": {
+    input: {
+      "feature": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["feature"]>>;
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "value": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["value"]>>;
+    };
+    output: {
+      "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["entry"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>>, ["entry"]>]>>;
+    };
+    error: { error: AppWideError | "ALREADY_EXISTS" | "BAD_CATALOG_OP" | "INVALID_INPUT" };
+  };
   "/portal/create-game": {
     input: {
-      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["create"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>]>>;
+      "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>[0], ["owner"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>>, ["owner"]>]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>]>>;
       "gameName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["create"]>[0], ["name"]>>;
     };
     output: {
-      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["create"]>[0], ["id"]>>;
+      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>[0], ["owner"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>>, ["owner"]>]>>;
     };
-    error: { error: AppWideError | "DUPLICATE_CONTEXT" | "DUPLICATE_KEY" | "INVALID_INPUT" };
+    error: { error: AppWideError | "BAD_INVENTORY_OP" | "DUPLICATE_CONTEXT" | "DUPLICATE_KEY" | "INVALID_INPUT" };
   };
   "/portal/open-bag": {
     input: {
-      "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>, AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["member"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>]>>;
     };
     output: {
-      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["member"]>>;
     };
-    error: { error: AppWideError | "ALREADY_EXISTS" | "DUPLICATE_MEMBER" | "INVALID_INPUT" | "NO_SUCH_CONTEXT" };
+    error: { error: AppWideError | "ALREADY_EXISTS" | "BAD_INVENTORY_OP" | "DUPLICATE_MEMBER" | "INVALID_INPUT" | "NO_SUCH_CONTEXT" };
   };
   "/portal/reopen-bag": {
     input: {
-      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>>;
     };
     output: {
-      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>>;
     };
     error: { error: AppWideError | "DOES_NOT_EXIST" | "INVALID_INPUT" | "NO_SUCH_CONTEXT" };
   };
@@ -54,40 +77,68 @@ export type BoHWire = {
     };
     error: { error: AppWideError | "INVALID_INPUT" | "NO_SUCH_CONTEXT" };
   };
+  "/portal/start": {
+    input: Record<string, never>;
+    output: Record<string, never>;
+    error: { error: AppWideError | "BAD_CATALOG_OP" };
+  };
 };
 
 export type HttpAppWideError = never;
 
 export type BoHWireHttp = {
+  "/edit/add-entry": {
+    input: {
+      "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["add"]>[0], ["owner"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
+      "lookup": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>]>>;
+    };
+    output: {
+      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["add"]>[0], ["owner"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
+    };
+    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" };
+  };
+  "/edit/update-entry": {
+    input: {
+      "feature": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["feature"]>>;
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "value": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["value"]>>;
+    };
+    output: {
+      "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["entry"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>>, ["entry"]>]>>;
+    };
+    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" };
+  };
   "/portal/create-game": {
     input: {
-      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["create"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>]>>;
+      "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>[0], ["owner"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>>, ["owner"]>]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>]>>;
       "gameName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["create"]>[0], ["name"]>>;
     };
     output: {
-      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["create"]>[0], ["id"]>>;
+      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>[0], ["owner"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>>, ["owner"]>]>>;
     };
     error: { error: HttpAppWideError | "CONFLICT" | "INTERNAL_ERROR" | "INVALID_REQUEST" };
   };
   "/portal/open-bag": {
     input: {
-      "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>, AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["member"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>]>>;
     };
     output: {
-      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["id"]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["join"]>[0], ["member"]>>;
     };
     error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" | "NOT_FOUND" };
   };
   "/portal/reopen-bag": {
     input: {
-      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>>;
     };
     output: {
-      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
-      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>>;
     };
     error: { error: HttpAppWideError | "INVALID_REQUEST" | "NOT_FOUND" };
   };
@@ -99,5 +150,10 @@ export type BoHWireHttp = {
       "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>>;
     };
     error: { error: HttpAppWideError | "INVALID_REQUEST" | "NOT_FOUND" };
+  };
+  "/portal/start": {
+    input: Record<string, never>;
+    output: Record<string, never>;
+    error: { error: HttpAppWideError | "CONFLICT" };
   };
 };

@@ -1,9 +1,12 @@
 import { assemble } from "@mit-sdg/sync-engine/assembly";
-import { portalCmp } from "./compositions/Portal.ts";
-import { NamingConcept } from "./concepts/Naming.ts";
-import { JoiningConcept } from "./concepts/Joining.ts";
-import { applicationConceptSet } from "./concepts.ts";
-import { db } from "./db.ts";
+import { portalCmp } from "./compositions/Portal";
+import { editCmp } from "./compositions/Edit";
+import { NamingConcept } from "./concepts/Naming";
+import { JoiningConcept } from "./concepts/Joining";
+import { InventoryingConcept } from "./concepts/Inventorying";
+import { CatalogingConcept } from "./concepts/Cataloging";
+import { applicationConceptSet } from "./concepts";
+import { db } from "./db";
 
 export function assembleApplication() {
   return assemble({
@@ -11,8 +14,10 @@ export function assembleApplication() {
     instances: {
       Naming: new NamingConcept(db),
       Joining: new JoiningConcept(db),
+      Inventorying: new InventoryingConcept(db),
+      Cataloging: new CatalogingConcept(db),
     },
-    composition: { Portal: portalCmp },
+    composition: { Portal: portalCmp, Edit: editCmp },
     rawFaultReporter: ({ error }) => console.error(error),
   });
 }

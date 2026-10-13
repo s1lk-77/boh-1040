@@ -35,36 +35,30 @@ make(owner: Owner) : returns (owner: Owner)
         returns owner
     where owner already exists
     then
-        refuses ALREADY_EXISTS "Owner already exists"
+        refuses BAD_INVENTORY_OP "Owner already exists"
 
 add(owner: Owner, item: Item) : returns (item: Item)
-    where owner does not exist
-    then
-        refuses DOES_NOT_EXIST "Owner does not exist"
     where owner exists and does not have item
     then
         add item to owner
         returns item
-    where owner exists and has item
+    where owner does not exist or owner has this item
     then
-        refuses ALREADY_EXISTS "Owner already owns item"
+        refuses BAD_INVENTORY_OP "Owner already owns item"
 
 remove(owner: Owner, item: Item) : returns (item: Item)
-    where owner does not exist
-    then
-        refuses DOES_NOT_EXIST "Owner does not exist"
     where owner exists and has item
     then
         remove item from owner
         returns item
-    where owner exists and does not have item
+    where owner does not exist or owner exists and does not have item
     then
-        refuses FAILED "Owner does not own item"
+        refuses BAD_INVENTORY_OP "Owner does not own item"
 
 delete(owner: Owner) : returns (owner: Owner)
     where owner does not exist
     then
-        refuses DOES_NOT_EXIST "Owner does not exist"
+        refuses BAD_INVENTORY_OP "Owner does not exist"
     where owner exists
     then
         remove owner
@@ -74,9 +68,9 @@ delete(owner: Owner) : returns (owner: Owner)
 ## Queries
 
 ```queries
-_owns(owner: Owner, item: Item) : one (isOwner: Flag)
+_owns(owner: Owner, item: Item) : one (owns: Flag)
     Returns true if owner exists and owns item, false otherwise
 
-_getAll(owner: Owner) : many (items: Item)
+_getAll(owner: Owner) : many (item: Item)
     Returns all items owned by owner, or no items if owner does not exist
 ```

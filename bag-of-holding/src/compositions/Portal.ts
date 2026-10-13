@@ -1,15 +1,27 @@
 import { endpoint, receive, respond } from "@mit-sdg/sync-engine/boundary";
-import {
-  each,
-  form,
-  former,
-  where,
-  no,
-  is,
-} from "@mit-sdg/sync-engine/language";
+import { where } from "@mit-sdg/sync-engine/language";
 import { concepts } from "../concepts.ts";
 
-const { Naming, Joining } = concepts;
+const { Naming, Joining, Inventorying, Cataloging } = concepts;
+
+// generate abils catalog on start
+const Start = endpoint("/portal/start", () =>
+  receive({}).then(
+    where(Cataloging._isCatalog({ name: "abils" }).is({ isCatalog: false }))
+      .then(
+        Cataloging.catalog({
+          name: "abils",
+          features: ["myDesc", "myEffect", "myName"],
+          default_: "",
+        }).responds({ catalog: "abils" }),
+      )
+      .then(respond({}))
+      .named("abilsAdded"),
+    where(Cataloging._isCatalog({ name: "abils" }).is({ isCatalog: true }))
+      .then(respond({}))
+      .named("abilsVerified"),
+  ),
+);
 
 // endpoint for player joining a game
 const Join = endpoint(
@@ -23,7 +35,12 @@ const Join = endpoint(
         }),
       )
         .then(Joining.join({ id: gameCode, member: playerName }))
-        .then(Naming.uniquify({ context: gameCode, suffix: playerName }))
+        .then(
+          Naming.uniquify({ context: gameCode, suffix: playerName }).responds({
+            key: pid,
+          }),
+        )
+        .then(Inventorying.make({ owner: pid }).responds({ owner: pid }))
         .then(respond({ gameCode, playerName }))
         .named("openedBag"),
       where(Joining._isContext({ id: gameCode }).is({ isContext: false }))
@@ -83,6 +100,9 @@ const Create = endpoint(
             name: gameName,
           }),
         )
+        .then(
+          Inventorying.make({ owner: gameCode }).responds({ owner: gameCode }),
+        )
         .then(respond({ gameCode }))
         .named("gameCode"),
       where(Joining._isContext({ id: gameCode }).is({ isContext: true }))
@@ -111,4 +131,4 @@ const Reopen = endpoint(
   },
 );
 
-export const portalCmp = { Join, Rejoin, Create, Reopen };
+export const portalCmp = { Join, Rejoin, Create, Reopen, Start };

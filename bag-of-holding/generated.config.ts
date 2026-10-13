@@ -11,6 +11,7 @@ export default {
     documents: [
       new URL("./design/types.md", import.meta.url),
       new URL("./design/compositions/Portal.md", import.meta.url),
+      new URL("./design/compositions/Edit.md", import.meta.url),
     ],
   },
   projections: [httpWire({ policy, name: "BoHWireHttp" })],

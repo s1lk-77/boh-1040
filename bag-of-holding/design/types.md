@@ -8,6 +8,9 @@ concrete GameCode
 
 concrete Name
     The name a player types in when creating a bag for themself or a lookup code.
+
+concrete AnyString
+    A collection of valid strings
 ```
 
 ```instances
@@ -18,4 +21,13 @@ instantiate Naming with
 instantiate Joining with
     Identifier is GameCode
     Member is Name
+
+instantiate Inventorying with
+    Owner is AnyString
+    Item is Naming.Key
+
+instantiate Cataloging with
+    Entry is Naming.Key
+    Feature is AnyString
+    Value is AnyString
 ```

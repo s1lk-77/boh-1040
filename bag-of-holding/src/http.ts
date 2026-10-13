@@ -8,5 +8,7 @@ export const policy = httpPolicy({
     DUPLICATE_CONTEXT: "CONFLICT",
     ALREADY_EXISTS: "CONFLICT",
     NO_SUCH_CONTEXT: "NOT_FOUND",
+    BAD_INVENTORY_OP: "CONFLICT",
+    BAD_CATALOG_OP: "CONFLICT",
   },
 });

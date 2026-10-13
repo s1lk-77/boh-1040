@@ -1,5 +1,5 @@
 import { Stack, Text, Title, Input, Button, Group } from "@mantine/core";
-import CenterLayout from "../components/centerLayout";
+import CenterLayout from "../components/CenterLayout";
 import { useState, useCallback, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../ClientProvider";

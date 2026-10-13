@@ -3,7 +3,7 @@ import { useState, useCallback, type ChangeEvent } from "react";
 import { Button, Stack, Group, Input, Title, Text } from "@mantine/core";
 import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../constants";
 import { useNavigate } from "react-router";
-import CenterLayout from "../components/centerLayout";
+import CenterLayout from "../components/CenterLayout";
 
 /**
  * The home page of the app.

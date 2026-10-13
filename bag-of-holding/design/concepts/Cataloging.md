@@ -41,10 +41,10 @@ a set of Bindings with
 ## Actions
 
 ```actions
-catalog(name: String, features: Features, default: Value) : returns (catalog: Catalog)
+catalog(name: String, features: Features, default_: Value) : returns (catalog: Catalog)
     where a catalog with name exists
     then
-        refuses ALREADY_EXISTS "Catalog with this name already exists"
+        refuses BAD_CATALOG_OP "Catalog with this name already exists"
     where a catalog with name does not exist
     then
         add a new catalog with name, the given set of features, the default value, and no entries
@@ -58,7 +58,7 @@ addEntry(catalog: Catalog, entry: Entry) : returns (entry: Entry)
         returns entry
     where catalog does not exist or entry in catalog
     then
-        refuses FAILED "failed to add entry to catalog"
+        refuses BAD_CATALOG_OP "failed to add entry to catalog"
 
 update(catalog: Catalog, entry: Entry, feature: Feature, value: Value) : returns (entry: Entry)
     where catalog exists and entry exists in catalog and feature is in this catalog's features
@@ -67,7 +67,7 @@ update(catalog: Catalog, entry: Entry, feature: Feature, value: Value) : returns
         returns entry
     where catalog does not exist or entry does not exist in catalog or feature is not in catalog
     then
-        refuses FAILED "Could not update catalog entry"
+        refuses BAD_CATALOG_OP "Could not update catalog entry"
 
 delete(catalog: Catalog, entry: Entry) : returns (entry: Entry)
     where catalog exists and entry exists in catalog
@@ -76,13 +76,13 @@ delete(catalog: Catalog, entry: Entry) : returns (entry: Entry)
         returns entry
     where catalog does not exist or entry does not exist in catalog
     then
-        refuses FAILED "Could not delete entry from catalog"
+        refuses BAD_CATALOG_OP "Could not delete entry from catalog"
 ```
 
 ## Queries
 
 ```queries
-_isCatalog(name: string): one (isCatalog: Flag)
+_isCatalog(name: String): one (isCatalog: Flag)
     Returns true iff a catalog with this name exists else false
 
 _get(catalog: Catalog, entry: Entry) : many (feature: Feature, value: Value)
