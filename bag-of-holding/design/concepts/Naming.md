@@ -38,7 +38,7 @@ uniquify(context: Context, suffix: Suffix) : returns (key: Key)
         add a new key with the given context and suffix
         returns key
 
-delete(context: Context, suffix: Suffix) : returns (key: Key)
+delete(key: Key) : returns (key: Key)
     where key with context and suffix exists
     then
         remove key

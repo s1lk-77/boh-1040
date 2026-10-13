@@ -40,7 +40,7 @@ export class JoiningConcept {
   }: {
     id: string;
     name: string;
-  }): Promise<{ id: string }> {
+  }): Promise<{ context: string }> {
     // set up the index
     if (!this.indexed) {
       this.contexts.createIndex({ identifier: 1 });
@@ -56,7 +56,7 @@ export class JoiningConcept {
       throw error;
     }
 
-    return { id };
+    return { context: id };
   }
 
   /**
@@ -65,7 +65,13 @@ export class JoiningConcept {
    * @param member the member to add
    * @returns the member if the add was successful
    */
-  async join({ id, member }: { id: string; member: string }): Promise<string> {
+  async join({
+    id,
+    member,
+  }: {
+    id: string;
+    member: string;
+  }): Promise<{ member: string }> {
     const contextObj: WithId<Context> | null = await this.contexts.findOne({
       identifier: id,
     });
@@ -87,7 +93,7 @@ export class JoiningConcept {
       { _id: contextObj._id },
       { $set: { members: newMembers } },
     );
-    return member;
+    return { member };
   }
 
   /* ******* Queries ******* */
@@ -97,10 +103,12 @@ export class JoiningConcept {
    * @param id
    * @returns true iff id is a context
    */
-  async _isContext({ id }: { id: string }): Promise<boolean> {
-    return (
-      (await this.contexts.countDocuments({ identifier: id }, { limit: 1 })) > 0
-    );
+  async _isContext({ id }: { id: string }): Promise<{ isContext: boolean }> {
+    return {
+      isContext:
+        (await this.contexts.countDocuments({ identifier: id }, { limit: 1 })) >
+        0,
+    };
   }
 
   /**
@@ -115,16 +123,16 @@ export class JoiningConcept {
   }: {
     id: string;
     member: string;
-  }): Promise<boolean> {
+  }): Promise<{ isMember: boolean }> {
     const contextObj: Context | null = await this.contexts.findOne({
       identifier: id,
     });
 
     if (contextObj === null) {
-      return false;
+      return { isMember: false };
     }
 
-    return contextObj.members.includes(member);
+    return { isMember: contextObj.members.includes(member) };
   }
 
   /**
@@ -133,15 +141,15 @@ export class JoiningConcept {
    * @param id the context
    * @returns its name, if it exists, else null
    */
-  async _getName({ id }: { id: string }): Promise<string | null> {
+  async _getName({ id }: { id: string }): Promise<{ name: string | null }> {
     const contextObj: Context | null = await this.contexts.findOne({
       identifier: id,
     });
 
     if (contextObj === null) {
-      return null;
+      return { name: null };
     }
 
-    return contextObj.name;
+    return { name: contextObj.name };
   }
 }

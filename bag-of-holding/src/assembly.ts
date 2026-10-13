@@ -12,7 +12,7 @@ export function assembleApplication() {
       Naming: new NamingConcept(db),
       Joining: new JoiningConcept(db),
     },
-    composition: {},
+    composition: { Portal: portalCmp },
     rawFaultReporter: ({ error }) => console.error(error),
   });
 }

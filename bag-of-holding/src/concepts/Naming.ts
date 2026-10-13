@@ -48,7 +48,7 @@ export class NamingConcept {
   }: {
     context: string;
     suffix: string;
-  }): Promise<string> {
+  }): Promise<{ key: string }> {
     // set up indexing if not already
     if (!this.indexed) {
       await this.keys.createIndex({ context: 1, suffix: 1 }, { unique: true });
@@ -65,7 +65,7 @@ export class NamingConcept {
       }
       throw error;
     }
-    return key;
+    return { key };
   }
 
   /**
@@ -76,12 +76,12 @@ export class NamingConcept {
    * @returns a promise of a key
    * @throws error if this key does not exist
    */
-  async delete(key: string): Promise<string> {
+  async delete({ key }: { key: string }): Promise<{ key: string }> {
     const result: DeleteResult = await this.keys.deleteOne({ _id: key });
     if (result.deletedCount === 0) {
       throw new DoesNotExist("Cannot delete non existent key");
     }
-    return key;
+    return { key };
   }
 
   /* ******* Queries ******* */
@@ -98,12 +98,12 @@ export class NamingConcept {
   }: {
     context: string;
     suffix: string;
-  }): Promise<string | null> {
+  }): Promise<{ key: string | null }> {
     const keyObj: Key | null = await this.keys.findOne({ context, suffix });
     if (keyObj !== null) {
-      return keyObj._id;
+      return { key: keyObj._id };
     } else {
-      return null;
+      return { key: null };
     }
   }
 
@@ -116,12 +116,12 @@ export class NamingConcept {
     key,
   }: {
     key: string;
-  }): Promise<{ context: string; suffix: string } | null> {
+  }): Promise<{ context: string | null; suffix: string | null }> {
     const keyObj: Key | null = await this.keys.findOne({ _id: key });
     if (keyObj !== null) {
       return { context: keyObj.context, suffix: keyObj.suffix };
     } else {
-      return null;
+      return { context: null, suffix: null };
     }
   }
 }

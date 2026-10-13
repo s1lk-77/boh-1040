@@ -15,7 +15,7 @@ const Join = endpoint(
       )
         .then(
           Naming.uniquify({ context: gameCode, suffix: playerName }).responds({
-            pid,
+            key: pid,
           }),
         )
         .then(Joining.join({ id: gameCode, member: pid }))
@@ -23,10 +23,10 @@ const Join = endpoint(
         .named("openBag"),
       where()
         .then(respond({ error: "NO_SUCH_CONTEXT" }))
-        .named("refused"),
+        .named("gameNotFound"),
       where()
         .then(respond({ error: "DUPLICATE_MEMBER" }))
-        .named("refused"),
+        .named("playerAlreadyExists"),
     ),
   {
     input: { required: ["gameCode", "playerName"] },
@@ -46,10 +46,10 @@ const Rejoin = endpoint(
         .named("reopenBag"),
       where(no(Joining._isContext({ id: gameCode })))
         .then(respond({ error: "NO_SUCH_CONTEXT" }))
-        .named("refused"),
+        .named("gameNotFound"),
       where(no(Naming._getKey({ context: gameCode, suffix: playerName })))
         .then(respond({ error: "DOES_NOT_EXIST" }))
-        .named("refused"),
+        .named("playerNotFound"),
     ),
   {
     input: { required: ["gameCode", "playerName"] },
@@ -65,7 +65,7 @@ const Create = endpoint(
         .then(
           Joining.create({
             id: gameCode,
-            name: gameName ?? gameCode,
+            name: gameName,
           }).responds({}),
         )
         .then(respond({ gameCode }))
@@ -75,7 +75,7 @@ const Create = endpoint(
         .named("refused"),
     ),
   {
-    input: { required: ["gameCode"] },
+    input: { required: ["gameCode", "gameName"] }, // how do I do an optional key?
   },
 );
 
