@@ -28,7 +28,7 @@ function AppContent() {
           <Route index element={<HomePage />} />
           <Route path="portal" element={<GMLoginPage />} />
           <Route path="demiplane" element={<GMPage />} />
-          <Route path="bag" element={<PlayerPage />} />
+          <Route path="bag/:bagId" element={<PlayerPage />} />
         </Routes>
       </Box>
     </Suspense>
