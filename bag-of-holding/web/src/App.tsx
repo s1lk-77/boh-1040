@@ -1,16 +1,7 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useRef } from "react";
 import { Route, Routes } from "react-router";
 import { Box, MantineProvider } from "@mantine/core";
-// import { Box, MantineProvider } from '@mantine/core';
-// import { DatesProvider } from '@mantine/dates';
-// import { ModalsProvider } from '@mantine/modals';
-// import { Notifications } from '@mantine/notifications';
-
-// import ErrorBoundary from './ErrorBoundary';
-// import { LoadingScreen } from './components';
-// import { contextModals, theme } from './mantine';
-
-// import './App.css';
+import { useClient } from "./ClientProvider";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GMLoginPage = lazy(() => import("./pages/GMLoginPage"));
@@ -21,6 +12,15 @@ const PlayerPage = lazy(() => import("./pages/PlayerPage"));
  * The main application content component that handles routing and renders the appropriate page component.
  */
 function AppContent() {
+  // call the application start endpoint
+  const startedRef = useRef<boolean>(false);
+  const client = useClient();
+  useEffect(() => {
+    if (client === null || startedRef.current) return;
+    client["/portal/start"]({});
+    startedRef.current = true;
+  }, [client]);
+
   return (
     <Suspense fallback={<div></div>}>
       <Box w="100vw" h="100dvh" pos="relative">
