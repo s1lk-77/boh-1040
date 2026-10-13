@@ -25,7 +25,7 @@ external Value
 
 ```state
 a set of Catalogs with
-    a name String
+    a unique name String
     a default Value
     a set of Features
     a set of Entries
@@ -67,7 +67,7 @@ update(catalog: Catalog, entry: Entry, feature: Feature, value: Value) : returns
         returns entry
     where catalog does not exist or entry does not exist in catalog or feature is not in catalog
     then
-        refuses FAILED_UPDATE "Could not update catalog entry"
+        refuses FAILED "Could not update catalog entry"
 
 delete(catalog: Catalog, entry: Entry) : returns (entry: Entry)
     where catalog exists and entry exists in catalog
@@ -76,17 +76,17 @@ delete(catalog: Catalog, entry: Entry) : returns (entry: Entry)
         returns entry
     where catalog does not exist or entry does not exist in catalog
     then
-        refuses FAILED_DELETIE "Could not delete entry from catalog"
+        refuses FAILED "Could not delete entry from catalog"
 ```
 
 ## Queries
 
 ```queries
+_isCatalog(name: string): one (isCatalog: Flag)
+    Returns true iff a catalog with this name exists else false
+
 _get(catalog: Catalog, entry: Entry) : many (feature: Feature, value: Value)
     Returns objects of features and values in all bindings of the entry, or no objects if catalog or entry does not exist
-
-_getFeatures(catalog: Catalog) : many (feature: Feature)
-    Returns all feature associated with this catalog, or nothing if catalog does not exist
 
 _exists(catalog: Catalog, entry: Entry) : one (exists: Flag)
     Returns true if catalog exists and entry is in catalog, false otherwise
