@@ -1,11 +1,12 @@
-import { Input, Group, Button, type GroupProps } from "@mantine/core";
+import { Input, Flex, Button, type FlexProps } from "@mantine/core";
 import { useCallback, useRef, useState } from "react";
 import { useClient } from "../ClientProvider";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
+import { Send } from "lucide-react";
 
-interface SearchBarProps extends GroupProps {
+interface SearchBarProps extends FlexProps {
   onSuccess: (value: BaseCard) => void;
   gameCode: string;
   playerName: string;
@@ -57,13 +58,13 @@ const SearchBar = ({
   };
 
   return (
-    <Group
+    <Flex
       {...props}
       w={STANDARD_FRAME_WIDTH}
       bg="white"
       bd="2px solid black"
       py="lg"
-      px="sm"
+      pl="sm"
     >
       <Input
         flex={1}
@@ -76,8 +77,10 @@ const SearchBar = ({
         }}
         onKeyDown={handleKeyDown}
       />
-      <Button onClick={onSubmit}>Find</Button>
-    </Group>
+      <Button onClick={onSubmit} h="auto" c="black" bg="white">
+        <Send />
+      </Button>
+    </Flex>
   );
 };
 

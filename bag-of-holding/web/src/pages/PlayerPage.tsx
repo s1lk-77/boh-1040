@@ -21,9 +21,12 @@ function PlayerPage() {
   const playerName: string | undefined = bagId?.split("@")[0];
 
   const [gameName, setGameName] = useState<string | null>(null);
-  const [page, setPage] = useState<PlayerPage>("display");
+  const [page, setPage] = useState<PlayerPage>("home");
   const [searching, setSearching] = useState<boolean>(false);
+
+  const init = { MYlookup: "1", MYname: "2" };
   const [cards, setCards] = useState<BaseCard[]>([]);
+  const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
 
   /**
    * Loads game name
@@ -61,23 +64,44 @@ function PlayerPage() {
     loadCompendium();
   }, []);
 
-  const display = useCallback((lookup: string) => {
-    console.log(`${lookup}`);
-  }, []);
+  const display = useCallback(
+    (lookup: string) => {
+      console.log(`lookup is ${lookup}`);
+      const card: BaseCard | undefined = cards.find(
+        (c) => c.MYlookup === lookup,
+      );
+      if (!card) {
+        console.error("card not found");
+        return;
+      }
+      setSelectedCard(card);
+      setPage("display");
+    },
+    [cards],
+  );
+
+  useEffect(() => {
+    console.log("cards", cards);
+  }, [cards]);
 
   return (
     <MobileViewport>
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
-        <Flex direction="column" align="center">
-          <Title my={0}>{gameName}</Title>
-          {page === "home" && <Text my={0}>{playerName}</Text>}
-        </Flex>
+        <Text>MIT Assassins' Guild</Text>
+        {page === "home" && (
+          <Flex direction="column" align="center">
+            <Title order={1} my={0} size="h2">
+              {gameName}
+            </Title>
+            <Text my={0}>{playerName}</Text>
+          </Flex>
+        )}
         {page === "home" && <Catalog entries={cards} onDisplay={display} />}
         {page === "display" && (
           <Display
             gameName={gameName ?? "Moonrise"}
             playerName={playerName ?? "silvanvs"}
-            card={cards[0]}
+            card={selectedCard ?? cards[0] ?? init}
             showToolBar={!searching}
           />
         )}
@@ -91,7 +115,11 @@ function PlayerPage() {
             }}
           />
         )}
-        <NavBar toggleSearch={() => setSearching(!searching)} />
+        <NavBar
+          toggleSearch={() => setSearching(!searching)}
+          goHome={() => setPage("home")}
+          showHome={page !== "home"}
+        />
       </Stack>
     </MobileViewport>
   );

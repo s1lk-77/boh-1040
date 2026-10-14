@@ -1,4 +1,4 @@
-export interface BaseCard {
+export interface BaseCard extends Record<string, string> {
   MYname: string;
   MYlookup: string;
 }

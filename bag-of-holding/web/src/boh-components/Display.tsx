@@ -16,15 +16,21 @@ interface DisplayProps {
 const Display = ({
   gameName,
   playerName,
+  card,
   showToolBar = true,
 }: DisplayProps) => {
-  const [flipped, setFlipped] = useState<boolean>(true);
+  const [flipped, setFlipped] = useState<boolean>(false);
   return (
     <Stack w={STANDARD_FRAME_WIDTH} flex={1} mih={0}>
       {flipped ? (
-        <CardBack gameName={gameName} />
+        <CardBack gameName={gameName} card={card} />
       ) : (
-        <CardFront owned gameName={gameName} playerName={playerName} />
+        <CardFront
+          owned
+          gameName={gameName}
+          playerName={playerName}
+          card={card}
+        />
       )}
       {showToolBar && (
         <Group justify="space-between" align="center" h="15%" wrap="nowrap">

@@ -2,13 +2,19 @@ import { Stack, Title, Text, ScrollArea } from "@mantine/core";
 import Card from "./Card";
 import { SMALL_FRAME_WIDTH } from "../../../shared/constants";
 import { formatDate } from "../utilities";
+import { BaseCard } from "../../../shared/types";
 
 interface CardBackProps {
   heading?: string;
   gameName: string;
+  card: BaseCard;
 }
 
-const CardBack = ({ heading = "Ability Effect", gameName }: CardBackProps) => {
+const CardBack = ({
+  heading = "Ability Effect",
+  gameName,
+  card,
+}: CardBackProps) => {
   const today: Date = new Date();
   const cardType = "Ability Card";
   const tr = "Not Transferable";
@@ -28,7 +34,7 @@ const CardBack = ({ heading = "Ability Effect", gameName }: CardBackProps) => {
         bd="1px solid black"
       >
         <Stack mih="100%" align="center" justify="center" h="100%">
-          <Text>Just a short description</Text>
+          <Text>{!card.MYeffect ? "-" : card.MYeffect}</Text>
         </Stack>
       </ScrollArea>
     </Card>

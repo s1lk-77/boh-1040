@@ -3,6 +3,7 @@ import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
+import { Filter } from "lucide-react";
 
 interface CatalogProps {
   entries: BaseCard[];
@@ -19,8 +20,8 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
       mih={0}
     >
       <Group p="xs" fw="bold" ta="center">
-        <Text>Heading</Text>
-        <Input placeholder="filter..." />
+        <Filter />
+        <Input placeholder="type to filter..." />
       </Group>
       <Divider size="sm" mb={0} color="black" aria-hidden />
       <ScrollArea
