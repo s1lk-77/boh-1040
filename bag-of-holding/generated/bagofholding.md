@@ -153,6 +153,22 @@ Former "the abil compendium" — inputs (pid); bindings (entry, feature, value);
 
 ## Reactions
 
+### Collect.Print:alreadyFound
+
+Authored path: `Collect.Print`.
+- Covered by [Collect](../design/compositions/Collect.md), line 3.
+- Covered by [Collect](../design/compositions/Collect.md), line 6.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/collect/print", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: lookup) has (key: entry)
+  Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
+  Inventorying._owns (item: entry, owner: pid) has (owns: true)
+then
+  RequestBoundary.respond (error: "BAD_INVENTORY_OP", msg: "alreadyFound", requestId)
+```
+
 ### Collect.Print:found
 
 Authored path: `Collect.Print`.
@@ -165,6 +181,7 @@ where
   Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
   Naming._getKey (context: gameCode, suffix: lookup) has (key: entry)
   Inventorying._owns (item: entry, owner: gameCode) has (owns: true)
+  Inventorying._owns (item: entry, owner: pid) has (owns: false)
 then
   Inventorying.add (item: entry, owner: pid)
 ```

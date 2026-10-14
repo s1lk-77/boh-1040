@@ -38,6 +38,7 @@ const Print = endpoint(
           key: entry,
         }),
         Inventorying._owns({ owner: gameCode, item: entry }).is({ owns: true }),
+        Inventorying._owns({ owner: pid, item: entry }).is({ owns: false }),
       )
         .then(Inventorying.add({ owner: pid, item: entry }))
         .then(respond({ abil: Card({ entry }) }))
@@ -66,6 +67,19 @@ const Print = endpoint(
       )
         .then(respond({ error: "BAD_INVENTORY_OP", msg: "noSuchAbil" }))
         .named("noSuchAbil"),
+      where(
+        Naming._getKey({ context: gameCode, suffix: lookup }).is({
+          key: entry,
+        }),
+        Naming._getKey({ context: gameCode, suffix: playerName }).is({
+          key: pid,
+        }),
+        Inventorying._owns({ owner: pid, item: entry }).is({
+          owns: true,
+        }),
+      )
+        .then(respond({ error: "BAD_INVENTORY_OP", msg: "alreadyFound" }))
+        .named("alreadyFound"),
     ),
   {
     input: { required: ["gameCode", "playerName", "lookup"] },

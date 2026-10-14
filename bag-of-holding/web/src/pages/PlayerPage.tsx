@@ -2,12 +2,13 @@ import { useParams } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
 import { useCallback, useEffect, useState } from "react";
-import { Stack, Title } from "@mantine/core";
+import { Stack, Title, Text } from "@mantine/core";
 import Catalog from "../boh-components/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
 import SearchBar from "../boh-components/SearchBar";
 import { BaseCard } from "../../../shared/types";
+import { unwrapCard } from "../utilities";
 
 /**
  * The player home page.
@@ -21,13 +22,11 @@ function PlayerPage() {
   const [gameName, setGameName] = useState<string | null>(null);
   const [page, setPage] = useState<PlayerPage>("home");
   const [searching, setSearching] = useState<boolean>(false);
+  const [cards, setCards] = useState<BaseCard[]>([]);
 
-  const hardCode: BaseCard[] = [
-    { MYname: "a1", MYlookup: "123" },
-    { MYname: "a2", MYlookup: "234923" },
-  ];
-  const [entries, setEntries] = useState<BaseCard[]>(hardCode);
-
+  /**
+   * Loads game name
+   */
   const loadName = useCallback(async () => {
     if (!client || gameCode === undefined) return;
     const res = await client["/portal/name"]({ gameCode });
@@ -38,8 +37,27 @@ function PlayerPage() {
     setGameName(res.gameName);
   }, [gameCode, client]);
 
+  /**
+   * Loads the player's compendium
+   */
+  const loadCompendium = useCallback(async () => {
+    if (!client || gameCode === undefined || playerName === undefined) return;
+    const res = await client["/collect/production"]({ gameCode, playerName });
+    if ("error" in res) {
+      console.error("could not load compendium");
+      return;
+    }
+    const rawCards = res.abils.cards;
+    console.log("raw cards are", rawCards);
+    const mappedCards: BaseCard[] = rawCards
+      .map((raw) => unwrapCard(raw.card))
+      .filter((card) => card !== undefined);
+    setCards([...cards, ...mappedCards]);
+  }, [gameCode, playerName, client]);
+
   useEffect(() => {
     loadName();
+    loadCompendium();
   }, []);
 
   const display = useCallback((lookup: string) => {
@@ -50,13 +68,14 @@ function PlayerPage() {
     <MobileViewport>
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
         <Title>{gameName}</Title>
-        <Catalog entries={entries} onDisplay={display} />
+        <Text>{playerName}</Text>
+        <Catalog entries={cards} onDisplay={display} />
         {searching && (
           <SearchBar
             gameCode={gameCode ?? "moonrise"}
             playerName={playerName ?? "silvanvs"}
             onSuccess={(card: BaseCard) => {
-              setEntries([...entries, card]);
+              setCards([...cards, card]);
             }}
           />
         )}

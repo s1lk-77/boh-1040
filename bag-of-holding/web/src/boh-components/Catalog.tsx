@@ -1,4 +1,4 @@
-import { Divider, Stack, ScrollArea, Text, Group, Input } from "@mantine/core";
+import { Divider, Flex, ScrollArea, Text, Group, Input } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
@@ -11,12 +11,18 @@ interface CatalogProps {
 
 const Catalog = ({ entries, onDisplay }: CatalogProps) => {
   return (
-    <Stack bd="solid black 3px" w={STANDARD_FRAME_WIDTH} flex={1} mih={0}>
+    <Flex
+      direction="column"
+      bd="solid black 3px"
+      w={STANDARD_FRAME_WIDTH}
+      flex={1}
+      mih={0}
+    >
       <Group p="xs" fw="bold" ta="center">
         <Text>Heading</Text>
         <Input placeholder="filter..." />
       </Group>
-      <Divider size="sm" color="black" aria-hidden />
+      <Divider size="sm" mb={0} color="black" aria-hidden />
       <ScrollArea
         flex={1}
         type="auto"
@@ -32,7 +38,7 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
           </Fragment>
         ))}
       </ScrollArea>
-    </Stack>
+    </Flex>
   );
 };
 
