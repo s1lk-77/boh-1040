@@ -116,7 +116,143 @@ Concrete types:
 - `GameCode` — [Application types](../design/types.md), line 6.
 - `Name` — [Application types](../design/types.md), line 9.
 
+## Formers
+
+_Formers name result shapes evaluated when asked. The source former owns_
+_the authored explanation; this section records the generated shape._
+
+### the abil card
+
+Authored path: `Collect.Card`.
+- Covered by [Collect](../design/compositions/Collect.md), line 15.
+
+```former
+Former "the abil card" — inputs (entry); bindings (feature, value); promises exactly one record — forms:
+  a record of
+    card: each Cataloging._get (catalog: "abils", entry) has (feature, value)
+      form a record of
+        feature
+        value
+```
+
+### the abil compendium
+
+Authored path: `Collect.Compendium`.
+- Covered by [Collect](../design/compositions/Collect.md), line 15.
+
+```former
+Former "the abil compendium" — inputs (pid); bindings (entry, feature, value); promises exactly one record — forms:
+  a record of
+    cards: each Inventorying._getAll (owner: pid) has (item: entry)
+      form a record of
+        card: each Cataloging._get (catalog: "abils", entry) has (feature, value)
+          form a record of
+            feature
+            value
+```
+
 ## Reactions
+
+### Collect.Print:found
+
+Authored path: `Collect.Print`.
+- Covered by [Collect](../design/compositions/Collect.md), line 3.
+- Covered by [Collect](../design/compositions/Collect.md), line 6.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/collect/print", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
+  Naming._getKey (context: gameCode, suffix: lookup) has (key: entry)
+  Inventorying._owns (item: entry, owner: gameCode) has (owns: true)
+then
+  Inventorying.add (item: entry, owner: pid)
+```
+
+### Collect.Print:found#2
+
+Authored path: `Collect.Print`.
+- Covered by [Collect](../design/compositions/Collect.md), line 3.
+- Covered by [Collect](../design/compositions/Collect.md), line 6.
+
+```reaction
+when Inventorying.add (item: entry, owner: pid), asked by Collect.Print:found
+where
+  earlier, RequestBoundary.request (gameCode, lookup, path: "/collect/print", playerName, requestId)
+then
+  RequestBoundary.respond (abil: former "the abil card" with (entry), requestId)
+```
+
+### Collect.Print:noKey
+
+Authored path: `Collect.Print`.
+- Covered by [Collect](../design/compositions/Collect.md), line 3.
+- Covered by [Collect](../design/compositions/Collect.md), line 6.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/collect/print", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: lookup) has (key: null)
+then
+  RequestBoundary.respond (error: "DOES_NOT_EXIST", msg: "noKey", requestId)
+```
+
+### Collect.Print:noPlayer
+
+Authored path: `Collect.Print`.
+- Covered by [Collect](../design/compositions/Collect.md), line 3.
+- Covered by [Collect](../design/compositions/Collect.md), line 6.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/collect/print", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: playerName) has (key: null)
+then
+  RequestBoundary.respond (error: "DOES_NOT_EXIST", msg: "noPlayer", requestId)
+```
+
+### Collect.Print:noSuchAbil
+
+Authored path: `Collect.Print`.
+- Covered by [Collect](../design/compositions/Collect.md), line 3.
+- Covered by [Collect](../design/compositions/Collect.md), line 6.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/collect/print", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: lookup) has (key: entry)
+  Inventorying._owns (item: entry, owner: gameCode) has (owns: false)
+then
+  RequestBoundary.respond (error: "BAD_INVENTORY_OP", msg: "noSuchAbil", requestId)
+```
+
+### Collect.Production:collected
+
+Authored path: `Collect.Production`.
+- Covered by [Collect](../design/compositions/Collect.md), line 9.
+- Covered by [Collect](../design/compositions/Collect.md), line 12.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/collect/production", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
+then
+  RequestBoundary.respond (abils: former "the abil compendium" with (pid), requestId)
+```
+
+### Collect.Production:noPlayer
+
+Authored path: `Collect.Production`.
+- Covered by [Collect](../design/compositions/Collect.md), line 9.
+- Covered by [Collect](../design/compositions/Collect.md), line 12.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/collect/production", playerName, requestId)
+where
+  Naming._getKey (context: gameCode, suffix: playerName) has (key: null)
+then
+  RequestBoundary.respond (error: "DOES_NOT_EXIST", msg: "noPlayer", requestId)
+```
 
 ### DeliverFaultToAsker
 
@@ -520,6 +656,8 @@ object or lacks a required key. The response uses `INVALID_INPUT` and names
 the path or missing key. A declared default fills an absent key. Endpoints
 not listed here have no explicit input contract.
 
+- `/collect/print` — requires `gameCode`, `playerName`, `lookup`
+- `/collect/production` — requires `gameCode`, `playerName`
 - `/edit/add-entry` — requires `gameCode`, `lookup`
 - `/edit/update-entry` — requires `gameCode`, `lookup`, `feature`, `value`
 - `/portal/create-game` — requires `gameCode`, `gameName`

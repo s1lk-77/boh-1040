@@ -1,6 +1,7 @@
 import { assemble } from "@mit-sdg/sync-engine/assembly";
 import { portalCmp } from "./compositions/Portal";
 import { editCmp } from "./compositions/Edit";
+import { collectCmp } from "./compositions/Collect";
 import { NamingConcept } from "./concepts/Naming";
 import { JoiningConcept } from "./concepts/Joining";
 import { InventoryingConcept } from "./concepts/Inventorying";
@@ -17,7 +18,7 @@ export function assembleApplication() {
       Inventorying: new InventoryingConcept(db),
       Cataloging: new CatalogingConcept(db),
     },
-    composition: { Portal: portalCmp, Edit: editCmp },
+    composition: { Portal: portalCmp, Edit: editCmp, Collect: collectCmp },
     rawFaultReporter: ({ error }) => console.error(error),
   });
 }

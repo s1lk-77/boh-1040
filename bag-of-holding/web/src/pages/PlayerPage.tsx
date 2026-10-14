@@ -15,6 +15,7 @@ function PlayerPage() {
   const client = useClient();
   const { bagId } = useParams();
   const gameCode: string | undefined = bagId?.split("@")[1];
+  const playerName: string | undefined = bagId?.split("@")[0];
 
   const [gameName, setGameName] = useState<string | null>(null);
   const [page, setPage] = useState<PlayerPage>("home");
@@ -48,7 +49,13 @@ function PlayerPage() {
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
         <Title>{gameName}</Title>
         <Catalog entries={hardCode} onDisplay={display} />
-        {searching && <SearchBar onSuccess={() => {}} />}
+        {searching && (
+          <SearchBar
+            gameCode={gameCode ?? "moonrise"}
+            playerName={playerName ?? "silvanvs"}
+            onSuccess={() => {}}
+          />
+        )}
         <NavBar toggleSearch={() => setSearching(!searching)} />
       </Stack>
     </MobileViewport>

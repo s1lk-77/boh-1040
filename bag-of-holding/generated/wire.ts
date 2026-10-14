@@ -14,6 +14,39 @@ export type Json = null | boolean | number | string | Json[] | { [key: string]: 
 export type AppWideError = never;
 
 export type BoHWire = {
+  "/collect/print": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+    };
+    output: {
+      "abil": {
+        "card": {
+          "feature": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["feature"]>>;
+          "value": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["value"]>>;
+        }[];
+      };
+    };
+    error: { error: AppWideError | "BAD_INVENTORY_OP" | "DOES_NOT_EXIST" | "INVALID_INPUT" };
+  };
+  "/collect/production": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+    };
+    output: {
+      "abils": {
+        "cards": {
+          "card": {
+            "feature": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["feature"]>>;
+            "value": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["value"]>>;
+          }[];
+        }[];
+      };
+    };
+    error: { error: AppWideError | "DOES_NOT_EXIST" | "INVALID_INPUT" };
+  };
   "/edit/add-entry": {
     input: {
       "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["add"]>[0], ["owner"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
@@ -97,6 +130,39 @@ export type BoHWire = {
 export type HttpAppWideError = never;
 
 export type BoHWireHttp = {
+  "/collect/print": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+    };
+    output: {
+      "abil": {
+        "card": {
+          "feature": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["feature"]>>;
+          "value": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["value"]>>;
+        }[];
+      };
+    };
+    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" | "NOT_FOUND" };
+  };
+  "/collect/production": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "playerName": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+    };
+    output: {
+      "abils": {
+        "cards": {
+          "card": {
+            "feature": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["feature"]>>;
+            "value": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["value"]>>;
+          }[];
+        }[];
+      };
+    };
+    error: { error: HttpAppWideError | "INVALID_REQUEST" | "NOT_FOUND" };
+  };
   "/edit/add-entry": {
     input: {
       "gameCode": Jsonify<OneOf<[AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["add"]>[0], ["owner"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["context"]>]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>]>>;
