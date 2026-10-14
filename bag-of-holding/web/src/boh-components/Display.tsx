@@ -11,6 +11,7 @@ interface DisplayProps {
   playerName: string;
   card: BaseCard;
   showToolBar?: boolean;
+  onIndex: (dir: -1 | 1) => void;
 }
 
 const Display = ({
@@ -18,6 +19,7 @@ const Display = ({
   playerName,
   card,
   showToolBar = true,
+  onIndex,
 }: DisplayProps) => {
   const [flipped, setFlipped] = useState<boolean>(false);
   return (
@@ -35,7 +37,7 @@ const Display = ({
       {showToolBar && (
         <Group justify="space-between" align="center" h="15%" wrap="nowrap">
           <Button h="auto" c="black" bg="white">
-            <ArrowLeft />
+            <ArrowLeft onClick={() => onIndex(-1)} />
           </Button>
           <Button
             h="auto"
@@ -51,7 +53,7 @@ const Display = ({
             </Flex>
           </Button>
           <Button h="auto" c="black" bg="white">
-            <ArrowRight />
+            <ArrowRight onClick={() => onIndex(1)} />
           </Button>
         </Group>
       )}

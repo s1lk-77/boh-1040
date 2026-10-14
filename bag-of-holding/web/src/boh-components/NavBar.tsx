@@ -24,14 +24,14 @@ const NavBar = ({
       <Button h="auto" c="black" bg="white">
         <Settings />
       </Button>
+      <Button onClick={toggleSearch} h="auto" c="black" bg="white">
+        <Search />
+      </Button>
       {showHome && (
         <Button h="auto" c="black" bg="white" onClick={goHome}>
           <Home />
         </Button>
       )}
-      <Button onClick={toggleSearch} h="auto" c="black" bg="white">
-        <Search />
-      </Button>
     </Group>
   );
 };

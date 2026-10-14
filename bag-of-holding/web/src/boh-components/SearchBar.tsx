@@ -67,6 +67,14 @@ const SearchBar = ({
       pl="sm"
     >
       <Input
+        styles={{
+          input: {
+            border: "2px solid black",
+            "&:focus": {
+              borderColor: "var(--mantine-color-grape-6)",
+            },
+          },
+        }}
         flex={1}
         placeholder="@..."
         value={value}

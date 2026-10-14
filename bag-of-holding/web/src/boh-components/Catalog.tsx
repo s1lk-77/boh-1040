@@ -21,7 +21,17 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
     >
       <Group p="xs" ta="center">
         <Filter />
-        <Input placeholder="type to filter..." />
+        <Input
+          placeholder="type to filter..."
+          styles={{
+            input: {
+              border: "2px solid black",
+              "&:focus": {
+                borderColor: "var(--mantine-color-grape-6)",
+              },
+            },
+          }}
+        />
       </Group>
       <Divider size="sm" mb={0} color="black" aria-hidden />
       <ScrollArea

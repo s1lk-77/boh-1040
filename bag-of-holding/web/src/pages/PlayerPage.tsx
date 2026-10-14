@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Flex, Stack, Title, Text } from "@mantine/core";
 import Catalog from "../boh-components/Catalog";
 import NavBar from "../boh-components/NavBar";
@@ -26,6 +26,7 @@ function PlayerPage() {
 
   const init = { MYlookup: "1", MYname: "2" };
   const [cards, setCards] = useState<BaseCard[]>([]);
+  const indexRef = useRef<number>(0);
   const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
 
   /**
@@ -67,22 +68,26 @@ function PlayerPage() {
   const display = useCallback(
     (lookup: string) => {
       console.log(`lookup is ${lookup}`);
-      const card: BaseCard | undefined = cards.find(
-        (c) => c.MYlookup === lookup,
-      );
-      if (!card) {
+      indexRef.current = cards.findIndex((c) => c.MYlookup === lookup);
+      if (indexRef.current === -1) {
         console.error("card not found");
         return;
       }
-      setSelectedCard(card);
+      setSelectedCard(cards[indexRef.current]);
       setPage("display");
     },
     [cards],
   );
 
-  useEffect(() => {
-    console.log("cards", cards);
-  }, [cards]);
+  const onIndex = useCallback(
+    (offset: -1 | 1) => {
+      const newIndex = indexRef.current + offset;
+      if (newIndex < 0 || newIndex >= cards.length) return;
+      indexRef.current = newIndex;
+      setSelectedCard(cards[newIndex]);
+    },
+    [cards],
+  );
 
   return (
     <MobileViewport>
@@ -103,6 +108,7 @@ function PlayerPage() {
             playerName={playerName ?? "silvanvs"}
             card={selectedCard ?? cards[0] ?? init}
             showToolBar={!searching}
+            onIndex={onIndex}
           />
         )}
 
