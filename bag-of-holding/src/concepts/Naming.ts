@@ -12,7 +12,7 @@ export class DoesNotExist extends Error {}
  * The internal Key interface
  */
 interface Key {
-  _id: string;
+  id: string;
   context: string;
   suffix: string;
 }
@@ -56,9 +56,9 @@ export class NamingConcept {
     }
 
     // data structure
-    const key: string = `${context}@${suffix}`;
+    const key: string = `${suffix}@${context}`;
     try {
-      await this.keys.insertOne({ _id: key, context, suffix });
+      await this.keys.insertOne({ id: key, context, suffix });
     } catch (error) {
       if (error instanceof MongoServerError && error.code === 11000) {
         throw new AlreadyExists("Key already exists.");
@@ -77,7 +77,7 @@ export class NamingConcept {
    * @throws error if this key does not exist
    */
   async delete({ key }: { key: string }): Promise<{ key: string }> {
-    const result: DeleteResult = await this.keys.deleteOne({ _id: key });
+    const result: DeleteResult = await this.keys.deleteOne({ id: key });
     if (result.deletedCount === 0) {
       throw new DoesNotExist("Cannot delete non existent key");
     }
@@ -101,7 +101,7 @@ export class NamingConcept {
   }): Promise<{ key: string | null }> {
     const keyObj: Key | null = await this.keys.findOne({ context, suffix });
     if (keyObj !== null) {
-      return { key: keyObj._id };
+      return { key: keyObj.id };
     } else {
       return { key: null };
     }
@@ -117,7 +117,7 @@ export class NamingConcept {
   }: {
     key: string;
   }): Promise<{ context: string | null; suffix: string | null }> {
-    const keyObj: Key | null = await this.keys.findOne({ _id: key });
+    const keyObj: Key | null = await this.keys.findOne({ id: key });
     if (keyObj !== null) {
       return { context: keyObj.context, suffix: keyObj.suffix };
     } else {

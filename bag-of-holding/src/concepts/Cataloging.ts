@@ -1,4 +1,10 @@
-import { MongoServerError, WithId, type Collection, type Db } from "mongodb";
+import {
+  MongoServerError,
+  WithId,
+  type Collection,
+  type Db,
+  type UpdateResult,
+} from "mongodb";
 
 export class BadCatalogOperation extends Error {}
 
@@ -76,6 +82,7 @@ export class CatalogingConcept {
     if (catalogObj.entries.some((e) => e.entry === entry)) {
       throw new BadCatalogOperation();
     }
+
     const newEntry: Entry = {
       entry,
       bindings: catalogObj.features.map((feature) => ({
@@ -84,7 +91,11 @@ export class CatalogingConcept {
       })),
     };
 
-    void this.catalogs.updateOne({ catalog }, { $push: { entries: newEntry } });
+    await this.catalogs.updateOne(
+      { name: catalog },
+      { $push: { entries: newEntry } },
+    );
+
     return { entry };
   }
 

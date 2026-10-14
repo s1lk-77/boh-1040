@@ -9,7 +9,7 @@ export interface Feature {
 }
 export const BASE_FEATURES: Readonly<Feature[]> = [
   { name: "MYlookup", isMultiline: false, required: true },
-  { name: "MYname", isMultiline: false, required: true },
+  { name: "MYname", isMultiline: false, required: false },
 ];
 export const ABIL_FEATURES: Readonly<Feature[]> = [
   { name: "MYtext", isMultiline: true, required: false },

@@ -60,7 +60,7 @@ const UpdateEntry = endpoint(
       where(
         Naming._getKey({ context: gameCode, suffix: lookup }).is({ key: null }),
       )
-        .then(respond({ error: "ALREADY_EXISTS" }))
+        .then(respond({ error: "DOES_NOT_EXIST" }))
         .named("refused"),
     ),
   {

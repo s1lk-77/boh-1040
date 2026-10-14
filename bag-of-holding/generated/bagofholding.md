@@ -247,7 +247,7 @@ when RequestBoundary.request (feature, gameCode, lookup, path: "/edit/update-ent
 where
   Naming._getKey (context: gameCode, suffix: lookup) has (key: null)
 then
-  RequestBoundary.respond (error: "ALREADY_EXISTS", requestId)
+  RequestBoundary.respond (error: "DOES_NOT_EXIST", requestId)
 ```
 
 ### Portal.Create:gameCode
@@ -468,7 +468,7 @@ when RequestBoundary.request (path: "/portal/start", requestId)
 where
   Cataloging._isCatalog (name: "abils") has (isCatalog: false)
 then
-  Cataloging.catalog (default_: "", features: ["myDesc", "myEffect", "myName"], name: "abils")
+  Cataloging.catalog (default_: "", features: ["MYlookup", "MYname", "MYtext", "MYeffect"], name: "abils")
 ```
 
 ### Portal.Start:abilsAdded#2
@@ -478,7 +478,7 @@ Authored path: `Portal.Start`.
 - Covered by [Portal](../design/compositions/Portal.md), line 6.
 
 ```reaction
-when Cataloging.catalog (default_: "", features: ["myDesc", "myEffect", "myName"], name: "abils", catalog: "abils"), asked by Portal.Start:abilsAdded
+when Cataloging.catalog (default_: "", features: ["MYlookup", "MYname", "MYtext", "MYeffect"], name: "abils", catalog: "abils"), asked by Portal.Start:abilsAdded
 where
   earlier, RequestBoundary.request (path: "/portal/start", requestId)
 then

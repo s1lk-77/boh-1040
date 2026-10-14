@@ -21,7 +21,7 @@ const FeatureInput = ({ feature, onChange, ...props }: FeatureInputProps) => {
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newValue = e.target.value;
       setValue(newValue);
-      onChange(value);
+      onChange(newValue);
     },
     [onChange],
   );

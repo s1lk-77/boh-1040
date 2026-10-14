@@ -34,7 +34,7 @@ export type BoHWire = {
     output: {
       "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["entry"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>>, ["entry"]>]>>;
     };
-    error: { error: AppWideError | "ALREADY_EXISTS" | "BAD_CATALOG_OP" | "INVALID_INPUT" };
+    error: { error: AppWideError | "BAD_CATALOG_OP" | "DOES_NOT_EXIST" | "INVALID_INPUT" };
   };
   "/portal/create-game": {
     input: {
@@ -108,7 +108,7 @@ export type BoHWireHttp = {
     output: {
       "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["entry"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>>, ["entry"]>]>>;
     };
-    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" };
+    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" | "NOT_FOUND" };
   };
   "/portal/create-game": {
     input: {

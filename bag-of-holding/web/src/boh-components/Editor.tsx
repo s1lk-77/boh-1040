@@ -1,19 +1,65 @@
-import { Button, Stack } from "@mantine/core";
+import { Button, Stack, Text } from "@mantine/core";
 import { Fragment } from "react/jsx-runtime";
 import FeatureInput from "../boh-generics/FeatureInput";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { type Feature } from "../../../shared/constants";
+import { useClient } from "../ClientProvider";
 
 interface EditorProps {
   features: Feature[];
+  gameCode: string;
 }
 
-const Editor = ({ features }: EditorProps) => {
+const Editor = ({ gameCode, features }: EditorProps) => {
+  const client = useClient();
+  const [log, setLog] = useState<string>("");
   const featuresRef = useRef<Record<string, string>>({});
 
   const OnFeatureChange = useCallback((feature: string, value: string) => {
     featuresRef.current[feature] = value;
+    setLog("");
   }, []);
+
+  const OnAdd = useCallback(async (): Promise<void> => {
+    if (!client) {
+      return;
+    }
+
+    // check required features
+    const outstanding = features.filter(
+      (feature) =>
+        feature.required &&
+        !(
+          feature.name in featuresRef.current ||
+          featuresRef.current[feature.name] === ""
+        ),
+    );
+    if (outstanding.length > 0) {
+      setLog("a required field is missing");
+      return;
+    }
+
+    // perform the add
+    const lookup = featuresRef.current["MYlookup"]!;
+    const addedEntry = await client["/edit/add-entry"]({ gameCode, lookup });
+    if ("error" in addedEntry) {
+      console.error("error adding entry");
+      return;
+    }
+
+    const updatedEntry = Promise.all(
+      Object.keys(featuresRef.current).map((key) =>
+        client["/edit/update-entry"]({
+          gameCode,
+          lookup,
+          feature: key,
+          value: featuresRef.current[key],
+        }),
+      ),
+    );
+    await updatedEntry;
+    console.log("entry updated", updatedEntry);
+  }, [features, client]);
 
   return (
     <Stack>
@@ -25,7 +71,8 @@ const Editor = ({ features }: EditorProps) => {
           />
         </Fragment>
       ))}
-      <Button>Add</Button>
+      <Text>{log}</Text>
+      <Button onClick={OnAdd}>Add</Button>
     </Stack>
   );
 };

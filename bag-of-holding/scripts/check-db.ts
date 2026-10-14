@@ -15,6 +15,19 @@ try {
   console.log(
     `Connected to ${db.databaseName}. It has ${await checks.countDocuments()} check(s).`,
   );
+  const catalogs = db.collection("cataloging.catalogs");
+  const catalogObj = await catalogs.findOne({ name: "abils" });
+  const games = db.collection("joining.contexts");
+  const gamesObj = await games.findOne({ identifier: "test1" });
+  const keysCollection = db.collection("naming.keys");
+  const keysObj = await keysCollection.findOne({});
+  const inventories = db.collection("inventorying.inventories");
+  const inventoryObj = await inventories.findOne({ owner: "test1" });
+  console.log(catalogObj);
+  console.log(catalogObj?.entries);
+  console.log(gamesObj);
+  console.log(keysObj);
+  console.log(inventoryObj);
 } catch (error) {
   console.error(`Could not reach MongoDB at ${url}`);
   console.error(error instanceof Error ? error.message : error);

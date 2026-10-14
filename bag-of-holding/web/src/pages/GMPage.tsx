@@ -21,7 +21,7 @@ function GMPage() {
         <Title>Demiplane: {gameCode}</Title>
         <Group flex={1} align="flex-start" w="70dvw">
           <Panel h="90%" flex={1}>
-            <Editor features={features} />
+            <Editor features={features} gameCode={gameCode!} />
           </Panel>
           <Panel h="90%" flex={1}>
             Placeholder
