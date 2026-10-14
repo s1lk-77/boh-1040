@@ -4,9 +4,12 @@ interface EntryProps {
   name: string;
   lookup: string;
   onClick: () => void;
+  desc?: string;
 }
 
-const Entry = ({ name, lookup, onClick }: EntryProps) => {
+const Entry = ({ name, lookup, onClick, desc = undefined }: EntryProps) => {
+  const resolvedDesc: string =
+    desc === undefined || desc === "" ? "no description text given" : desc;
   return (
     <Stack
       w="100%"
@@ -28,7 +31,9 @@ const Entry = ({ name, lookup, onClick }: EntryProps) => {
         <Title size="h3">{name}</Title>
         <Text>{"@" + lookup}</Text>
       </Group>
-      <Text px="sm">Lorem ipsum dolor sit amet</Text>
+      <Text truncate="end" px="sm">
+        {resolvedDesc}
+      </Text>
       <Divider size="sm" color="black" />
     </Stack>
   );

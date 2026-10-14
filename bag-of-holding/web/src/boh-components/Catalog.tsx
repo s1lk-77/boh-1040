@@ -28,15 +28,24 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
         type="auto"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
-        {entries.map((entry, i) => (
-          <Fragment key={`${entry}-${i}`}>
-            <Entry
-              name={entry.MYname}
-              lookup={entry.MYlookup}
-              onClick={() => onDisplay(entry.MYlookup)}
-            />
-          </Fragment>
-        ))}
+        {entries.map((entry, i) => {
+          const key = "MYtext";
+          let desc: string | undefined = undefined;
+          if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
+            desc = entry["MYtext"];
+          }
+
+          return (
+            <Fragment key={`${entry}-${i}`}>
+              <Entry
+                name={entry.MYname}
+                lookup={entry.MYlookup}
+                desc={desc}
+                onClick={() => onDisplay(entry.MYlookup)}
+              />
+            </Fragment>
+          );
+        })}
       </ScrollArea>
     </Flex>
   );
