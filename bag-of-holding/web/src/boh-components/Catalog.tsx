@@ -4,6 +4,7 @@ import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
 import { Filter } from "lucide-react";
+import { type ChangeEvent, useCallback, useState } from "react";
 
 interface CatalogProps {
   entries: BaseCard[];
@@ -11,6 +12,24 @@ interface CatalogProps {
 }
 
 const Catalog = ({ entries, onDisplay }: CatalogProps) => {
+  const [filter, setFilter] = useState<string>("");
+  const [filtered, setFiltered] = useState<BaseCard[]>(entries);
+
+  const onFilter = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      setFilter(newValue);
+      setFiltered(
+        entries.filter(
+          (c) =>
+            c.MYname.toLowerCase().includes(newValue.toLowerCase()) ||
+            c.MYtext?.toLowerCase().includes(newValue.toLowerCase()),
+        ),
+      );
+    },
+    [entries],
+  );
+
   return (
     <Flex
       direction="column"
@@ -23,6 +42,8 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
         <Filter />
         <Input
           placeholder="type to filter..."
+          value={filter}
+          onChange={onFilter}
           styles={{
             input: {
               border: "2px solid black",
@@ -40,7 +61,7 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         <Flex direction="column" align="center" gap="sm" mt="sm">
-          {entries.map((entry, i) => {
+          {filtered.map((entry, i) => {
             const key = "MYtext";
             let desc: string | undefined = undefined;
             if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
