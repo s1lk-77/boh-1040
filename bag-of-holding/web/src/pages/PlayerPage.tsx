@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
 import { useCallback, useEffect, useState } from "react";
-import { Stack, Title, Text } from "@mantine/core";
+import { Flex, Stack, Title, Text } from "@mantine/core";
 import Catalog from "../boh-components/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
@@ -67,8 +67,10 @@ function PlayerPage() {
   return (
     <MobileViewport>
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
-        <Title>{gameName}</Title>
-        <Text>{playerName}</Text>
+        <Flex direction="column" align="center">
+          <Title my={0}>{gameName}</Title>
+          <Text my={0}>{playerName}</Text>
+        </Flex>
         <Catalog entries={cards} onDisplay={display} />
         {searching && (
           <SearchBar
