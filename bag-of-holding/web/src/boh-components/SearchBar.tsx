@@ -1,17 +1,22 @@
-import { Input, Group, Button } from "@mantine/core";
+import { Input, Group, Button, type GroupProps } from "@mantine/core";
 import { useCallback, useRef, useState } from "react";
 import { useClient } from "../ClientProvider";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 
-interface SearchBarProps {
+interface SearchBarProps extends GroupProps {
   onSuccess: (value: BaseCard) => void;
   gameCode: string;
   playerName: string;
 }
 
-const SearchBar = ({ onSuccess, gameCode, playerName }: SearchBarProps) => {
+const SearchBar = ({
+  onSuccess,
+  gameCode,
+  playerName,
+  ...props
+}: SearchBarProps) => {
   const [value, setValue] = useState<string>("");
   const busyRef = useRef<boolean>(false);
   const [error, setError] = useState<boolean>(false);
@@ -53,9 +58,10 @@ const SearchBar = ({ onSuccess, gameCode, playerName }: SearchBarProps) => {
 
   return (
     <Group
+      {...props}
       w={STANDARD_FRAME_WIDTH}
       bg="white"
-      bd="3px solid black"
+      bd="2px solid black"
       py="lg"
       px="sm"
     >

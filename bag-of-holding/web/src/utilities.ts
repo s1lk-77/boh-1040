@@ -19,3 +19,16 @@ export const unwrapCard = (
   if (!("MYlookup" in card) || !("MYname" in card)) return undefined;
   return card as BaseCard;
 };
+
+/**
+ * Date formatter
+ * @param date date in typecsript date
+ * @returns formatted date!
+ */
+export const formatDate = (date: Date): string => {
+  return date.toLocaleDateString("en-US", {
+    month: "long", // "October"
+    day: "2-digit", // "14"
+    year: "numeric", // "2026"
+  });
+};

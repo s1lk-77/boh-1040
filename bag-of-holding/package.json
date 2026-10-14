@@ -7,6 +7,7 @@
     "@mantine/hooks": "^9.7.2",
     "@mit-sdg/sync-engine": "1.1.0",
     "@mit-sdg/sync-engine-http": "1.1.0",
+    "lucide-react": "^1.57.0",
     "mongodb": "^7.7.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

@@ -9,6 +9,7 @@ import { PlayerPage } from "../../../shared/constants";
 import SearchBar from "../boh-components/SearchBar";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
+import Display from "../boh-components/Display";
 
 /**
  * The player home page.
@@ -20,7 +21,7 @@ function PlayerPage() {
   const playerName: string | undefined = bagId?.split("@")[0];
 
   const [gameName, setGameName] = useState<string | null>(null);
-  const [page, setPage] = useState<PlayerPage>("home");
+  const [page, setPage] = useState<PlayerPage>("display");
   const [searching, setSearching] = useState<boolean>(false);
   const [cards, setCards] = useState<BaseCard[]>([]);
 
@@ -69,9 +70,18 @@ function PlayerPage() {
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
         <Flex direction="column" align="center">
           <Title my={0}>{gameName}</Title>
-          <Text my={0}>{playerName}</Text>
+          {page === "home" && <Text my={0}>{playerName}</Text>}
         </Flex>
-        <Catalog entries={cards} onDisplay={display} />
+        {page === "home" && <Catalog entries={cards} onDisplay={display} />}
+        {page === "display" && (
+          <Display
+            gameName={gameName ?? "Moonrise"}
+            playerName={playerName ?? "silvanvs"}
+            card={cards[0]}
+            showToolBar={!searching}
+          />
+        )}
+
         {searching && (
           <SearchBar
             gameCode={gameCode ?? "moonrise"}
