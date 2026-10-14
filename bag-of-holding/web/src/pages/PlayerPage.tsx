@@ -6,6 +6,7 @@ import { Stack, Title } from "@mantine/core";
 import Catalog from "../boh-components/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
+import SearchBar from "../boh-components/SearchBar";
 
 /**
  * The player home page.
@@ -17,6 +18,7 @@ function PlayerPage() {
 
   const [gameName, setGameName] = useState<string | null>(null);
   const [page, setPage] = useState<PlayerPage>("home");
+  const [searching, setSearching] = useState<boolean>(false);
 
   const loadName = useCallback(async () => {
     if (!client || gameCode === undefined) return;
@@ -46,7 +48,8 @@ function PlayerPage() {
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
         <Title>{gameName}</Title>
         <Catalog entries={hardCode} onDisplay={display} />
-        <NavBar />
+        {searching && <SearchBar onSuccess={() => {}} />}
+        <NavBar toggleSearch={() => setSearching(!searching)} />
       </Stack>
     </MobileViewport>
   );

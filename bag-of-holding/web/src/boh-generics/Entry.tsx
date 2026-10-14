@@ -26,7 +26,7 @@ const Entry = ({ name, lookup, onClick }: EntryProps) => {
     >
       <Group justify="space-between" px="sm">
         <Title size="h3">{name}</Title>
-        <Text>{lookup}</Text>
+        <Text>{"@" + lookup}</Text>
       </Group>
       <Text px="sm">Lorem ipsum dolor sit amet</Text>
       <Divider size="sm" color="black" />
