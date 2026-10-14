@@ -14,6 +14,22 @@ export type Json = null | boolean | number | string | Json[] | { [key: string]: 
 export type AppWideError = never;
 
 export type BoHWire = {
+  "/collect/admin": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>>;
+    };
+    output: {
+      "abils": {
+        "cards": {
+          "card": {
+            "feature": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["feature"]>>;
+            "value": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["value"]>>;
+          }[];
+        }[];
+      };
+    };
+    error: { error: AppWideError | "DOES_NOT_EXIST" | "INVALID_INPUT" };
+  };
   "/collect/print": {
     input: {
       "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
@@ -130,6 +146,22 @@ export type BoHWire = {
 export type HttpAppWideError = never;
 
 export type BoHWireHttp = {
+  "/collect/admin": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>>;
+    };
+    output: {
+      "abils": {
+        "cards": {
+          "card": {
+            "feature": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["feature"]>>;
+            "value": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Cataloging"]["_get"]>>>, ["value"]>>;
+          }[];
+        }[];
+      };
+    };
+    error: { error: HttpAppWideError | "INVALID_REQUEST" | "NOT_FOUND" };
+  };
   "/collect/print": {
     input: {
       "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;

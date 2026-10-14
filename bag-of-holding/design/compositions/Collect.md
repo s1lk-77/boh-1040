@@ -12,4 +12,12 @@ Player should be able to [see all the abils they own](reaction:Collect.Productio
 Collect.Production at /collect/production
 ```
 
-The [compendium](former:Collect.Compendium) collects a player's or game's abilities. The [card](former:Collect.Card) collects just one.
+GM should be able to [see all the abils in a game](reaction:Collect.Admin)
+
+```endpoints
+Collect.Admin at /collect/admin
+```
+
+The [card](former:Collect.Card) collects just one.
+
+The [compendium](former:Collect.Compendium) collects a player or a game's abilities.

@@ -2,7 +2,7 @@ import { endpoint, receive, respond } from "@mit-sdg/sync-engine/boundary";
 import { where, former, form, each } from "@mit-sdg/sync-engine/language";
 import { concepts } from "../concepts.ts";
 
-const { Naming, Cataloging, Inventorying } = concepts;
+const { Joining, Naming, Cataloging, Inventorying } = concepts;
 
 const Card = former("the abil card", ({ entry }, { feature, value }) =>
   form({
@@ -110,4 +110,28 @@ const Production = endpoint(
   },
 );
 
-export const collectCmp = { Card, Print, Compendium, Production };
+const Admin = endpoint(
+  "/collect/admin",
+  ({ gameCode }) =>
+    receive({ gameCode }).then(
+      where(
+        Joining._isContext({ id: gameCode }).is({
+          isContext: true,
+        }),
+      )
+        .then(respond({ abils: Compendium({ pid: gameCode }) }))
+        .named("collected"),
+      where(
+        Joining._isContext({ id: gameCode }).is({
+          isContext: false,
+        }),
+      )
+        .then(respond({ error: "DOES_NOT_EXIST", msg: "gameNotFound" }))
+        .named("gameNotFound"),
+    ),
+  {
+    input: { required: ["gameCode"] },
+  },
+);
+
+export const collectCmp = { Card, Print, Compendium, Production, Admin };

@@ -124,7 +124,7 @@ _the authored explanation; this section records the generated shape._
 ### the abil card
 
 Authored path: `Collect.Card`.
-- Covered by [Collect](../design/compositions/Collect.md), line 15.
+- Covered by [Collect](../design/compositions/Collect.md), line 21.
 
 ```former
 Former "the abil card" — inputs (entry); bindings (feature, value); promises exactly one record — forms:
@@ -138,7 +138,7 @@ Former "the abil card" — inputs (entry); bindings (feature, value); promises e
 ### the abil compendium
 
 Authored path: `Collect.Compendium`.
-- Covered by [Collect](../design/compositions/Collect.md), line 15.
+- Covered by [Collect](../design/compositions/Collect.md), line 23.
 
 ```former
 Former "the abil compendium" — inputs (pid); bindings (entry, feature, value); promises exactly one record — forms:
@@ -152,6 +152,34 @@ Former "the abil compendium" — inputs (pid); bindings (entry, feature, value);
 ```
 
 ## Reactions
+
+### Collect.Admin:collected
+
+Authored path: `Collect.Admin`.
+- Covered by [Collect](../design/compositions/Collect.md), line 15.
+- Covered by [Collect](../design/compositions/Collect.md), line 18.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/collect/admin", requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: true)
+then
+  RequestBoundary.respond (abils: former "the abil compendium" with (pid: gameCode), requestId)
+```
+
+### Collect.Admin:gameNotFound
+
+Authored path: `Collect.Admin`.
+- Covered by [Collect](../design/compositions/Collect.md), line 15.
+- Covered by [Collect](../design/compositions/Collect.md), line 18.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/collect/admin", requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: false)
+then
+  RequestBoundary.respond (error: "DOES_NOT_EXIST", msg: "gameNotFound", requestId)
+```
 
 ### Collect.Print:alreadyFound
 
@@ -673,6 +701,7 @@ object or lacks a required key. The response uses `INVALID_INPUT` and names
 the path or missing key. A declared default fills an absent key. Endpoints
 not listed here have no explicit input contract.
 
+- `/collect/admin` — requires `gameCode`
 - `/collect/print` — requires `gameCode`, `playerName`, `lookup`
 - `/collect/production` — requires `gameCode`, `playerName`
 - `/edit/add-entry` — requires `gameCode`, `lookup`
