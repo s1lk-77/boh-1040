@@ -2,9 +2,11 @@ import { Input, Group, Button } from "@mantine/core";
 import { useCallback, useRef, useState } from "react";
 import { useClient } from "../ClientProvider";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
+import { BaseCard } from "../../../shared/types";
+import { unwrapCard } from "../utilities";
 
 interface SearchBarProps {
-  onSuccess: (value: [string, string][]) => void;
+  onSuccess: (value: BaseCard) => void;
   gameCode: string;
   playerName: string;
 }
@@ -12,6 +14,7 @@ interface SearchBarProps {
 const SearchBar = ({ onSuccess, gameCode, playerName }: SearchBarProps) => {
   const [value, setValue] = useState<string>("");
   const busyRef = useRef<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const client = useClient();
 
   const onSubmit = useCallback(async () => {
@@ -29,7 +32,15 @@ const SearchBar = ({ onSuccess, gameCode, playerName }: SearchBarProps) => {
       lookup: value,
       playerName,
     });
+    if ("error" in res) {
+      console.error("could not find lookup");
+      setError(true);
+      return;
+    }
     console.log(res);
+    const card = unwrapCard(res.abil.card);
+    if (card) onSuccess(card);
+
     // unset busy flag
     busyRef.current = false;
   }, [gameCode, playerName, value]);
@@ -52,7 +63,11 @@ const SearchBar = ({ onSuccess, gameCode, playerName }: SearchBarProps) => {
         flex={1}
         placeholder="@..."
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        error={error}
+        onChange={(e) => {
+          if (error) setError(false);
+          setValue(e.target.value);
+        }}
         onKeyDown={handleKeyDown}
       />
       <Button onClick={onSubmit}>Find</Button>

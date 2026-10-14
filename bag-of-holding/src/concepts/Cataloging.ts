@@ -130,7 +130,7 @@ export class CatalogingConcept {
     thisBinding.value = value;
 
     void this.catalogs.updateOne(
-      { catalog, "entries.entry": entry },
+      { name: catalog, "entries.entry": entry },
       { $set: { "entries.$": thisEntry } },
     );
     return { entry };

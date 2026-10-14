@@ -7,7 +7,7 @@ import {
 } from "@mantine/core";
 import { type ChangeEvent, useCallback, useState } from "react";
 import { parseGametexName } from "../utilities";
-import { type Feature } from "../../../shared/constants";
+import { type Feature } from "../../../shared/types";
 
 interface FeatureInputProps extends TextProps {
   onChange: (value: string) => void;

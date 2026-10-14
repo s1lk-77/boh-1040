@@ -23,8 +23,10 @@ try {
   const keysObj = await keysCollection.findOne({});
   const inventories = db.collection("inventorying.inventories");
   const inventoryObj = await inventories.findOne({ owner: "test1" });
-  console.log(catalogObj);
-  console.log(catalogObj?.entries);
+  const abil = catalogObj!.entries.filter(
+    (entry) => entry.entry === "sp-605@moonrise",
+  )[0];
+  console.log(abil);
   console.log(gamesObj);
   console.log(keysObj);
   console.log(inventoryObj);

@@ -2,7 +2,7 @@ import { Button, Stack, Text } from "@mantine/core";
 import { Fragment } from "react/jsx-runtime";
 import FeatureInput from "../boh-generics/FeatureInput";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { type Feature } from "../../../shared/constants";
+import { type Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
 
 interface EditorProps {
@@ -47,18 +47,20 @@ const Editor = ({ gameCode, features }: EditorProps) => {
       return;
     }
 
-    const updatedEntry = Promise.all(
-      Object.keys(featuresRef.current).map((key) =>
-        client["/edit/update-entry"]({
-          gameCode,
-          lookup,
-          feature: key,
-          value: featuresRef.current[key],
-        }),
-      ),
-    );
-    await updatedEntry;
-    console.log("entry updated", updatedEntry);
+    const entriesToUpdate = Object.keys(featuresRef.current).map((key) => {
+      return {
+        gameCode,
+        lookup,
+        feature: key,
+        value: featuresRef.current[key],
+      };
+    });
+
+    for (const entryToUpdate of entriesToUpdate) {
+      console.log(`updating`, entryToUpdate);
+      const res = await client["/edit/update-entry"](entryToUpdate);
+      console.log("entry updated", res);
+    }
   }, [features, client]);
 
   return (

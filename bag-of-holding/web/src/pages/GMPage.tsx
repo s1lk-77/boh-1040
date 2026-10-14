@@ -3,11 +3,8 @@ import CenterLayout from "../components/CenterLayout";
 import { Group, Stack, Title } from "@mantine/core";
 import { useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
-import {
-  ABIL_FEATURES,
-  BASE_FEATURES,
-  type Feature,
-} from "../../../shared/constants";
+import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
+import { Feature } from "../../../shared/types";
 
 /**
  * The GM's dashboard page.

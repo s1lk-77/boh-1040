@@ -7,6 +7,7 @@ import Catalog from "../boh-components/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
 import SearchBar from "../boh-components/SearchBar";
+import { BaseCard } from "../../../shared/types";
 
 /**
  * The player home page.
@@ -20,6 +21,12 @@ function PlayerPage() {
   const [gameName, setGameName] = useState<string | null>(null);
   const [page, setPage] = useState<PlayerPage>("home");
   const [searching, setSearching] = useState<boolean>(false);
+
+  const hardCode: BaseCard[] = [
+    { MYname: "a1", MYlookup: "123" },
+    { MYname: "a2", MYlookup: "234923" },
+  ];
+  const [entries, setEntries] = useState<BaseCard[]>(hardCode);
 
   const loadName = useCallback(async () => {
     if (!client || gameCode === undefined) return;
@@ -35,11 +42,6 @@ function PlayerPage() {
     loadName();
   }, []);
 
-  const hardCode = [
-    { name: "a1", lookup: "123" },
-    { name: "a2", lookup: "234923" },
-  ];
-
   const display = useCallback((lookup: string) => {
     console.log(`${lookup}`);
   }, []);
@@ -48,12 +50,14 @@ function PlayerPage() {
     <MobileViewport>
       <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
         <Title>{gameName}</Title>
-        <Catalog entries={hardCode} onDisplay={display} />
+        <Catalog entries={entries} onDisplay={display} />
         {searching && (
           <SearchBar
             gameCode={gameCode ?? "moonrise"}
             playerName={playerName ?? "silvanvs"}
-            onSuccess={() => {}}
+            onSuccess={(card: BaseCard) => {
+              setEntries([...entries, card]);
+            }}
           />
         )}
         <NavBar toggleSearch={() => setSearching(!searching)} />
