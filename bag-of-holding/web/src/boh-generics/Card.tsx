@@ -15,10 +15,18 @@ const Card = ({
   tl = "tl",
   br = "br",
   bl = "bl",
+  bg = "white",
   ...props
 }: CardProps) => {
   return (
-    <Flex direction="column" bd="solid black 2px" flex={1} mih={0} p="sm">
+    <Flex
+      direction="column"
+      bd="solid black 2px"
+      flex={1}
+      mih={0}
+      p="sm"
+      bg={bg}
+    >
       <Group justify="space-between" wrap="nowrap">
         <Text>{tl}</Text>
         <Text ta="right">{tr}</Text>

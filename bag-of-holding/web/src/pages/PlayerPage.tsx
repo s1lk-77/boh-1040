@@ -86,7 +86,7 @@ function PlayerPage() {
 
   return (
     <MobileViewport>
-      <Stack h="100%" w="100%" align="center" py="lg" mih={0}>
+      <Stack h="100%" w="100%" align="center" pb="lg" pt="sm" mih={0}>
         <Text>MIT Assassins' Guild</Text>
         {page === "home" && (
           <Flex direction="column" align="center">

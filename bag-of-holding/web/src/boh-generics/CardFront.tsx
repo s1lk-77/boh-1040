@@ -19,7 +19,14 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
   const br = owned ? "Not Transferable" : formatDate(today);
 
   return (
-    <Card justify="space-evenly" tl={cardType} tr={tr} bl={bl} br={br}>
+    <Card
+      justify="space-evenly"
+      tl={cardType}
+      tr={tr}
+      bl={bl}
+      br={br}
+      bg="yellow.5"
+    >
       <Stack align="center">
         <Title size="h2">
           {card.MYname === "" ? "Unnamed Ability" : card.MYname}

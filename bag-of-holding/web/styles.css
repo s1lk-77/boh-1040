@@ -1,9 +1,5 @@
-.hoverButton {
-  background: white !important;
-}
-
 .hoverButton:hover {
-  background: var(--mantine-color-gray-4) !important;
+  background: var(--mantine-color-yellow-8) !important;
 }
 
 .hoverText:hover {
@@ -11,7 +7,7 @@
 }
 
 .hoverButton:active {
-  background: var(--mantine-color-gray-4) !important;
+  background: var(--mantine-color-yellow-8) !important;
 }
 
 .lightNavButton:active {

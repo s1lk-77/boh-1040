@@ -14,12 +14,12 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
   return (
     <Flex
       direction="column"
-      bd="solid black 3px"
+      bd="solid black 2px"
       w={STANDARD_FRAME_WIDTH}
       flex={1}
       mih={0}
     >
-      <Group p="xs" fw="bold" ta="center">
+      <Group p="xs" ta="center">
         <Filter />
         <Input placeholder="type to filter..." />
       </Group>
@@ -29,24 +29,26 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
         type="auto"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
-        {entries.map((entry, i) => {
-          const key = "MYtext";
-          let desc: string | undefined = undefined;
-          if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
-            desc = entry["MYtext"];
-          }
+        <Flex direction="column" align="center" gap="sm" mt="sm">
+          {entries.map((entry, i) => {
+            const key = "MYtext";
+            let desc: string | undefined = undefined;
+            if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
+              desc = entry["MYtext"];
+            }
 
-          return (
-            <Fragment key={`${entry}-${i}`}>
-              <Entry
-                name={entry.MYname}
-                lookup={entry.MYlookup}
-                desc={desc}
-                onClick={() => onDisplay(entry.MYlookup)}
-              />
-            </Fragment>
-          );
-        })}
+            return (
+              <Fragment key={`${entry}-${i}`}>
+                <Entry
+                  name={entry.MYname}
+                  lookup={entry.MYlookup}
+                  desc={desc}
+                  onClick={() => onDisplay(entry.MYlookup)}
+                />
+              </Fragment>
+            );
+          })}
+        </Flex>
       </ScrollArea>
     </Flex>
   );

@@ -21,7 +21,14 @@ const CardBack = ({
   const bl = gameName;
   const br = formatDate(today);
   return (
-    <Card justify="space-evenly" tl={cardType} tr={tr} bl={bl} br={br}>
+    <Card
+      justify="space-evenly"
+      tl={cardType}
+      tr={tr}
+      bl={bl}
+      br={br}
+      bg="yellow.5"
+    >
       <Stack align="center">
         <Title size="h2">{heading}</Title>
       </Stack>
