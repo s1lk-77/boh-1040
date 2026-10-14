@@ -4,7 +4,7 @@ import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
 import { Filter } from "lucide-react";
-import { type ChangeEvent, useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 
 interface CatalogProps {
   entries: BaseCard[];
@@ -13,7 +13,7 @@ interface CatalogProps {
 
 const Catalog = ({ entries, onDisplay }: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
-  const [filtered, setFiltered] = useState<BaseCard[]>(entries);
+  const [filtered, setFiltered] = useState<BaseCard[]>([]);
 
   const onFilter = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +29,10 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
     },
     [entries],
   );
+
+  useEffect(() => {
+    setFiltered(entries);
+  }, [entries]);
 
   return (
     <Flex
