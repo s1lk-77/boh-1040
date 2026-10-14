@@ -1,0 +1,11 @@
+.hoverText:hover {
+  text-decoration: underline;
+}
+
+.headlinePanel {
+  background: white !important;
+}
+
+.headlinePanel:active {
+  background: var(--mantine-color-gray-4) !important;
+}

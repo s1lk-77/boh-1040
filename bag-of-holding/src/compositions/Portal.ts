@@ -132,4 +132,17 @@ const Reopen = endpoint(
   },
 );
 
-export const portalCmp = { Join, Rejoin, Create, Reopen, Start };
+const Name = endpoint(
+  "/portal/name",
+  ({ gameCode, gameName }) =>
+    receive({ gameCode }).then(
+      where(Joining._getName({ id: gameCode }).is({ name: gameName }))
+        .then(respond({ gameName }))
+        .named("foundName"),
+    ),
+  {
+    input: { required: ["gameCode"] },
+  },
+);
+
+export const portalCmp = { Join, Rejoin, Create, Reopen, Start, Name };

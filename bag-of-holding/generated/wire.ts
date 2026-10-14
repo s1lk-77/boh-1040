@@ -4,6 +4,7 @@
 import type { applicationConceptSet as ApplicationConceptSet } from "../src/concepts.ts";
 
 type AtPath<T, P extends readonly string[]> = P extends readonly [infer H extends string, ...infer R extends string[]] ? H extends keyof T ? AtPath<T[H], R> : H extends `${number}` ? T extends readonly (infer Item)[] ? AtPath<Item, R> : never : never : T;
+type QueryRow<T> = T extends readonly (infer Row)[] ? Row : T;
 type AllOf<T extends readonly unknown[]> = T extends readonly [infer Head, ...infer Rest] ? Head & AllOf<Rest> : unknown;
 type OneOf<T extends readonly unknown[]> = T[number];
 type Jsonify<T> = T extends Date ? string : T extends null | boolean | number | string ? T : T extends (...args: never[]) => unknown ? never : T extends readonly (infer Item)[] ? Jsonify<Item>[] : T extends object ? { [K in keyof T]: Jsonify<T[K]> } : never;
@@ -45,6 +46,15 @@ export type BoHWire = {
       "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>[0], ["owner"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>>, ["owner"]>]>>;
     };
     error: { error: AppWideError | "BAD_INVENTORY_OP" | "DUPLICATE_CONTEXT" | "DUPLICATE_KEY" | "INVALID_INPUT" };
+  };
+  "/portal/name": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_getName"]>[0], ["id"]>>;
+    };
+    output: {
+      "gameName": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Joining"]["_getName"]>>>, ["name"]>>;
+    };
+    error: { error: AppWideError | "INVALID_INPUT" };
   };
   "/portal/open-bag": {
     input: {
@@ -119,6 +129,15 @@ export type BoHWireHttp = {
       "gameCode": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>[0], ["owner"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Inventorying"]["make"]>>, ["owner"]>]>>;
     };
     error: { error: HttpAppWideError | "CONFLICT" | "INTERNAL_ERROR" | "INVALID_REQUEST" };
+  };
+  "/portal/name": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_getName"]>[0], ["id"]>>;
+    };
+    output: {
+      "gameName": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Joining"]["_getName"]>>>, ["name"]>>;
+    };
+    error: { error: HttpAppWideError | "INVALID_REQUEST" };
   };
   "/portal/open-bag": {
     input: {

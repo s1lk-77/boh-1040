@@ -15,3 +15,8 @@ export const ABIL_FEATURES: Readonly<Feature[]> = [
   { name: "MYtext", isMultiline: true, required: false },
   { name: "MYeffect", isMultiline: true, required: false },
 ];
+
+export const STANDARD_FRAME_WIDTH = "min(100%, 30rem)";
+export const SMALL_FRAME_WIDTH = "min(90%, 28rem)";
+
+export type PlayerPage = "home" | "display" | "settings";

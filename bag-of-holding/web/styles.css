@@ -1,0 +1,23 @@
+.hoverButton {
+  background: white !important;
+}
+
+.hoverButton:hover {
+  background: var(--mantine-color-gray-4) !important;
+}
+
+.hoverText:hover {
+  text-decoration: underline;
+}
+
+.hoverButton:active {
+  background: var(--mantine-color-gray-4) !important;
+}
+
+.lightNavButton:active {
+  background: var(--mantine-color-gray-4) !important;
+}
+
+.darkNavButton:active {
+  background: var(--mantine-color-gray-5) !important;
+}

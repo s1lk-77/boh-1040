@@ -386,6 +386,20 @@ then
   RequestBoundary.respond (error: "DUPLICATE_MEMBER", requestId)
 ```
 
+### Portal.Name
+
+Authored path: `Portal.Name`.
+- Covered by [Portal](../design/compositions/Portal.md), line 23.
+- Covered by [Portal](../design/compositions/Portal.md), line 26.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/portal/name", requestId)
+where
+  Joining._getName (id: gameCode) has (name: gameName)
+then
+  RequestBoundary.respond (gameName, requestId)
+```
+
 ### Portal.Rejoin:gameNotFound
 
 Authored path: `Portal.Rejoin`.
@@ -509,6 +523,7 @@ not listed here have no explicit input contract.
 - `/edit/add-entry` — requires `gameCode`, `lookup`
 - `/edit/update-entry` — requires `gameCode`, `lookup`, `feature`, `value`
 - `/portal/create-game` — requires `gameCode`, `gameName`
+- `/portal/name` — requires `gameCode`
 - `/portal/open-bag` — requires `gameCode`, `playerName`
 - `/portal/reopen-bag` — requires `gameCode`, `playerName`
 - `/portal/reopen-game` — requires `gameCode`

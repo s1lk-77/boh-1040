@@ -19,3 +19,9 @@ Anyone can set up Bag of Holding support for their Guild game by [creating a gam
 Portal.Create at /portal/create-game
 Portal.Reopen at /portal/reopen-game
 ```
+
+Anyone with a valid gamecode can [get the name of the game](reaction:Portal.Name)
+
+```endpoints
+Portal.Name at /portal/name
+```

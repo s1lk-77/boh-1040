@@ -40,7 +40,7 @@ function HomePage() {
     if ("error" in res) {
       console.error(res.error);
     } else {
-      navigate(`bag/${res.gameCode}@${res.playerName}`, {
+      navigate(`bag/${res.playerName}@${res.gameCode}`, {
         state: { gameCode: res.gameCode, playerName: res.playerName },
       });
     }
@@ -52,7 +52,7 @@ function HomePage() {
     if ("error" in res) {
       console.error(res.error);
     } else {
-      navigate(`bag/${res.gameCode}@${res.playerName}`, {
+      navigate(`bag/${res.playerName}@${res.gameCode}`, {
         state: { gameCode: res.gameCode, playerName: res.playerName },
       });
     }
