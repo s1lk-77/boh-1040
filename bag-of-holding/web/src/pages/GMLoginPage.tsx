@@ -1,6 +1,6 @@
 import { Stack, Text, Title, Input, Button, Group } from "@mantine/core";
 import CenterLayout from "../components/CenterLayout";
-import { useState, useCallback, type ChangeEvent } from "react";
+import { useEffect, useState, useCallback, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import { GAME_CODE_REGEX } from "../../../shared/constants";
@@ -15,9 +15,14 @@ function GMLoginPage() {
   const [gameCode, setGameCode] = useState<string>("");
   const [gameName, setGameName] = useState<string>("");
   const [createMode, setCreateMode] = useState<boolean>(false);
+  const [gameCodeError, setGameCodeError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [dneError, setDneError] = useState<boolean>(false);
 
   const updateGameCode = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newCode: string = e.target.value;
+    setGameCodeError(false);
+    setDneError(false);
     if (GAME_CODE_REGEX.test(newCode)) {
       setGameCode(newCode.toLowerCase());
     }
@@ -40,6 +45,7 @@ function GMLoginPage() {
     const res = await client["/portal/reopen-game"]({ gameCode });
     if ("error" in res) {
       console.error(res.error);
+      setDneError(true);
     } else {
       navigate(`../demiplane/${res.gameCode}`, {
         state: { gameCode: res.gameCode },
@@ -57,67 +63,87 @@ function GMLoginPage() {
     }
   };
 
+  useEffect(() => {
+    if (gameCodeError) setErrorMsg("We need a game code!");
+    else if (dneError) setErrorMsg("The demiplane rejected this connection :(");
+    else setErrorMsg(null);
+  }, [gameCodeError, dneError]);
+
   return (
     <CenterLayout asOverlay>
       <Stack align="center" h="96dvh" justify="space-between">
         <Text>MIT Assassins' Guild</Text>
-        {!createMode && (
-          <Stack align="center">
-            <Title>Welcome, GM!</Title>
+        <Stack align="center" pos="relative">
+          {!createMode && (
+            <>
+              <Title>Welcome, GM!</Title>
 
-            <Input
-              placeholder="Enter game code"
-              value={gameCode}
-              onChange={updateGameCode}
-              autoComplete="off"
-              autoCapitalize="off"
-              onKeyDown={reopenKeydown}
-            />
-            <Group>
-              <Button
-                className="hoverButton"
-                bd="2px solid black"
-                bg="none"
-                c="black"
-                onClick={() => setCreateMode(true)}
-              >
-                Create this game
-              </Button>
-              <Button
-                className="hoverButton"
-                bd="2px solid black"
-                bg="yellow.3"
-                c="black"
-                onClick={reopenGame}
-              >
-                Reopen this game
-              </Button>
-            </Group>
-          </Stack>
-        )}
-        {createMode && (
-          <Stack align="center">
-            <Title>Pick a name for your game</Title>
-            <Input
-              placeholder="Enter game name"
-              value={gameName}
-              onChange={(e) => setGameName(e.target.value)}
-              autoComplete="off"
-              autoCapitalize="off"
-            />
-            <Group>
-              <Button
-                className="hoverButton"
-                bd="2px solid black"
-                bg="yellow.3"
-                c="black"
-                onClick={createGame}
-              >
-                Confirm
-              </Button>
-            </Group>
-          </Stack>
-        )}
+              <Input
+                placeholder="Enter game code"
+                value={gameCode}
+                onChange={updateGameCode}
+                autoComplete="off"
+                autoCapitalize="off"
+                error={gameCodeError}
+                onKeyDown={reopenKeydown}
+              />
+              <Group>
+                <Button
+                  className="hoverButton"
+                  bd="2px solid black"
+                  bg="none"
+                  c="black"
+                  onClick={() => {
+                    if (gameCode === "") {
+                      setGameCodeError(true);
+                      return;
+                    }
+                    setCreateMode(true);
+                  }}
+                >
+                  Create this game
+                </Button>
+                <Button
+                  className="hoverButton"
+                  bd="2px solid black"
+                  bg="yellow.3"
+                  c="black"
+                  onClick={reopenGame}
+                >
+                  Reopen this game
+                </Button>
+              </Group>
+            </>
+          )}
+          {createMode && (
+            <>
+              <Title>Pick a name for your game</Title>
+              <Input
+                placeholder="Enter game name"
+                value={gameName}
+                onChange={(e) => setGameName(e.target.value)}
+                autoComplete="off"
+                autoCapitalize="off"
+              />
+              <Group>
+                <Button
+                  className="hoverButton"
+                  bd="2px solid black"
+                  bg="yellow.3"
+                  c="black"
+                  onClick={createGame}
+                >
+                  Confirm
+                </Button>
+              </Group>
+            </>
+          )}
+          {errorMsg !== null && (
+            <Text pos="absolute" top="105%" c="red">
+              {errorMsg}
+            </Text>
+          )}
+        </Stack>
         <Group>
           <Button
             bg="none"
