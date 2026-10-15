@@ -45,14 +45,7 @@ interface PanelFooterProps extends CenterProps {
  */
 function Panel({ children, ...props }: PanelProps) {
   return (
-    <Paper
-      radius="md"
-      shadow="xs"
-      p="md"
-      bg="gray.1"
-      bd="1px solid gray.4"
-      {...props}
-    >
+    <Paper radius="md" p="md" bg="gray.1" bd="2px solid black" {...props}>
       <Stack h="100%">{children}</Stack>
     </Paper>
   );

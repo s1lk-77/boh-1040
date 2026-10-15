@@ -61,6 +61,7 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
       <Divider size="sm" mb={0} color="black" aria-hidden />
       <ScrollArea
         flex={1}
+        mih={0}
         type="auto"
         style={{ WebkitOverflowScrolling: "touch" }}
       >

@@ -6,7 +6,7 @@ import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
 import { Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
@@ -19,6 +19,8 @@ function GMPage() {
   const client = useClient();
   const [gameName, setGameName] = useState<string | null>(null);
   const [cards, setCards] = useState<BaseCard[]>([]);
+  const [editorMode, setEditorMode] = useState<"add" | "update">("add");
+  const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
 
   /**
    * Loads game name
@@ -48,7 +50,7 @@ function GMPage() {
     const mappedCards: BaseCard[] = rawCards
       .map((raw) => unwrapCard(raw.card))
       .filter((card) => card !== undefined);
-    setCards([...cards, ...mappedCards]);
+    setCards([...mappedCards]);
   }, [gameCode, client]);
 
   useEffect(() => {
@@ -56,17 +58,41 @@ function GMPage() {
     loadCompendium();
   }, []);
 
+  const onDisplay = useCallback(
+    (lookup: string) => {
+      const thisCard = cards.find((c) => c.MYlookup === lookup);
+      if (!thisCard) return;
+      setSelectedCard(thisCard);
+      setEditorMode("update");
+    },
+    [cards],
+  );
+
   const features: Feature[] = BASE_FEATURES.concat(ABIL_FEATURES);
   return (
     <CenterLayout asOverlay>
-      <Stack h="100dvh" p="xl" gap="xl" align="center">
+      <Stack h="100dvh" p="xl" gap="xl" align="center" mih={0}>
         <Title>Demiplane: {gameName}</Title>
-        <Group flex={1} align="flex-start" w="70dvw">
+        <Group flex={1} mih={0} align="flex-start" w="70dvw">
           <Panel h="90%" flex={1}>
-            <Editor features={features} gameCode={gameCode!} />
+            <Editor
+              features={
+                editorMode === "update"
+                  ? features.filter((f) => f.name !== "MYlookup")
+                  : features
+              }
+              gameCode={gameCode!}
+              mode={editorMode}
+              card={editorMode === "update" ? selectedCard! : undefined}
+              setMode={setEditorMode}
+              onReload={() => {
+                loadCompendium();
+                setEditorMode("add");
+              }}
+            />
           </Panel>
-          <Panel h="90%" flex={1}>
-            <Catalog entries={cards} onDisplay={() => {}} />
+          <Panel h="90%" flex={1} mih={0}>
+            <Catalog entries={cards} onDisplay={onDisplay} />
           </Panel>
         </Group>
       </Stack>

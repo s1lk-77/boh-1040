@@ -1,35 +1,59 @@
 import {
   Stack,
+  StackProps,
   TextInput,
-  Text,
   type TextProps,
   Textarea,
 } from "@mantine/core";
-import { type ChangeEvent, useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 import { parseGametexName } from "../utilities";
 import { type Feature } from "../../../shared/types";
 
-interface FeatureInputProps extends TextProps {
-  onChange: (value: string) => void;
+interface FeatureInputProps extends StackProps {
+  onFeatureChange: (value: string) => void;
   feature: Feature;
+  defaultValue?: string;
+  flag: boolean;
 }
 
-const FeatureInput = ({ feature, onChange, ...props }: FeatureInputProps) => {
+const FeatureInput = ({
+  feature,
+  onFeatureChange,
+  defaultValue,
+  flag,
+  ...props
+}: FeatureInputProps) => {
   const [value, setValue] = useState<string>("");
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newValue = e.target.value;
       setValue(newValue);
-      onChange(newValue);
+      onFeatureChange(newValue);
     },
-    [onChange],
+    [onFeatureChange],
   );
 
+  useEffect(() => {
+    if (defaultValue !== undefined) setValue(defaultValue);
+  }, [defaultValue]);
+
+  useEffect(() => {
+    if (flag) setValue("");
+  }, [flag]);
+
   return (
-    <Stack gap="xs">
+    <Stack gap="xs" {...props}>
       {feature.isMultiline ? (
         <Textarea
+          styles={{
+            input: {
+              border: "2px solid black",
+              "&:focus": {
+                borderColor: "var(--mantine-color-grape-6)",
+              },
+            },
+          }}
           label={parseGametexName(feature.name)}
           required={feature.required}
           w="100%"
@@ -41,6 +65,14 @@ const FeatureInput = ({ feature, onChange, ...props }: FeatureInputProps) => {
         />
       ) : (
         <TextInput
+          styles={{
+            input: {
+              border: "2px solid black",
+              "&:focus": {
+                borderColor: "var(--mantine-color-grape-6)",
+              },
+            },
+          }}
           label={parseGametexName(feature.name)}
           required={feature.required}
           w="100%"

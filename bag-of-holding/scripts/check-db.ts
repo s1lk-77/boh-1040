@@ -24,7 +24,7 @@ try {
   const inventories = db.collection("inventorying.inventories");
   const inventoryObj = await inventories.findOne({ owner: "test1" });
   const abil = catalogObj!.entries.filter(
-    (entry) => entry.entry === "sp-605@moonrise",
+    (entry) => entry.entry === "sp-986@moonrise",
   )[0];
   console.log(abil);
   console.log(gamesObj);
