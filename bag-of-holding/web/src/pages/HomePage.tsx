@@ -19,6 +19,7 @@ function HomePage() {
 
   const updatePlayerName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newName: string = e.target.value;
+    setPlayerNameError(false);
     if (PLAYER_NAME_REGEX.test(newName) || newName === "") {
       setPlayerName(newName);
     } else if (newName.at(-1) === " " && newName.at(-2) !== "-") {
@@ -29,6 +30,7 @@ function HomePage() {
 
   const updateGameCode = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newCode: string = e.target.value;
+    setGameCodeError(false);
     if (GAME_CODE_REGEX.test(newCode)) {
       setGameCode(newCode.toLowerCase());
     }
@@ -48,6 +50,14 @@ function HomePage() {
 
   const reopenBag = useCallback(async () => {
     if (client === null) return;
+    if (gameCode === "") {
+      setGameCodeError(true);
+      return;
+    }
+    if (playerName === "") {
+      setPlayerNameError(true);
+      return;
+    }
     const res = await client["/portal/reopen-bag"]({ gameCode, playerName });
     if ("error" in res) {
       console.error(res.error);
@@ -61,6 +71,12 @@ function HomePage() {
   const openGMView = useCallback(() => {
     navigate("/portal");
   }, []);
+
+  const reopenKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      reopenBag();
+    }
+  };
 
   return (
     <CenterLayout asOverlay>
@@ -82,6 +98,7 @@ function HomePage() {
             error={gameCodeError}
             autoComplete="off"
             autoCapitalize="off"
+            onKeyDown={reopenKeydown}
           />
 
           <Input
@@ -91,10 +108,20 @@ function HomePage() {
             error={playerNameError}
             autoComplete="off"
             autoCapitalize="off"
+            onKeyDown={reopenKeydown}
           />
           <Group>
-            <Button onClick={openBag}>Open</Button>
-            <Button onClick={reopenBag}>Reopen</Button>
+            <Button bd="2px solid black" bg="none" c="black" onClick={openBag}>
+              Open
+            </Button>
+            <Button
+              bd="2px solid black"
+              bg="yellow.3"
+              c="black"
+              onClick={reopenBag}
+            >
+              Reopen
+            </Button>
           </Group>
         </Stack>
         <Group>

@@ -52,6 +52,12 @@ function GMLoginPage() {
     navigate("..");
   }, []);
 
+  const reopenKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      reopenGame();
+    }
+  };
+
   return (
     <CenterLayout asOverlay>
       <Stack align="center" h="96dvh" justify="space-between">
@@ -66,6 +72,7 @@ function GMLoginPage() {
             error={gameCodeError}
             autoComplete="off"
             autoCapitalize="off"
+            onKeyDown={reopenKeydown}
           />
 
           <Input
@@ -77,8 +84,24 @@ function GMLoginPage() {
             autoCapitalize="off"
           />
           <Group>
-            <Button onClick={createGame}>Create this game</Button>
-            <Button onClick={reopenGame}>Reopen this game</Button>
+            <Button
+              className="hoverButton"
+              bd="2px solid black"
+              bg="none"
+              c="black"
+              onClick={createGame}
+            >
+              Create this game
+            </Button>
+            <Button
+              className="hoverButton"
+              bd="2px solid black"
+              bg="yellow.3"
+              c="black"
+              onClick={reopenGame}
+            >
+              Reopen this game
+            </Button>
           </Group>
         </Stack>
         <Group>

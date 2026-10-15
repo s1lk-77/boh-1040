@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -10,6 +10,7 @@ import SearchBar from "../boh-components/SearchBar";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Display from "../boh-components/Display";
+import useBackButton from "../hooks/useBackButton";
 
 /**
  * The player home page.
@@ -28,6 +29,9 @@ function PlayerPage() {
   const [cards, setCards] = useState<BaseCard[]>([]);
   const indexRef = useRef<number>(0);
   const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
+
+  const { BackButton, setBackCb } = useBackButton();
+  const navigate = useNavigate();
 
   /**
    * Loads game name
@@ -89,8 +93,13 @@ function PlayerPage() {
     [cards],
   );
 
+  useEffect(() => {
+    setBackCb(() => navigate("../.."));
+  }, [setBackCb]);
+
   return (
     <MobileViewport>
+      {BackButton}
       <Stack h="100%" w="100%" align="center" pb="lg" pt="sm" mih={0}>
         <Text>MIT Assassins' Guild</Text>
         {page === "home" && (

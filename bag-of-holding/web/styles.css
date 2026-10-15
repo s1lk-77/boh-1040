@@ -2,6 +2,14 @@
   background: var(--mantine-color-yellow-8) !important;
 }
 
+.hoverTransparentButton:hover {
+  color: var(--mantine-color-gray-5) !important;
+}
+
+.hoverTransparentButton:active {
+  color: var(--mantine-color-gray-5) !important;
+}
+
 .hoverText:hover {
   text-decoration: underline;
 }

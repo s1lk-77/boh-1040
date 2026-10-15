@@ -1,15 +1,16 @@
 import Panel from "../components/Panel";
 import CenterLayout from "../components/CenterLayout";
-import { Group, Stack, Title } from "@mantine/core";
-import { useParams } from "react-router-dom";
+import { Group, Stack, Text, Title } from "@mantine/core";
+import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
 import { Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
+import useBackButton from "../hooks/useBackButton";
 
 /**
  * The GM's dashboard page.
@@ -21,6 +22,8 @@ function GMPage() {
   const [cards, setCards] = useState<BaseCard[]>([]);
   const [editorMode, setEditorMode] = useState<"add" | "update">("add");
   const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
+  const { BackButton, setBackCb } = useBackButton();
+  const navigate = useNavigate();
 
   /**
    * Loads game name
@@ -58,6 +61,13 @@ function GMPage() {
     loadCompendium();
   }, []);
 
+  const backCb = useCallback(() => {
+    navigate("../../portal");
+  }, []);
+  useEffect(() => {
+    setBackCb(backCb);
+  }, [backCb, setBackCb]);
+
   const onDisplay = useCallback(
     (lookup: string) => {
       const thisCard = cards.find((c) => c.MYlookup === lookup);
@@ -70,9 +80,11 @@ function GMPage() {
 
   const features: Feature[] = BASE_FEATURES.concat(ABIL_FEATURES);
   return (
-    <CenterLayout asOverlay>
-      <Stack h="100dvh" p="xl" gap="xl" align="center" mih={0}>
-        <Title>Demiplane: {gameName}</Title>
+    <CenterLayout asOverlay pos="relative">
+      {BackButton}
+      <Stack h="100dvh" pt="xl" pb="l" px="l" gap="xl" align="center" mih={0}>
+        <Text>MIT Assassins' Guild</Text>
+        <Title mt={0}>Demiplane: {gameName}</Title>
         <Group flex={1} mih={0} align="flex-start" w="70dvw">
           <Panel h="90%" flex={1}>
             <Editor
@@ -92,7 +104,7 @@ function GMPage() {
             />
           </Panel>
           <Panel h="90%" flex={1} mih={0}>
-            <Catalog entries={cards} onDisplay={onDisplay} />
+            <Catalog entries={cards} onDisplay={onDisplay} w="100%" />
           </Panel>
         </Group>
       </Stack>

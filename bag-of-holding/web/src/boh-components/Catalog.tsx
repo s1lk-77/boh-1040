@@ -9,9 +9,10 @@ import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 interface CatalogProps {
   entries: BaseCard[];
   onDisplay: (lookup: string) => void;
+  w?: string;
 }
 
-const Catalog = ({ entries, onDisplay }: CatalogProps) => {
+const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
   const [filtered, setFiltered] = useState<BaseCard[]>([]);
 
@@ -38,7 +39,7 @@ const Catalog = ({ entries, onDisplay }: CatalogProps) => {
     <Flex
       direction="column"
       bd="solid black 2px"
-      w={STANDARD_FRAME_WIDTH}
+      w={w ?? STANDARD_FRAME_WIDTH}
       flex={1}
       mih={0}
     >
