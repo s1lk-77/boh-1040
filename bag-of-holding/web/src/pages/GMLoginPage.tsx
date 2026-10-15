@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import { GAME_CODE_REGEX } from "../../../shared/constants";
+import { ExternalLink } from "lucide-react";
 
 /**
  * The GM login page
@@ -68,6 +69,14 @@ function GMLoginPage() {
     else if (dneError) setErrorMsg("The demiplane rejected this connection :(");
     else setErrorMsg(null);
   }, [gameCodeError, dneError]);
+
+  const openReadme = useCallback(() => {
+    window.open(
+      "https://github.com/s1lk-77/boh-1040/blob/main/documentations/GM-guide.md",
+      "_blank",
+      "noopener noreferrer",
+    );
+  }, []);
 
   return (
     <CenterLayout asOverlay>
@@ -150,8 +159,10 @@ function GMLoginPage() {
             c="black"
             bd="1px solid black"
             className="hoverGrayButton"
+            onClick={openReadme}
           >
             README
+            <ExternalLink size={15} />
           </Button>
           <Button
             bg="none"

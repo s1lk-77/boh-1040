@@ -65,7 +65,7 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 
 <img src="./documentations/images/DemoMain.png" height="400">
 
-[I'm a GM, how do I set this up?](/documentations/GM-demo.md)
+[I'm a GM, how do I set this up?](/documentations/GM-guide.md)
 
 ## Repository Structure
 

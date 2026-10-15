@@ -4,6 +4,7 @@ import { Button, Stack, Group, Input, Title, Text } from "@mantine/core";
 import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../../../shared/constants";
 import { useNavigate } from "react-router";
 import CenterLayout from "../components/CenterLayout";
+import { ExternalLink } from "lucide-react";
 
 /**
  * The home page of the app.
@@ -93,6 +94,14 @@ function HomePage() {
     else setErrorMsg(null);
   }, [playerNameError, gameCodeError, dneError]);
 
+  const openReadme = () => {
+    window.open(
+      "https://github.com/s1lk-77/boh-1040",
+      "_blank",
+      "noopener noreferrer",
+    );
+  };
+
   return (
     <CenterLayout asOverlay>
       <Stack align="center" h="96dvh" justify="space-between">
@@ -157,8 +166,10 @@ function HomePage() {
             c="black"
             bd="1px solid black"
             className="hoverGrayButton"
+            onClick={openReadme}
           >
-            README
+            {"README"}
+            <ExternalLink size={15} />
           </Button>
           <Button
             bg="none"
