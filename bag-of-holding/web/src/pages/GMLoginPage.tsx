@@ -14,8 +14,7 @@ function GMLoginPage() {
 
   const [gameCode, setGameCode] = useState<string>("");
   const [gameName, setGameName] = useState<string>("");
-  const [gameCodeError, setGameCodeError] = useState<boolean>(false);
-  const [playerNameError, setPlayerNameError] = useState<boolean>(false);
+  const [createMode, setCreateMode] = useState<boolean>(false);
 
   const updateGameCode = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newCode: string = e.target.value;
@@ -62,48 +61,63 @@ function GMLoginPage() {
     <CenterLayout asOverlay>
       <Stack align="center" h="96dvh" justify="space-between">
         <Text>MIT Assassins' Guild</Text>
-        <Stack align="center">
-          <Title>Welcome, GM!</Title>
+        {!createMode && (
+          <Stack align="center">
+            <Title>Welcome, GM!</Title>
 
-          <Input
-            placeholder="Enter game code"
-            value={gameCode}
-            onChange={updateGameCode}
-            error={gameCodeError}
-            autoComplete="off"
-            autoCapitalize="off"
-            onKeyDown={reopenKeydown}
-          />
-
-          <Input
-            placeholder="Enter game name"
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-            error={playerNameError}
-            autoComplete="off"
-            autoCapitalize="off"
-          />
-          <Group>
-            <Button
-              className="hoverButton"
-              bd="2px solid black"
-              bg="none"
-              c="black"
-              onClick={createGame}
-            >
-              Create this game
-            </Button>
-            <Button
-              className="hoverButton"
-              bd="2px solid black"
-              bg="yellow.3"
-              c="black"
-              onClick={reopenGame}
-            >
-              Reopen this game
-            </Button>
-          </Group>
-        </Stack>
+            <Input
+              placeholder="Enter game code"
+              value={gameCode}
+              onChange={updateGameCode}
+              autoComplete="off"
+              autoCapitalize="off"
+              onKeyDown={reopenKeydown}
+            />
+            <Group>
+              <Button
+                className="hoverButton"
+                bd="2px solid black"
+                bg="none"
+                c="black"
+                onClick={() => setCreateMode(true)}
+              >
+                Create this game
+              </Button>
+              <Button
+                className="hoverButton"
+                bd="2px solid black"
+                bg="yellow.3"
+                c="black"
+                onClick={reopenGame}
+              >
+                Reopen this game
+              </Button>
+            </Group>
+          </Stack>
+        )}
+        {createMode && (
+          <Stack align="center">
+            <Title>Pick a name for your game</Title>
+            <Input
+              placeholder="Enter game name"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
+              autoComplete="off"
+              autoCapitalize="off"
+            />
+            <Group>
+              <Button
+                className="hoverButton"
+                bd="2px solid black"
+                bg="yellow.3"
+                c="black"
+                onClick={createGame}
+              >
+                Confirm
+              </Button>
+            </Group>
+          </Stack>
+        )}
         <Group>
           <Button
             bg="none"

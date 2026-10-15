@@ -67,6 +67,9 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         <Flex direction="column" align="center" gap="sm" mt="sm">
+          {filtered.length === 0 && (
+            <Text c="gray.6">We couldn't find anything.</Text>
+          )}
           {filtered.map((entry, i) => {
             const key = "MYtext";
             let desc: string | undefined = undefined;
