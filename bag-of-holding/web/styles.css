@@ -2,6 +2,10 @@
   background: var(--mantine-color-yellow-8) !important;
 }
 
+.hoverGrayButton:hover {
+  background: var(--mantine-color-gray-6) !important;
+}
+
 .hoverTransparentButton:hover {
   color: var(--mantine-color-gray-5) !important;
 }

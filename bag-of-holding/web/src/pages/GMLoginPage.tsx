@@ -105,8 +105,23 @@ function GMLoginPage() {
           </Group>
         </Stack>
         <Group>
-          <Button>README</Button>
-          <Button onClick={openPlayerView}>I'm a player</Button>
+          <Button
+            bg="none"
+            c="black"
+            bd="1px solid black"
+            className="hoverGrayButton"
+          >
+            README
+          </Button>
+          <Button
+            bg="none"
+            c="black"
+            bd="1px solid black"
+            className="hoverGrayButton"
+            onClick={openPlayerView}
+          >
+            I'm a player
+          </Button>
         </Group>
       </Stack>
     </CenterLayout>
