@@ -4,7 +4,7 @@ import { useClient } from "../ClientProvider";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
-import { Send } from "lucide-react";
+import { Search } from "lucide-react";
 
 interface SearchBarProps extends FlexProps {
   onSuccess: (value: BaseCard) => void;
@@ -61,7 +61,7 @@ const SearchBar = ({
     <Flex
       {...props}
       w={STANDARD_FRAME_WIDTH}
-      bg="white"
+      bg="gray.1"
       bd="2px solid black"
       py="lg"
       pl="sm"
@@ -85,8 +85,8 @@ const SearchBar = ({
         }}
         onKeyDown={handleKeyDown}
       />
-      <Button onClick={onSubmit} h="auto" c="black" bg="white">
-        <Send />
+      <Button onClick={onSubmit} h="auto" c="black" bg="none">
+        <Search />
       </Button>
     </Flex>
   );

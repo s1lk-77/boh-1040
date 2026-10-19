@@ -22,7 +22,7 @@ function MobileViewport({ children }: MobileViewportProps) {
         h="100%"
         maw="var(--mantine-breakpoint-xs)"
         mah="48rem"
-        bg="white"
+        bg="gray.1"
         pos="relative"
       >
         <Box

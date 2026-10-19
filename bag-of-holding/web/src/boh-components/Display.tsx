@@ -36,13 +36,13 @@ const Display = ({
       )}
       {showToolBar && (
         <Group justify="space-between" align="center" h="15%" wrap="nowrap">
-          <Button h="auto" c="black" bg="white">
+          <Button h="auto" c="black" bg="none">
             <ArrowLeft onClick={() => onIndex(-1)} />
           </Button>
           <Button
             h="auto"
             c="black"
-            bg="white"
+            bg="none"
             onClick={() => {
               setFlipped(!flipped);
             }}
@@ -52,7 +52,7 @@ const Display = ({
               Flip
             </Flex>
           </Button>
-          <Button h="auto" c="black" bg="white">
+          <Button h="auto" c="black" bg="none">
             <ArrowRight onClick={() => onIndex(1)} />
           </Button>
         </Group>

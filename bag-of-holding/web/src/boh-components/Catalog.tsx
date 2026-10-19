@@ -39,11 +39,12 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
     <Flex
       direction="column"
       bd="solid black 2px"
+      bg="gray.2"
       w={w ?? STANDARD_FRAME_WIDTH}
       flex={1}
       mih={0}
     >
-      <Group p="xs" ta="center">
+      <Group p="xs" ta="center" bg="gray.4">
         <Filter />
         <Input
           placeholder="type to filter..."

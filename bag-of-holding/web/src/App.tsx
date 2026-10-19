@@ -1,7 +1,30 @@
 import { Suspense, lazy, useCallback, useEffect, useRef } from "react";
 import { Route, Routes } from "react-router";
-import { Box, MantineProvider } from "@mantine/core";
+import {
+  Box,
+  MantineProvider,
+  createTheme,
+  type CSSVariablesResolver,
+} from "@mantine/core";
 import { type BoHClient, useClient } from "./ClientProvider";
+
+export const theme = createTheme({
+  /* Put your mantine theme override here */
+});
+
+// Create a resolver that overrides --mantine-color-text in light & dark modes
+export const cssVarResolver: CSSVariablesResolver = () => ({
+  /** Shared CSS variables that should be accessible independent from color scheme */
+  variables: {},
+  /** CSS variables available only in dark color scheme */
+  light: {
+    "--mantine-color-text": "#000000",
+  },
+  /** CSS variables available only in light color scheme */
+  dark: {
+    "--mantine-color-text": "#FFFFFF",
+  },
+});
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const GMLoginPage = lazy(() => import("./pages/GMLoginPage"));
@@ -46,7 +69,7 @@ function AppContent() {
  */
 function App() {
   return (
-    <MantineProvider>
+    <MantineProvider theme={theme} cssVariablesResolver={cssVarResolver}>
       <AppContent />
     </MantineProvider>
   );

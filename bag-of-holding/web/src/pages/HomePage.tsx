@@ -108,7 +108,9 @@ function HomePage() {
         <Text>MIT Assassins' Guild</Text>
         <Stack align="center" pos="relative">
           <Text>the journeyman's</Text>
-          <Title>Bag of Holding</Title>
+          <Title order={1} c="black">
+            Bag of Holding
+          </Title>
           <Text>the one pocket to fit them all</Text>
           <Text>
             a great relievance in the Force, as if millions of trees suddenly
