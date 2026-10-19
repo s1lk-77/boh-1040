@@ -20,7 +20,7 @@ export class InventoryingConcept {
   async make({ owner }: { owner: string }): Promise<{ owner: string }> {
     // set up the index
     if (!this.indexed) {
-      await this.inventories.createIndex({ owner: 1 });
+      await this.inventories.createIndex({ owner: 1 }, { unique: true });
       this.indexed = true;
     }
 
@@ -52,7 +52,7 @@ export class InventoryingConcept {
     if (inventory.items.includes(item)) {
       throw new BadInventoryOperation();
     }
-    void this.inventories.updateOne(
+    await this.inventories.updateOne(
       { owner },
       { $set: { items: [...inventory.items, item] } },
     );
