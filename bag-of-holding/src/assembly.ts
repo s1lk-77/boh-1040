@@ -8,15 +8,16 @@ import { InventoryingConcept } from "./concepts/Inventorying";
 import { CatalogingConcept } from "./concepts/Cataloging";
 import { applicationConceptSet } from "./concepts";
 import { db } from "./db";
+import { type Db } from "mongodb";
 
-export function assembleApplication() {
+export function assembleApplication(database: Db = db) {
   return assemble({
     conceptSet: applicationConceptSet,
     instances: {
-      Naming: new NamingConcept(db),
-      Joining: new JoiningConcept(db),
-      Inventorying: new InventoryingConcept(db),
-      Cataloging: new CatalogingConcept(db),
+      Naming: new NamingConcept(database),
+      Joining: new JoiningConcept(database),
+      Inventorying: new InventoryingConcept(database),
+      Cataloging: new CatalogingConcept(database),
     },
     composition: { Portal: portalCmp, Edit: editCmp, Collect: collectCmp },
     rawFaultReporter: ({ error }) => console.error(error),

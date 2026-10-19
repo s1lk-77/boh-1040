@@ -79,6 +79,7 @@ function PlayerPage() {
       }
       setSelectedCard(cards[indexRef.current]);
       setPage("display");
+      setSearching(false);
     },
     [cards],
   );

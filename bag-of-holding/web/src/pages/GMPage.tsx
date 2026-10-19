@@ -1,6 +1,15 @@
 import Panel from "../components/Panel";
 import CenterLayout from "../components/CenterLayout";
-import { Box, Group, Input, Stack, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Box,
+  Group,
+  Input,
+  Stack,
+  Text,
+  Title,
+  Divider,
+} from "@mantine/core";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
@@ -189,22 +198,52 @@ function GMPage() {
           )}
         </Box>
         <Group flex={1} mih={0} align="flex-start" w="70dvw">
-          <Panel h="90%" flex={1}>
-            <Editor
-              features={
-                editorMode === "update"
-                  ? features.filter((f) => f.name !== "MYlookup")
-                  : features
-              }
-              gameCode={gameCode!}
-              mode={editorMode}
-              card={editorMode === "update" ? selectedCard! : undefined}
-              setMode={setEditorMode}
-              onReload={() => {
-                loadCompendium();
-                setEditorMode("add");
-              }}
-            />
+          <Panel h="90%" flex={1} gap="0">
+            <Panel.Header m={0}>
+              <Group w="100%">
+                <Button
+                  c="black"
+                  bg="none"
+                  className="hoverTransparentButton"
+                  fw="normal"
+                >
+                  View
+                </Button>
+                <Button
+                  c="black"
+                  bg="none"
+                  className="hoverTransparentButton"
+                  fw="normal"
+                >
+                  Edit
+                </Button>
+                <Button
+                  c="black"
+                  bg="none"
+                  className="hoverTransparentButton"
+                  fw="normal"
+                >
+                  Upload
+                </Button>
+              </Group>
+            </Panel.Header>
+            <Panel.Body mt={0}>
+              <Editor
+                features={
+                  editorMode === "update"
+                    ? features.filter((f) => f.name !== "MYlookup")
+                    : features
+                }
+                gameCode={gameCode!}
+                mode={editorMode}
+                card={editorMode === "update" ? selectedCard! : undefined}
+                setMode={setEditorMode}
+                onReload={() => {
+                  loadCompendium();
+                  setEditorMode("add");
+                }}
+              />
+            </Panel.Body>
           </Panel>
           <Panel h="90%" flex={1} mih={0}>
             <Catalog entries={cards} onDisplay={onDisplay} w="100%" />

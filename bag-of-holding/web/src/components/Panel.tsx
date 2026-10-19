@@ -16,6 +16,7 @@ import {
 
 interface PanelProps extends PaperProps {
   children: ReactNode;
+  gap?: string;
 }
 
 interface PanelHeaderProps extends CenterProps {
@@ -43,10 +44,12 @@ interface PanelFooterProps extends CenterProps {
  * Panel supports all the props of the underlying Paper component.
  * Use props such as h, w, maw, mah, etc. to control the size of the panel.
  */
-function Panel({ children, ...props }: PanelProps) {
+function Panel({ children, gap = "xs", ...props }: PanelProps) {
   return (
     <Paper radius="md" p="md" bg="gray.1" {...props}>
-      <Stack h="100%">{children}</Stack>
+      <Stack h="100%" gap={gap}>
+        {children}
+      </Stack>
     </Paper>
   );
 }
