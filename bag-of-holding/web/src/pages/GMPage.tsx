@@ -1,6 +1,6 @@
 import Panel from "../components/Panel";
 import CenterLayout from "../components/CenterLayout";
-import { Group, Stack, Text, Title } from "@mantine/core";
+import { Group, Input, Stack, Text, Title } from "@mantine/core";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
@@ -11,6 +11,8 @@ import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
 import useBackButton from "../hooks/useBackButton";
+import { Edit, Upload, X } from "lucide-react";
+import "../../styles.css";
 
 /**
  * The GM's dashboard page.
@@ -19,10 +21,12 @@ function GMPage() {
   const { gameCode } = useParams();
   const client = useClient();
   const [gameName, setGameName] = useState<string | null>(null);
+  const [updatedGameName, setUpdatedGameName] = useState<string>("");
   const [cards, setCards] = useState<BaseCard[]>([]);
   const [editorMode, setEditorMode] = useState<"add" | "update">("add");
   const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
   const { BackButton, setBackCb } = useBackButton();
+  const [editingName, setEditingName] = useState<boolean>(false);
   const navigate = useNavigate();
 
   /**
@@ -78,13 +82,55 @@ function GMPage() {
     [cards],
   );
 
+  const uploadName = useCallback(async () => {
+    if (!client || !gameCode || updatedGameName === "") return;
+    const newName = updatedGameName;
+    const res = await client["/edit/update-name"]({
+      gameCode,
+      gameName: newName,
+    });
+    if ("error" in res) {
+      console.error(res);
+      return;
+    }
+    setUpdatedGameName("");
+    setGameName(newName);
+    setEditingName(false);
+  }, [gameCode, client, updatedGameName]);
+
   const features: Feature[] = BASE_FEATURES.concat(ABIL_FEATURES);
   return (
     <CenterLayout asOverlay pos="relative">
       {BackButton}
       <Stack h="100dvh" pt="xl" pb="l" px="l" gap="xl" align="center" mih={0}>
         <Text>MIT Assassins' Guild</Text>
-        <Title mt={0}>Demiplane: {gameName}</Title>
+        {editingName ? (
+          <Group h="var(--mantine-h1-line-height)">
+            <Input
+              value={updatedGameName}
+              onChange={(e) => {
+                setUpdatedGameName(e.target.value);
+              }}
+            ></Input>
+            <Upload
+              className="u-pointer hoverTransparentButton"
+              onClick={uploadName}
+            />
+            <X
+              color="var(--mantine-color-red-8)"
+              className="u-pointer hoverTransparentButton"
+              onClick={() => setEditingName(false)}
+            />
+          </Group>
+        ) : (
+          <Title>
+            {gameName}{" "}
+            <Edit
+              className="u-pointer hoverTransparentButton"
+              onClick={() => setEditingName(true)}
+            />
+          </Title>
+        )}
         <Group flex={1} mih={0} align="flex-start" w="70dvw">
           <Panel h="90%" flex={1}>
             <Editor

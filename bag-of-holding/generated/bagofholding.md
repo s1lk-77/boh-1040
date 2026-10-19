@@ -73,6 +73,8 @@ Defined in [Joining](../design/concepts/Joining.md), line 1.
 - `join(id: Identifier, member: Member) : returns (member: Member)`
   - Refuses `NO_SUCH_CONTEXT`: The given id is not a context
   - Refuses `DUPLICATE_MEMBER`: Cannot add a member that is already in the context
+- `updateName(id: Identifier, name: String) : returns (name: String)`
+  - Refuses `NO_SUCH_CONTEXT`: no such context.
 
 #### Queries
 
@@ -431,6 +433,48 @@ then
   RequestBoundary.respond (error: "DOES_NOT_EXIST", requestId)
 ```
 
+### Edit.UpdateName:gameNameUpdated
+
+Authored path: `Edit.UpdateName`.
+- Covered by [Edit](../design/compositions/Edit.md), line 15.
+- Covered by [Edit](../design/compositions/Edit.md), line 18.
+
+```reaction
+when RequestBoundary.request (gameCode, gameName, path: "/edit/update-name", requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: true)
+then
+  Joining.updateName (id: gameCode, name: gameName)
+```
+
+### Edit.UpdateName:gameNameUpdated#2
+
+Authored path: `Edit.UpdateName`.
+- Covered by [Edit](../design/compositions/Edit.md), line 15.
+- Covered by [Edit](../design/compositions/Edit.md), line 18.
+
+```reaction
+when Joining.updateName (id: gameCode, name: gameName), asked by Edit.UpdateName:gameNameUpdated
+where
+  earlier, RequestBoundary.request (gameCode, gameName, path: "/edit/update-name", requestId)
+then
+  RequestBoundary.respond (gameName, requestId)
+```
+
+### Edit.UpdateName:refused
+
+Authored path: `Edit.UpdateName`.
+- Covered by [Edit](../design/compositions/Edit.md), line 15.
+- Covered by [Edit](../design/compositions/Edit.md), line 18.
+
+```reaction
+when RequestBoundary.request (gameCode, gameName, path: "/edit/update-name", requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: false)
+then
+  RequestBoundary.respond (error: "NO_SUCH_CONTEXT", requestId)
+```
+
 ### Portal.Create:gameCode
 
 Authored path: `Portal.Create`.
@@ -482,7 +526,7 @@ when RequestBoundary.request (gameCode, gameName, path: "/portal/create-game", r
 where
   Joining._isContext (id: gameCode) has (isContext: true)
 then
-  RequestBoundary.respond (error: "DUPLICATE_KEY", requestId)
+  RequestBoundary.respond (error: "DUPLICATE_CONTEXT", requestId)
 ```
 
 ### Portal.Join:gameNotFound
@@ -706,6 +750,7 @@ not listed here have no explicit input contract.
 - `/collect/production` — requires `gameCode`, `playerName`
 - `/edit/add-entry` — requires `gameCode`, `lookup`
 - `/edit/update-entry` — requires `gameCode`, `lookup`, `feature`, `value`
+- `/edit/update-name` — requires `gameCode`, `gameName`
 - `/portal/create-game` — requires `gameCode`, `gameName`
 - `/portal/name` — requires `gameCode`
 - `/portal/open-bag` — requires `gameCode`, `playerName`

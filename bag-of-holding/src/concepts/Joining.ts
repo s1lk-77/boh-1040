@@ -99,6 +99,25 @@ export class JoiningConcept {
     return { member };
   }
 
+  public async updateName({
+    id,
+    name,
+  }: {
+    id: string;
+    name: string;
+  }): Promise<{ name: string }> {
+    const contextObj: WithId<Context> | null = await this.contexts.findOne({
+      identifier: id,
+    });
+
+    if (contextObj === null) {
+      throw new NoSuchContext(`No context with id ${id} exists`);
+    }
+
+    await this.contexts.updateOne({ _id: contextObj._id }, { $set: { name } });
+    return { name };
+  }
+
   /* ******* Queries ******* */
 
   /**

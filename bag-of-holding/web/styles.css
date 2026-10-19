@@ -29,3 +29,11 @@
 .darkNavButton:active {
   background: var(--mantine-color-gray-5) !important;
 }
+
+.u-pointer {
+  cursor: pointer;
+}
+
+.u-test {
+  border: 2px solid red;
+}

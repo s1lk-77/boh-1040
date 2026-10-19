@@ -50,6 +50,15 @@ join(id: Identifier, member: Member) : returns (member: Member)
     then
         adds member to the context with id
         returns member
+
+updateName(id: Identifier, name: String) : returns (name: String)
+    where context with id exists
+    then
+        updates the context's name to name
+        returns name
+    where context does not exist
+    then
+        refuses NO_SUCH_CONTEXT "no such context."
 ```
 
 ## Queries

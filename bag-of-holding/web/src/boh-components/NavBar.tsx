@@ -1,6 +1,6 @@
 import { Button, Group, GroupProps } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import { Search, Settings, Home } from "lucide-react";
+import { Search, Settings, CornerDownLeft } from "lucide-react";
 
 interface NavBarProps extends GroupProps {
   toggleSearch: () => void;
@@ -29,7 +29,7 @@ const NavBar = ({
       </Button>
       {showHome && (
         <Button h="auto" c="black" bg="white" onClick={goHome}>
-          <Home />
+          <CornerDownLeft />
         </Button>
       )}
     </Group>
