@@ -1,6 +1,6 @@
 import Panel from "../components/Panel";
 import CenterLayout from "../components/CenterLayout";
-import { Group, Input, Stack, Text, Title } from "@mantine/core";
+import { Box, Group, Input, Stack, Text, Title } from "@mantine/core";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
@@ -11,6 +11,7 @@ import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
 import useBackButton from "../hooks/useBackButton";
+import { useFocusTrap } from "@mantine/hooks";
 import { Edit, Upload, X } from "lucide-react";
 import "../../styles.css";
 
@@ -27,6 +28,7 @@ function GMPage() {
   const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
   const { BackButton, setBackCb } = useBackButton();
   const [editingName, setEditingName] = useState<boolean>(false);
+  const focusTrapRef = useFocusTrap(editingName);
   const navigate = useNavigate();
 
   /**
@@ -104,33 +106,82 @@ function GMPage() {
       {BackButton}
       <Stack h="100dvh" pt="xl" pb="l" px="l" gap="xl" align="center" mih={0}>
         <Text>MIT Assassins' Guild</Text>
-        {editingName ? (
-          <Group h="var(--mantine-h1-line-height)">
-            <Input
-              value={updatedGameName}
-              onChange={(e) => {
-                setUpdatedGameName(e.target.value);
+        <Box
+          h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {editingName ? (
+            <Group
+              ref={focusTrapRef}
+              h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+              align="center"
+            >
+              <Input
+                data-autofocus
+                autoFocus
+                value={updatedGameName}
+                onChange={(e) => {
+                  setUpdatedGameName(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    uploadName();
+                  } else if (e.key === "Escape") {
+                    setEditingName(false);
+                  }
+                }}
+              />
+              <Upload
+                role="button"
+                tabIndex={0}
+                aria-label="Save title"
+                className="u-pointer hoverTransparentButton"
+                onClick={uploadName}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    uploadName();
+                  }
+                }}
+              />
+              <X
+                role="button"
+                tabIndex={0}
+                aria-label="Cancel editing title"
+                color="var(--mantine-color-red-8)"
+                className="u-pointer hoverTransparentButton"
+                onClick={() => setEditingName(false)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setEditingName(false);
+                  }
+                }}
+              />
+            </Group>
+          ) : (
+            <Title
+              order={1}
+              h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
               }}
-            ></Input>
-            <Upload
-              className="u-pointer hoverTransparentButton"
-              onClick={uploadName}
-            />
-            <X
-              color="var(--mantine-color-red-8)"
-              className="u-pointer hoverTransparentButton"
-              onClick={() => setEditingName(false)}
-            />
-          </Group>
-        ) : (
-          <Title>
-            {gameName}{" "}
-            <Edit
-              className="u-pointer hoverTransparentButton"
-              onClick={() => setEditingName(true)}
-            />
-          </Title>
-        )}
+            >
+              {gameName}{" "}
+              <Edit
+                className="u-pointer hoverTransparentButton"
+                onClick={() => {
+                  setUpdatedGameName(gameName ?? "");
+                  setEditingName(true);
+                }}
+              />
+            </Title>
+          )}
+        </Box>
         <Group flex={1} mih={0} align="flex-start" w="70dvw">
           <Panel h="90%" flex={1}>
             <Editor

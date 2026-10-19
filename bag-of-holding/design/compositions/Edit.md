@@ -17,3 +17,9 @@ A GM should be ahble to [update the name of their game](reaction:Edit.UpdateName
 ```endpoints
 Edit.UpdateName at /edit/update-name
 ```
+
+A GM should be able to [delete an ability from their game](reaction:Edit.DeleteEntry).
+
+```endpoints
+Edit.UpdateName at /edit/delete-entry
+```

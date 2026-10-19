@@ -1,5 +1,6 @@
 import { Input, Flex, Button, type FlexProps } from "@mantine/core";
 import { useCallback, useRef, useState } from "react";
+import { useFocusTrap } from "@mantine/hooks";
 import { useClient } from "../ClientProvider";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { BaseCard } from "../../../shared/types";
@@ -22,6 +23,7 @@ const SearchBar = ({
   const busyRef = useRef<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const client = useClient();
+  const focusTrapRef = useFocusTrap();
 
   const onSubmit = useCallback(async () => {
     setValue("");
@@ -32,24 +34,25 @@ const SearchBar = ({
     // set busy flag
     busyRef.current = true;
     console.log(`${playerName}@${gameCode} @ ${value}`);
-    // await
-    const res = await client["/collect/print"]({
-      gameCode,
-      lookup: value,
-      playerName,
-    });
-    if ("error" in res) {
-      console.error("could not find lookup");
-      setError(true);
-      return;
+    try {
+      const res = await client["/collect/print"]({
+        gameCode,
+        lookup: value,
+        playerName,
+      });
+      if ("error" in res) {
+        console.error("could not find lookup");
+        setError(true);
+        return;
+      }
+      console.log(res);
+      const card = unwrapCard(res.abil.card);
+      if (card) onSuccess(card);
+    } finally {
+      // unset busy flag
+      busyRef.current = false;
     }
-    console.log(res);
-    const card = unwrapCard(res.abil.card);
-    if (card) onSuccess(card);
-
-    // unset busy flag
-    busyRef.current = false;
-  }, [gameCode, playerName, value]);
+  }, [client, gameCode, onSuccess, playerName, value]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -60,13 +63,17 @@ const SearchBar = ({
   return (
     <Flex
       {...props}
+      ref={focusTrapRef}
       w={STANDARD_FRAME_WIDTH}
+      h="15%"
+      align="center"
       bg="gray.1"
       bd="2px solid black"
-      py="lg"
       pl="sm"
     >
       <Input
+        data-autofocus
+        autoFocus
         styles={{
           input: {
             border: "2px solid black",
@@ -85,7 +92,7 @@ const SearchBar = ({
         }}
         onKeyDown={handleKeyDown}
       />
-      <Button onClick={onSubmit} h="auto" c="black" bg="none">
+      <Button onClick={onSubmit} h="auto" c="black" bg="none" aria-label="Search">
         <Search />
       </Button>
     </Flex>
