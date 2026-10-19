@@ -107,7 +107,7 @@ const Create = endpoint(
         .then(respond({ gameCode }))
         .named("gameCode"),
       where(Joining._isContext({ id: gameCode }).is({ isContext: true }))
-        .then(respond({ error: "DUPLICATE_KEY" }))
+        .then(respond({ error: "DUPLICATE_CONTEXT" }))
         .named("refused"),
     ),
   {
