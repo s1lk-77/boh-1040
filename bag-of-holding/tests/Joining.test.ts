@@ -49,6 +49,10 @@ afterAll(async () => {
  *
  * getName
  * - partition on context: extant, nonexistent
+ *
+ *
+ * updateName
+ * - partition on context: extant, nonexistent
  */
 
 describe("create", () => {
@@ -143,5 +147,25 @@ describe("getName", () => {
     await expect(joining._getName({ id: "moonrise" })).resolves.toEqual({
       name: null,
     });
+  });
+});
+
+describe("updateName", () => {
+  test("covers valid context", async () => {
+    await joining.create({ id: "moonrise", name: "Moonrise" });
+    await expect(
+      joining.updateName({ id: "moonrise", name: "Moonrise2" }),
+    ).resolves.toEqual({
+      name: "Moonrise2",
+    });
+    await expect(joining._getName({ id: "moonrise" })).resolves.toEqual({
+      name: "Moonrise2",
+    });
+  });
+
+  test("covers inalid context", async () => {
+    await expect(
+      joining.updateName({ id: "moonrise", name: "placeholder" }),
+    ).rejects.toThrow();
   });
 });
