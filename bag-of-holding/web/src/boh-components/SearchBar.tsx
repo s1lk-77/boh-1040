@@ -80,6 +80,8 @@ const SearchBar = ({
             "&:focus": {
               borderColor: "var(--mantine-color-grape-6)",
             },
+            fontFamily: "Fira Code, monospace",
+            fontWeight: 450,
           },
         }}
         flex={1}
@@ -92,7 +94,13 @@ const SearchBar = ({
         }}
         onKeyDown={handleKeyDown}
       />
-      <Button onClick={onSubmit} h="auto" c="black" bg="none" aria-label="Search">
+      <Button
+        onClick={onSubmit}
+        h="auto"
+        c="black"
+        bg="none"
+        aria-label="Search"
+      >
         <Search />
       </Button>
     </Flex>

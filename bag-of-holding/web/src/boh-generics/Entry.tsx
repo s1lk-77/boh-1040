@@ -1,4 +1,5 @@
 import { Divider, Flex, Group, Stack, Text, Title } from "@mantine/core";
+import "../../styles.css";
 
 interface EntryProps {
   name: string;
@@ -29,7 +30,7 @@ const Entry = ({ name, lookup, onClick, desc = undefined }: EntryProps) => {
     >
       <Group justify="space-between" px="sm">
         <Title size="h3">{name === "" ? "Unnamed Ability" : name}</Title>
-        <Text>{"@" + lookup}</Text>
+        <Text className="u-fira-code">{"@" + lookup}</Text>
       </Group>
       <Text truncate="end" px="sm">
         {resolvedDesc}

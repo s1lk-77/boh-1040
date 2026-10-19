@@ -134,6 +134,12 @@ function GMPage() {
                     setEditingName(false);
                   }
                 }}
+                styles={{
+                  input: {
+                    fontFamily: "Fira Code, monospace",
+                    fontWeight: 450,
+                  },
+                }}
               />
               <Upload
                 role="button"

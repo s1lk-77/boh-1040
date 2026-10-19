@@ -52,6 +52,8 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
           onChange={onFilter}
           styles={{
             input: {
+              fontFamily: "Fira Code, monospace",
+              fontWeight: 450,
               border: "2px solid black",
               "&:focus": {
                 borderColor: "var(--mantine-color-grape-6)",

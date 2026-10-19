@@ -4,7 +4,6 @@ import { concepts } from "../concepts.ts";
 import { collectCmp } from "./Collect.ts";
 
 const { Naming, Cataloging, Inventorying, Joining } = concepts;
-const { PlayerList } = collectCmp;
 
 // endpoint for adding ability entry, assumes the abilities catalog exists
 const AddEntry = endpoint(

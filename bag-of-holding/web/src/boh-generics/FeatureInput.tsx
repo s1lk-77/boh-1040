@@ -48,6 +48,8 @@ const FeatureInput = ({
         <Textarea
           styles={{
             input: {
+              fontFamily: "Fira Code, monospace",
+              fontWeight: 450,
               border: "2px solid black",
               "&:focus": {
                 borderColor: "var(--mantine-color-grape-6)",
@@ -71,6 +73,8 @@ const FeatureInput = ({
               "&:focus": {
                 borderColor: "var(--mantine-color-grape-6)",
               },
+              fontFamily: "Fira Code, monospace",
+              fontWeight: 450,
             },
           }}
           label={parseGametexName(feature.name)}

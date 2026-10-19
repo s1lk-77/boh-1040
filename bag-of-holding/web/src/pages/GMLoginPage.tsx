@@ -95,6 +95,12 @@ function GMLoginPage() {
                 autoCapitalize="off"
                 error={gameCodeError}
                 onKeyDown={reopenKeydown}
+                styles={{
+                  input: {
+                    fontFamily: "Fira Code, monospace",
+                    fontWeight: 450,
+                  },
+                }}
               />
               <Group>
                 <Button
@@ -133,6 +139,12 @@ function GMLoginPage() {
                 onChange={(e) => setGameName(e.target.value)}
                 autoComplete="off"
                 autoCapitalize="off"
+                styles={{
+                  input: {
+                    fontFamily: "Fira Code, monospace",
+                    fontWeight: 450,
+                  },
+                }}
               />
               <Group>
                 <Button

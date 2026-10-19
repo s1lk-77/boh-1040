@@ -125,6 +125,9 @@ function HomePage() {
             autoComplete="off"
             autoCapitalize="off"
             onKeyDown={reopenKeydown}
+            styles={{
+              input: { fontFamily: "Fira Code, monospace", fontWeight: 450 },
+            }}
           />
 
           <Input
@@ -135,6 +138,9 @@ function HomePage() {
             autoComplete="off"
             autoCapitalize="off"
             onKeyDown={reopenKeydown}
+            styles={{
+              input: { fontFamily: "Fira Code, monospace", fontWeight: 450 },
+            }}
           />
           <Group>
             <Button

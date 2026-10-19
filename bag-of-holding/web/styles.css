@@ -41,3 +41,10 @@ body {
 .u-test {
   border: 2px solid red;
 }
+
+.u-fira-code {
+  font-family: "Fira Code", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}

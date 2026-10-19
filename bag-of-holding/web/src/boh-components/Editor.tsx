@@ -4,6 +4,7 @@ import FeatureInput from "../boh-generics/FeatureInput";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BaseCard, type Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
+import { Trash, Upload } from "lucide-react";
 
 interface EditorProps {
   features: Feature[];
@@ -125,7 +126,11 @@ const Editor = ({
 
   return (
     <Stack align="center" w="100%" pt="sm">
-      {mode === "update" && <Text fw="bold">@{card?.MYlookup}</Text>}
+      {mode === "update" ? (
+        <Text fw="bold">@{card?.MYlookup}</Text>
+      ) : (
+        <Text fw="bold">Add Entry</Text>
+      )}
       {features.map((feature: Feature, i: number) => (
         <Fragment key={`${feature.name}${i}`}>
           <FeatureInput
@@ -149,7 +154,10 @@ const Editor = ({
           bg="yellow.2"
           bd="2px solid black"
         >
-          {mode === "add" ? "Add" : "Update"}
+          <Text mr="0.5rem">
+            {mode === "add" ? `Add to my game` : "Update"}
+          </Text>
+          <Upload />
         </Button>
         {mode === "update" && (
           <>
@@ -161,7 +169,8 @@ const Editor = ({
               bd="2px solid black"
               bg="red.5"
             >
-              Delete
+              <Text mr="0.5rem">Delete</Text>
+              <Trash />
             </Button>
             <Button
               className="hoverButton"
