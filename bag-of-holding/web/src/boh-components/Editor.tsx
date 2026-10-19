@@ -136,16 +136,28 @@ const Editor = ({
           {mode === "add" ? "Add" : "Update"}
         </Button>
         {mode === "update" && (
-          <Button
-            className="hoverButton"
-            flex={1}
-            onClick={() => setMode("add")}
-            c="black"
-            bg="none"
-            bd="2px solid black"
-          >
-            Cancel
-          </Button>
+          <>
+            <Button
+              className="hoverButton"
+              flex={1}
+              onClick={() => setMode("add")}
+              c="black"
+              bd="2px solid black"
+              bg="red.5"
+            >
+              Delete
+            </Button>
+            <Button
+              className="hoverButton"
+              flex={1}
+              onClick={() => setMode("add")}
+              c="black"
+              bg="none"
+              bd="2px solid black"
+            >
+              Cancel
+            </Button>
+          </>
         )}
       </Group>
     </Stack>
