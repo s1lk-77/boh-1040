@@ -1,8 +1,10 @@
 import { endpoint, receive, respond } from "@mit-sdg/sync-engine/boundary";
 import { where } from "@mit-sdg/sync-engine/language";
 import { concepts } from "../concepts.ts";
+import { collectCmp } from "./Collect.ts";
 
 const { Naming, Cataloging, Inventorying, Joining } = concepts;
+const { PlayerList } = collectCmp;
 
 // endpoint for adding ability entry, assumes the abilities catalog exists
 const AddEntry = endpoint(
@@ -98,4 +100,43 @@ const UpdateName = endpoint(
   },
 );
 
-export const editCmp = { AddEntry, UpdateEntry, UpdateName };
+// endpoint for deleting an entry
+const DeleteEntry = endpoint(
+  "/edit/delete-entry",
+  ({ gameCode, lookup, entry }) =>
+    receive({ gameCode, lookup }).then(
+      where(
+        Naming._getKey({ context: gameCode, suffix: lookup }).is({
+          key: entry,
+        }),
+        Cataloging._exists({ catalog: "abils", entry }).is({
+          exists: true,
+        }),
+      )
+        .then(
+          Cataloging.delete({ catalog: "abils", entry }).responds({ entry }),
+        )
+        .then(
+          Inventorying.remove({ owner: gameCode, item: entry }).responds({
+            item: entry,
+          }),
+        )
+        .then(
+          Naming.delete({ key: entry }).responds({
+            key: entry,
+          }),
+        )
+        .then(respond({ entry }))
+        .named("entryDelete"),
+      where(
+        Naming._getKey({ context: gameCode, suffix: lookup }).is({ key: null }),
+      )
+        .then(respond({ error: "DOES_NOT_EXIST" }))
+        .named("refused"),
+    ),
+  {
+    input: { required: ["gameCode", "lookup"] },
+  },
+);
+
+export const editCmp = { AddEntry, UpdateEntry, UpdateName, DeleteEntry };

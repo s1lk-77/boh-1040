@@ -81,6 +81,7 @@ Defined in [Joining](../design/concepts/Joining.md), line 1.
 - `_isContext(id: Identifier) : one (isContext: Flag)`
 - `_isMember(id: Identifier, member: Member) : one (isMember: Flag)`
 - `_getName(id: Identifier) : one (name: String)`
+- `_getAll(id: Identifier) : many (member: String)`
 
 #### Instances
 
@@ -143,14 +144,44 @@ Authored path: `Collect.Compendium`.
 - Covered by [Collect](../design/compositions/Collect.md), line 23.
 
 ```former
-Former "the abil compendium" — inputs (pid); bindings (entry, feature, value); promises exactly one record — forms:
+Former "the abil compendium" — inputs (gameCode); bindings (entry, feature, value); promises exactly one record — forms:
   a record of
-    cards: each Inventorying._getAll (owner: pid) has (item: entry)
+    cards: each Inventorying._getAll (owner: gameCode) has (item: entry)
       form a record of
         card: each Cataloging._get (catalog: "abils", entry) has (feature, value)
           form a record of
             feature
             value
+```
+
+### the player abil compendium
+
+Authored path: `Collect.PlayerCompendium`.
+- Covered by [Collect](../design/compositions/Collect.md), line 25.
+
+```former
+Former "the player abil compendium" — inputs (gameCode, pid); bindings (entry, feature, value); promises exactly one record — forms:
+  a record of
+    cards: each Inventorying._getAll (owner: pid) has (item: entry)
+      where Inventorying._owns (item: entry, owner: gameCode) has (owns: true)
+      form a record of
+        card: each Cataloging._get (catalog: "abils", entry) has (feature, value)
+          form a record of
+            feature
+            value
+```
+
+### the playerlist
+
+Authored path: `Collect.PlayerList`.
+- Covered by [Collect](../design/compositions/Collect.md), line 27.
+
+```former
+Former "the playerlist" — inputs (gameCode); bindings (playerName, pid); promises exactly one record — forms:
+  each Joining._getAll (id: gameCode) has (member: playerName)
+    where Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
+    form a record of
+      pid
 ```
 
 ## Reactions
@@ -166,7 +197,7 @@ when RequestBoundary.request (gameCode, path: "/collect/admin", requestId)
 where
   Joining._isContext (id: gameCode) has (isContext: true)
 then
-  RequestBoundary.respond (abils: former "the abil compendium" with (pid: gameCode), requestId)
+  RequestBoundary.respond (abils: former "the abil compendium" with (gameCode), requestId)
 ```
 
 ### Collect.Admin:gameNotFound
@@ -284,7 +315,7 @@ when RequestBoundary.request (gameCode, path: "/collect/production", playerName,
 where
   Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
 then
-  RequestBoundary.respond (abils: former "the abil compendium" with (pid), requestId)
+  RequestBoundary.respond (abils: former "the player abil compendium" with (gameCode, pid), requestId)
 ```
 
 ### Collect.Production:noPlayer
@@ -388,6 +419,73 @@ where
   Naming._getKey (context: gameCode, suffix: lookup)
 then
   RequestBoundary.respond (error: "ALREADY_EXISTS", requestId)
+```
+
+### Edit.DeleteEntry:entryDelete
+
+Authored path: `Edit.DeleteEntry`.
+- Covered by [Edit](../design/compositions/Edit.md), line 21.
+- Covered by [Edit](../design/compositions/Edit.md), line 24.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/edit/delete-entry", requestId)
+where
+  Naming._getKey (context: gameCode, suffix: lookup) has (key: entry)
+  Cataloging._exists (catalog: gameCode, entry) has (exists: true)
+then
+  Cataloging.delete (catalog: gameCode, entry)
+```
+
+### Edit.DeleteEntry:entryDelete#2
+
+Authored path: `Edit.DeleteEntry`.
+- Covered by [Edit](../design/compositions/Edit.md), line 21.
+- Covered by [Edit](../design/compositions/Edit.md), line 24.
+
+```reaction
+when Cataloging.delete (catalog: gameCode, entry), asked by Edit.DeleteEntry:entryDelete
+then
+  Inventorying.remove (item: entry, owner: gameCode)
+```
+
+### Edit.DeleteEntry:entryDelete#3
+
+Authored path: `Edit.DeleteEntry`.
+- Covered by [Edit](../design/compositions/Edit.md), line 21.
+- Covered by [Edit](../design/compositions/Edit.md), line 24.
+
+```reaction
+when Inventorying.remove (item: entry, owner: gameCode), asked by Edit.DeleteEntry:entryDelete#2
+then
+  Naming.delete (key: entry)
+```
+
+### Edit.DeleteEntry:entryDelete#4
+
+Authored path: `Edit.DeleteEntry`.
+- Covered by [Edit](../design/compositions/Edit.md), line 21.
+- Covered by [Edit](../design/compositions/Edit.md), line 24.
+
+```reaction
+when Naming.delete (key: entry), asked by Edit.DeleteEntry:entryDelete#3
+where
+  earlier, RequestBoundary.request (gameCode, lookup, path: "/edit/delete-entry", requestId)
+then
+  RequestBoundary.respond (entry, requestId)
+```
+
+### Edit.DeleteEntry:refused
+
+Authored path: `Edit.DeleteEntry`.
+- Covered by [Edit](../design/compositions/Edit.md), line 21.
+- Covered by [Edit](../design/compositions/Edit.md), line 24.
+
+```reaction
+when RequestBoundary.request (gameCode, lookup, path: "/edit/delete-entry", requestId)
+where
+  Naming._getKey (context: gameCode, suffix: lookup) has (key: null)
+then
+  RequestBoundary.respond (error: "DOES_NOT_EXIST", requestId)
 ```
 
 ### Edit.UpdateEntry:entryUpdated
@@ -749,6 +847,7 @@ not listed here have no explicit input contract.
 - `/collect/print` — requires `gameCode`, `playerName`, `lookup`
 - `/collect/production` — requires `gameCode`, `playerName`
 - `/edit/add-entry` — requires `gameCode`, `lookup`
+- `/edit/delete-entry` — requires `gameCode`, `lookup`
 - `/edit/update-entry` — requires `gameCode`, `lookup`, `feature`, `value`
 - `/edit/update-name` — requires `gameCode`, `gameName`
 - `/portal/create-game` — requires `gameCode`, `gameName`

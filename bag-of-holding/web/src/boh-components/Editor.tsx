@@ -107,6 +107,22 @@ const Editor = ({
     if (clearFlag) setClearFlag(false);
   }, [clearFlag]);
 
+  const onDelete = useCallback(async () => {
+    if (!client || !card) return;
+
+    const res = await client["/edit/delete-entry"]({
+      gameCode,
+      lookup: card.MYlookup,
+    });
+
+    if ("error" in res) {
+      console.error(res);
+      return;
+    }
+
+    onReload();
+  }, [card, client, gameCode]);
+
   return (
     <Stack align="center" w="100%" pt="sm">
       {mode === "update" && <Text fw="bold">@{card?.MYlookup}</Text>}
@@ -140,7 +156,7 @@ const Editor = ({
             <Button
               className="hoverButton"
               flex={1}
-              onClick={() => setMode("add")}
+              onClick={onDelete}
               c="black"
               bd="2px solid black"
               bg="red.5"

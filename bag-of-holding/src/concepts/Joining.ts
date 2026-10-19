@@ -174,4 +174,24 @@ export class JoiningConcept {
 
     return { name: contextObj.name };
   }
+
+  /**
+   * Gets all members of a context
+   *
+   * @param id the context
+   * @returns all members, if it exists, else null
+   */
+  async _getAll({ id }: { id: string }): Promise<{ member: string }[]> {
+    const contextObj: Context | null = await this.contexts.findOne({
+      identifier: id,
+    });
+
+    if (contextObj === null) {
+      return [];
+    }
+
+    return contextObj.members.map((member) => {
+      return { member };
+    });
+  }
 }

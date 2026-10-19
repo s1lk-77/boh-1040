@@ -65,6 +65,9 @@ describe("catalog", () => {
     await expect(
       cataloging.catalog({ name: "test", features: ["feature"], default_: "" }),
     ).resolves.toEqual({ catalog: "test" });
+    await expect(cataloging._isCatalog({ name: "test" })).resolves.toEqual({
+      isCatalog: true,
+    });
   });
 
   test("invalid new catalog", async () => {
@@ -93,6 +96,25 @@ describe("addEntry", () => {
     await expect(
       cataloging.addEntry({ catalog: "test", entry: "entry" }),
     ).rejects.toThrow();
+  });
+
+  test("adding entry does not modify other entries", async () => {
+    await cataloging.catalog({
+      name: "test",
+      features: ["feature"],
+      default_: "",
+    });
+    await cataloging.addEntry({
+      catalog: "test",
+      entry: "entry",
+    });
+    await cataloging.addEntry({
+      catalog: "test",
+      entry: "entry1",
+    });
+    await expect(
+      cataloging._get({ catalog: "test", entry: "entry" }),
+    ).resolves.toStrictEqual([{ feature: "feature", value: "" }]);
   });
 
   test("valid entry", async () => {

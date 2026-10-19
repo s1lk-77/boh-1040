@@ -72,4 +72,7 @@ _isMember(id: Identifier, member: Member) : one (isMember: Flag)
 
 _getName(id: Identifier) : one (name: String)
     Returns the name of the context with this id, or nothing if no context with this id exists
+
+_getAll(id: Identifier) : many (member: String)
+    Returns all members of the context, or nothig if no context with this id exists
 ```

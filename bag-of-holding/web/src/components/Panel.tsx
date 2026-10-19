@@ -45,7 +45,7 @@ interface PanelFooterProps extends CenterProps {
  */
 function Panel({ children, ...props }: PanelProps) {
   return (
-    <Paper radius="md" p="md" bg="gray.1" bd="1px solid black" {...props}>
+    <Paper radius="md" p="md" bg="gray.1" {...props}>
       <Stack h="100%">{children}</Stack>
     </Paper>
   );
@@ -92,8 +92,6 @@ function PanelBody({ children, ...props }: PanelBodyProps) {
       type="auto"
       scrollbars="y"
       offsetScrollbars="present"
-      bd="1px solid gray.3"
-      bg="gray.0"
       {...props}
     >
       <Box p="md">{children}</Box>

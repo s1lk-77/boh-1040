@@ -21,5 +21,5 @@ Edit.UpdateName at /edit/update-name
 A GM should be able to [delete an ability from their game](reaction:Edit.DeleteEntry).
 
 ```endpoints
-Edit.UpdateName at /edit/delete-entry
+Edit.DeleteEntry at /edit/delete-entry
 ```

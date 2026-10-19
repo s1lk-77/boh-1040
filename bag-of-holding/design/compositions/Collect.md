@@ -20,4 +20,8 @@ Collect.Admin at /collect/admin
 
 The [card](former:Collect.Card) collects just one.
 
-The [compendium](former:Collect.Compendium) collects a player or a game's abilities.
+The [compendium](former:Collect.Compendium) collects a game's abilities.
+
+The [player. compendium](former:Collect.PlayerCompendium) collects a player's abilities.
+
+The [playerlist](former:Collect.PlayerList) collects a game's players.

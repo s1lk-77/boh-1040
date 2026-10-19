@@ -74,6 +74,16 @@ export type BoHWire = {
     };
     error: { error: AppWideError | "ALREADY_EXISTS" | "BAD_CATALOG_OP" | "BAD_INVENTORY_OP" | "INVALID_INPUT" };
   };
+  "/edit/delete-entry": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+    };
+    output: {
+      "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["delete"]>[0], ["key"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Naming"]["delete"]>>, ["key"]>]>>;
+    };
+    error: { error: AppWideError | "BAD_CATALOG_OP" | "BAD_INVENTORY_OP" | "DOES_NOT_EXIST" | "INVALID_INPUT" };
+  };
   "/edit/update-entry": {
     input: {
       "feature": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["feature"]>>;
@@ -215,6 +225,16 @@ export type BoHWireHttp = {
       "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["uniquify"]>[0], ["suffix"]>>;
     };
     error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" };
+  };
+  "/edit/delete-entry": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
+    };
+    output: {
+      "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["delete"]>[0], ["key"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Naming"]["delete"]>>, ["key"]>]>>;
+    };
+    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" | "NOT_FOUND" };
   };
   "/edit/update-entry": {
     input: {

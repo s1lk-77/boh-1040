@@ -66,6 +66,20 @@ describe("delete", () => {
   test("valid key", async () => {
     const { key } = await naming.uniquify({ context: "ctx", suffix: "sfx" });
     await expect(naming.delete({ key })).resolves.toBeDefined();
+    await expect(naming._getValue({ key })).resolves.toEqual({
+      context: null,
+      suffix: null,
+    });
+  });
+
+  test("delete does not delete other keys", async () => {
+    const { key } = await naming.uniquify({ context: "ctx", suffix: "sfx" });
+    const keyObj2 = await naming.uniquify({ context: "ctx1", suffix: "sfx1" });
+    await naming.delete({ key });
+    await expect(naming._getValue(keyObj2)).resolves.toEqual({
+      context: "ctx1",
+      suffix: "sfx1",
+    });
   });
 
   test("invalid key", async () => {

@@ -14,16 +14,46 @@ const Card = former("the abil card", ({ entry }, { feature, value }) =>
 
 const Compendium = former(
   "the abil compendium",
-  ({ pid }, { entry, feature, value }) =>
+  ({ gameCode }, { entry, feature, value }) =>
     form({
       cards: each(
-        Inventorying._getAll({ owner: pid }).is({ item: entry }),
+        Inventorying._getAll({ owner: gameCode }).is({ item: entry }),
       ).form({
         card: each(
           Cataloging._get({ catalog: "abils", entry }).is({ feature, value }),
         ).form({ feature, value }),
       }),
     }),
+);
+
+const PlayerCompendium = former(
+  "the player abil compendium",
+  ({ gameCode, pid }, { entry, feature, value }) =>
+    form({
+      cards: each(Inventorying._getAll({ owner: pid }).is({ item: entry }))
+        .where(
+          Inventorying._owns({ owner: gameCode, item: entry }).is({
+            owns: true,
+          }),
+        )
+        .form({
+          card: each(
+            Cataloging._get({ catalog: "abils", entry }).is({ feature, value }),
+          ).form({ feature, value }),
+        }),
+    }),
+);
+
+const PlayerList = former(
+  "the playerlist",
+  ({ gameCode }, { playerName, pid }) =>
+    each(Joining._getAll({ id: gameCode }).is({ member: playerName }))
+      .where(
+        Naming._getKey({ context: gameCode, suffix: playerName }).is({
+          key: pid,
+        }),
+      )
+      .form({ pid }),
 );
 
 const Print = endpoint(
@@ -95,7 +125,7 @@ const Production = endpoint(
           key: pid,
         }),
       )
-        .then(respond({ abils: Compendium({ pid }) }))
+        .then(respond({ abils: PlayerCompendium({ gameCode, pid }) }))
         .named("collected"),
       where(
         Naming._getKey({ context: gameCode, suffix: playerName }).is({
@@ -119,7 +149,7 @@ const Admin = endpoint(
           isContext: true,
         }),
       )
-        .then(respond({ abils: Compendium({ pid: gameCode }) }))
+        .then(respond({ abils: Compendium({ gameCode }) }))
         .named("collected"),
       where(
         Joining._isContext({ id: gameCode }).is({
@@ -134,4 +164,12 @@ const Admin = endpoint(
   },
 );
 
-export const collectCmp = { Card, Print, Compendium, Production, Admin };
+export const collectCmp = {
+  Card,
+  Print,
+  Compendium,
+  Production,
+  Admin,
+  PlayerList,
+  PlayerCompendium,
+};
