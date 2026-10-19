@@ -92,8 +92,7 @@ export class JoiningConcept {
 
     const newMembers = [...contextObj.members, member];
 
-    // we are NOT awaiting this promise, write lock will take care of race conditions
-    void this.contexts.updateOne(
+    await this.contexts.updateOne(
       { _id: contextObj._id },
       { $set: { members: newMembers } },
     );
