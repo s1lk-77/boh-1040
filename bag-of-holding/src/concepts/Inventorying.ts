@@ -20,7 +20,7 @@ export class InventoryingConcept {
   async make({ owner }: { owner: string }): Promise<{ owner: string }> {
     // set up the index
     if (!this.indexed) {
-      this.inventories.createIndex({ owner: 1 });
+      await this.inventories.createIndex({ owner: 1 });
       this.indexed = true;
     }
 

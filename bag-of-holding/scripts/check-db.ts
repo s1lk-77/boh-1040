@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb";
 
 const url =
   process.env.MONGODB_URL ?? "mongodb://127.0.0.1:27017/bag-of-holding";
+console.log("url is", url);
 // With --wait, keep trying for 30 seconds. That gives a fresh container time to start.
 const timeout = process.argv.includes("--wait") ? 30_000 : 3_000;
 const client = new MongoClient(url, { serverSelectionTimeoutMS: timeout });

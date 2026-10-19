@@ -45,6 +45,7 @@
     "db:logs": "podman compose logs mongo",
     "db:reset": "podman compose down -v",
     "db:check": "bun scripts/check-db.ts",
-    "build:css": "postcss web/src/styles.css -o web/src/compiled-mantine.css"
+    "build:css": "postcss web/src/styles.css -o web/src/compiled-mantine.css",
+    "test": "bun test --env-file=.env"
   }
 }

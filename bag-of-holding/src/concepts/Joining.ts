@@ -43,12 +43,16 @@ export class JoiningConcept {
   }): Promise<{ context: string }> {
     // set up the index
     if (!this.indexed) {
-      this.contexts.createIndex({ identifier: 1 });
+      await this.contexts.createIndex({ identifier: 1 }, { unique: true });
       this.indexed = true;
     }
 
     try {
-      await this.contexts.insertOne({ identifier: id, name, members: [] });
+      await this.contexts.insertOne({
+        identifier: id,
+        name,
+        members: [],
+      });
     } catch (error) {
       if (error instanceof MongoServerError && error.code === 11000) {
         throw new DuplicateContext("Key already exists.");

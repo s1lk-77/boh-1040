@@ -11,9 +11,7 @@ export async function openTestDb(): Promise<TestDb> {
   let url = process.env.MONGODB_URL;
 
   if (!url) {
-    throw new Error(
-      "MONGODB_URL is not set. Add it to .env, or run `bun run test:memory` instead.",
-    );
+    throw new Error("MONGODB_URL is not set.");
   }
 
   const client = new MongoClient(url, { serverSelectionTimeoutMS: 3000 });

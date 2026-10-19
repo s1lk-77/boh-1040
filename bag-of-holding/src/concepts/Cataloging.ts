@@ -45,7 +45,7 @@ export class CatalogingConcept {
     default_: string;
   }): Promise<{ catalog: string }> {
     if (!this.indexed) {
-      this.catalogs.createIndex({ name: 1 });
+      await this.catalogs.createIndex({ name: 1 });
       this.indexed = true;
     }
 

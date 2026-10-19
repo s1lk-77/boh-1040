@@ -51,12 +51,44 @@ afterAll(async () => {
  * - partition on context: extant, nonexistent
  */
 
-describe("create", () => {});
+describe("create", () => {
+  test("covers nonexistent context, valid create", async () => {
+    const res = await joining.create({ id: "moonrise", name: "Moonrise" });
+    expect(res.context).toBe("moonrise");
+  });
 
-describe("join", () => {});
+  test("covers extant context, invalid create", async () => {
+    await joining.create({ id: "moonrise", name: "Moonrise" });
+    expect(joining.create({ id: "moonrise", name: "Test" })).rejects.toThrow(
+      "Key already exists.",
+    );
+  });
+});
 
-describe("isContext", () => {});
+describe("join", () => {
+  test("covers valid context, new member", async () => {});
 
-describe("isMember", () => {});
+  test("covers valid context, existing member", async () => {});
 
-describe("getName", () => {});
+  test("covers invalid context", async () => {});
+});
+
+describe("isContext", () => {
+  test("covers valid context", async () => {});
+
+  test("covers inalid context", async () => {});
+});
+
+describe("isMember", () => {
+  test("covers valid context, new member", async () => {});
+
+  test("covers valid context, existing member", async () => {});
+
+  test("covers invalid context", async () => {});
+});
+
+describe("getName", () => {
+  test("covers valid context", async () => {});
+
+  test("covers inalid context", async () => {});
+});
