@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BaseCard } from "../../../shared/types";
 import CardFront from "../boh-generics/CardFront";
 import { RefreshCcw, ArrowLeft, ArrowRight } from "lucide-react";
+import "../../styles.css";
 
 interface DisplayProps {
   gameName: string;
@@ -36,23 +37,34 @@ const Display = ({
       )}
       {showToolBar && (
         <Group justify="space-between" align="center" h="15%" wrap="nowrap">
-          <Button h="auto" c="black" bg="none">
+          <Button
+            h="auto"
+            c="black"
+            bg="none"
+            className="hoverTransparentButton"
+          >
             <ArrowLeft onClick={() => onIndex(-1)} />
           </Button>
           <Button
             h="auto"
             c="black"
             bg="none"
+            className="hoverTransparentButton"
             onClick={() => {
               setFlipped(!flipped);
             }}
           >
             <Flex direction="column">
-              <RefreshCcw size={30} />
+              <RefreshCcw size={30} className="hoverRotate" />
               Flip
             </Flex>
           </Button>
-          <Button h="auto" c="black" bg="none">
+          <Button
+            h="auto"
+            c="black"
+            bg="none"
+            className="hoverTransparentButton"
+          >
             <ArrowRight onClick={() => onIndex(1)} />
           </Button>
         </Group>

@@ -141,6 +141,7 @@ const Editor = ({
             }
             defaultValue={card === undefined ? undefined : card[feature.name]}
             flag={clearFlag}
+            strict={feature.name === "MYlookup"}
           />
         </Fragment>
       ))}

@@ -8,12 +8,14 @@ import {
 import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 import { parseGametexName } from "../utilities";
 import { type Feature } from "../../../shared/types";
+import { PLAYER_NAME_REGEX } from "../../../shared/constants";
 
 interface FeatureInputProps extends StackProps {
   onFeatureChange: (value: string) => void;
   feature: Feature;
   defaultValue?: string;
   flag: boolean;
+  strict?: boolean;
 }
 
 const FeatureInput = ({
@@ -21,17 +23,31 @@ const FeatureInput = ({
   onFeatureChange,
   defaultValue,
   flag,
+  strict = false,
   ...props
 }: FeatureInputProps) => {
   const [value, setValue] = useState<string>("");
 
+  const strictUpdate = useCallback((newString: string) => {
+    if (PLAYER_NAME_REGEX.test(newString) || newString === "") {
+      setValue(newString);
+    } else if (newString.at(-1) === " " && newString.at(-2) !== "-") {
+      newString = newString.replace(" ", "-");
+      setValue(newString);
+    }
+  }, []);
+
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newValue = e.target.value;
+      if (strict) {
+        strictUpdate(newValue);
+        return;
+      }
       setValue(newValue);
       onFeatureChange(newValue);
     },
-    [onFeatureChange],
+    [onFeatureChange, strict, strictUpdate],
   );
 
   useEffect(() => {

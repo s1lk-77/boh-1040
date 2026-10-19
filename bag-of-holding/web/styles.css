@@ -6,6 +6,10 @@ body {
   background: var(--mantine-color-yellow-8) !important;
 }
 
+.hoverButton:active {
+  background: var(--mantine-color-yellow-8) !important;
+}
+
 .hoverGrayButton:hover {
   background: var(--mantine-color-gray-6) !important;
 }
@@ -22,8 +26,16 @@ body {
   text-decoration: underline;
 }
 
-.hoverButton:active {
-  background: var(--mantine-color-yellow-8) !important;
+.hoverRotate {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hoverRotate:hover {
+  transform: rotate(-70deg);
+}
+
+.hoverRotate:active {
+  transform: rotate(-70deg);
 }
 
 .lightNavButton:active {
