@@ -45,7 +45,7 @@ export class CatalogingConcept {
     default_: string;
   }): Promise<{ catalog: string }> {
     if (!this.indexed) {
-      await this.catalogs.createIndex({ name: 1 });
+      await this.catalogs.createIndex({ name: 1 }, { unique: true });
       this.indexed = true;
     }
 
@@ -129,7 +129,7 @@ export class CatalogingConcept {
 
     thisBinding.value = value;
 
-    void this.catalogs.updateOne(
+    await this.catalogs.updateOne(
       { name: catalog, "entries.entry": entry },
       { $set: { "entries.$": thisEntry } },
     );
@@ -154,8 +154,8 @@ export class CatalogingConcept {
       throw new BadCatalogOperation();
     }
 
-    void this.catalogs.updateOne(
-      { catalog },
+    await this.catalogs.updateOne(
+      { name: catalog },
       { $pull: { entries: { entry } } },
     );
     return { entry };
@@ -187,7 +187,7 @@ export class CatalogingConcept {
 
     const thisEntry = catalogObj.entries.find((e) => e.entry === entry);
     if (!thisEntry) {
-      throw new BadCatalogOperation();
+      return [];
     }
     return thisEntry.bindings;
   }
