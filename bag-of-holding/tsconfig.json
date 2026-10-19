@@ -21,6 +21,7 @@
     "generated.config.ts",
     "generated",
     "declarations.d.ts",
-    "shared"
+    "shared",
+    "tests"
   ]
 }
