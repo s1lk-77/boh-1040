@@ -231,7 +231,7 @@ function GMPage() {
                 </Button> */}
               </Group>
             </Panel.Header>
-            <Stack mt={0} flex={1} px="xl">
+            <Stack mt={0} flex={1} px="lg">
               {viewMode === "edit" ? (
                 <Editor
                   features={
