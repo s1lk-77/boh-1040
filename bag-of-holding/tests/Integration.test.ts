@@ -258,6 +258,23 @@ describe("add, update delete", () => {
       value: "Heals 10 HP.",
     });
 
+    const lookupres = await client["/collect/print"]({
+      gameCode,
+      playerName,
+      lookup: "abil-1",
+    });
+
+    expect(lookupres).toStrictEqual({
+      abil: {
+        card: [
+          { feature: "MYlookup", value: "abil-1" },
+          { feature: "MYname", value: "Fireball" },
+          { feature: "MYtext", value: "Hurls a ball of fire." },
+          { feature: "MYeffect", value: "Deals 5 fire damage." },
+        ],
+      },
+    });
+
     // Delete
     await client["/edit/delete-entry"]({
       gameCode,
@@ -280,6 +297,17 @@ describe("add, update delete", () => {
             ],
           },
         ],
+      },
+    });
+
+    const res2 = await client["/collect/production"]({
+      gameCode,
+      playerName,
+    });
+
+    expect(res2).toStrictEqual({
+      abils: {
+        cards: [],
       },
     });
   });
