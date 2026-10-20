@@ -163,7 +163,7 @@ const Editor = ({
         {mode === "update" && (
           <>
             <Button
-              className="hoverButton"
+              className="hoverRedButton"
               flex={1}
               onClick={onDelete}
               c="black"
@@ -174,7 +174,7 @@ const Editor = ({
               <Trash />
             </Button>
             <Button
-              className="hoverButton"
+              className="hoverGrayButton"
               flex={1}
               onClick={() => setMode("add")}
               c="black"

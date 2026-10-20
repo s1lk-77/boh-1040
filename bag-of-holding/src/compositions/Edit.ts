@@ -1,7 +1,6 @@
 import { endpoint, receive, respond } from "@mit-sdg/sync-engine/boundary";
 import { where } from "@mit-sdg/sync-engine/language";
 import { concepts } from "../concepts.ts";
-import { collectCmp } from "./Collect.ts";
 
 const { Naming, Cataloging, Inventorying, Joining } = concepts;
 

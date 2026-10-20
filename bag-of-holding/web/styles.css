@@ -10,6 +10,14 @@ body {
   background: var(--mantine-color-yellow-8) !important;
 }
 
+.hoverRedButton:hover {
+  background: var(--mantine-color-red-8) !important;
+}
+
+.hoverRedButton:active {
+  background: var(--mantine-color-red-8) !important;
+}
+
 .hoverGrayButton:hover {
   background: var(--mantine-color-gray-6) !important;
 }
