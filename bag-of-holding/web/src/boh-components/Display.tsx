@@ -1,7 +1,7 @@
 import { Button, Flex, Group, Stack } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import CardBack from "../boh-generics/CardBack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BaseCard } from "../../../shared/types";
 import CardFront from "../boh-generics/CardFront";
 import { RefreshCcw, ArrowLeft, ArrowRight } from "lucide-react";
@@ -13,6 +13,7 @@ interface DisplayProps {
   card: BaseCard;
   showToolBar?: boolean;
   onIndex: (dir: -1 | 1) => void;
+  defaultFlipped?: boolean;
 }
 
 const Display = ({
@@ -20,9 +21,13 @@ const Display = ({
   playerName,
   card,
   showToolBar = true,
+  defaultFlipped = false,
   onIndex,
 }: DisplayProps) => {
   const [flipped, setFlipped] = useState<boolean>(false);
+  useEffect(() => {
+    setFlipped(defaultFlipped);
+  }, [defaultFlipped]);
   return (
     <Stack w={STANDARD_FRAME_WIDTH} flex={1} mih={0}>
       {flipped ? (

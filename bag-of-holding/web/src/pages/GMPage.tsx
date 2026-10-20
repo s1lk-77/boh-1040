@@ -1,15 +1,6 @@
 import Panel from "../components/Panel";
 import CenterLayout from "../components/CenterLayout";
-import {
-  Button,
-  Box,
-  Group,
-  Input,
-  Stack,
-  Text,
-  Title,
-  Divider,
-} from "@mantine/core";
+import { Button, Box, Group, Input, Stack, Text, Title } from "@mantine/core";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
@@ -21,8 +12,9 @@ import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
 import useBackButton from "../hooks/useBackButton";
 import { useFocusTrap } from "@mantine/hooks";
-import { Edit, Upload, X } from "lucide-react";
+import { Edit, Upload, X, Eye } from "lucide-react";
 import "../../styles.css";
+import Display from "../boh-components/Display";
 
 /**
  * The GM's dashboard page.
@@ -39,6 +31,7 @@ function GMPage() {
   const [editingName, setEditingName] = useState<boolean>(false);
   const focusTrapRef = useFocusTrap(editingName);
   const navigate = useNavigate();
+  const [viewMode, setViewMode] = useState<"edit" | "view">("view");
 
   /**
    * Loads game name
@@ -64,12 +57,17 @@ function GMPage() {
       return;
     }
     const rawCards = res.abils.cards;
-    console.log("raw cards are", rawCards);
     const mappedCards: BaseCard[] = rawCards
       .map((raw) => unwrapCard(raw.card))
       .filter((card) => card !== undefined);
+    if (selectedCard) {
+      const maybe = mappedCards.find(
+        (c) => c.MYlookup === selectedCard.MYlookup,
+      );
+      if (maybe) setSelectedCard(maybe);
+    }
     setCards([...mappedCards]);
-  }, [gameCode, client]);
+  }, [gameCode, client, selectedCard]);
 
   useEffect(() => {
     loadName();
@@ -206,44 +204,76 @@ function GMPage() {
                   bg="none"
                   className="hoverTransparentButton"
                   fw="normal"
+                  onClick={() => setViewMode("view")}
+                  bd={viewMode === "view" ? "2px solid black" : "none"}
                 >
-                  View
+                  <Text mr="0.5rem">Viewer</Text>
+                  <Eye />
                 </Button>
                 <Button
                   c="black"
                   bg="none"
                   className="hoverTransparentButton"
                   fw="normal"
+                  onClick={() => setViewMode("edit")}
+                  bd={viewMode === "edit" ? "2px solid black" : "none"}
                 >
-                  Edit
+                  <Text mr="0.5rem">Editor</Text>
+                  <Edit />
                 </Button>
-                <Button
+                {/* <Button
                   c="black"
                   bg="none"
                   className="hoverTransparentButton"
                   fw="normal"
                 >
                   Upload
-                </Button>
+                </Button> */}
               </Group>
             </Panel.Header>
-            <Panel.Body mt={0}>
-              <Editor
-                features={
-                  editorMode === "update"
-                    ? features.filter((f) => f.name !== "MYlookup")
-                    : features
-                }
-                gameCode={gameCode!}
-                mode={editorMode}
-                card={editorMode === "update" ? selectedCard! : undefined}
-                setMode={setEditorMode}
-                onReload={() => {
-                  loadCompendium();
-                  setEditorMode("add");
-                }}
-              />
-            </Panel.Body>
+            <Stack mt={0} flex={1} px="xl">
+              {viewMode === "edit" ? (
+                <Editor
+                  features={
+                    editorMode === "update"
+                      ? features.filter((f) => f.name !== "MYlookup")
+                      : features
+                  }
+                  gameCode={gameCode!}
+                  mode={editorMode}
+                  card={editorMode === "update" ? selectedCard! : undefined}
+                  setMode={setEditorMode}
+                  onReload={() => {
+                    loadCompendium();
+                    setEditorMode("add");
+                  }}
+                />
+              ) : (
+                <Stack h="100%" w="100%" py="xl" align="center">
+                  {selectedCard ? (
+                    <>
+                      <Display
+                        gameName={gameName!}
+                        onIndex={() => {}}
+                        showToolBar={false}
+                        playerName="TestPlayer1"
+                        card={selectedCard}
+                      />
+                      <Display
+                        gameName={gameName!}
+                        onIndex={() => {}}
+                        showToolBar={false}
+                        playerName="TestPlayer1"
+                        card={selectedCard}
+                        defaultFlipped={true}
+                      />
+                    </>
+                  ) : (
+                    <Text c="gray.6">No card selected</Text>
+                  )}
+                </Stack>
+              )}
+            </Stack>
           </Panel>
           <Panel h="90%" flex={1} mih={0}>
             <Catalog entries={cards} onDisplay={onDisplay} w="100%" />

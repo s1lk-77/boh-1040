@@ -3,6 +3,7 @@ import Card from "./Card";
 import { SMALL_FRAME_WIDTH } from "../../../shared/constants";
 import { formatDate } from "../utilities";
 import { BaseCard } from "../../../shared/types";
+import "../../styles.css";
 
 interface CardFrontProps {
   owned: boolean;
@@ -31,7 +32,7 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
         <Title size="h2">
           {card.MYname === "" ? "Unnamed Ability" : card.MYname}
         </Title>
-        <Text>{`@${card.MYlookup}`}</Text>
+        <Text className="u-fira-code">{`@${card.MYlookup}`}</Text>
       </Stack>
       <ScrollArea
         w={SMALL_FRAME_WIDTH}
