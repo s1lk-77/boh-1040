@@ -24,9 +24,9 @@ A set of Contexts with\
 &emsp; **where** context with id exists\
 &emsp; **then** return the context name
 
-\_getMember(id Identifier, member Member) : (member Member)\
-&emsp; **where** context with id exists and member is in that context\
-&emsp; **then** return the member
+\_getAll(id Identifier) : many(member Member)\
+&emsp; **where** context with id exists\
+&emsp; **then** return all its members
 
 **Actions**\
 create(id Identifier, name String) : (context Context)\
@@ -36,6 +36,10 @@ create(id Identifier, name String) : (context Context)\
 join(id Identifier, member Member) : (Member)\
 &emsp; **where** context exists and Member does not in context\
 &emsp; **then** add member to context
+
+updateName(id Identifier, name String) : (name String)\
+&emsp; **where** context exists\
+&emsp; **then** update the context's name to name
 
 ### Note
 

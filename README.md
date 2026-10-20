@@ -81,6 +81,14 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 |  |- GM-guide.md
 |  |- HLDD.md
 |  |- UI-design.md
+|- bag-of-holding
+|  |- design/
+|  |- src/
+|  |  |-main.tsx
+|  |- web/
+|  |  index.html
+|  |  |- src/
+|  |  |  |  |-main.tsx
 ```
 
 ## High Level Design Doc

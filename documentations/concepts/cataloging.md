@@ -18,9 +18,9 @@ A set of Bindings with\
 &emsp;A Value\
 
 **Queries**\
-\_get(catalog Catalog, entry Entry) : (entry Entry, {feature Feature, value Value}[])\ // TODO
+\_get(catalog Catalog, entry Entry) : ({feature Feature, value Value}[])\
 &emsp;**where** entry exists in catalog\
-&emsp;**then** return the entry and its bindings as an object of feature-value pairs
+&emsp;**then** return the entry's bindings as an object of feature-value pairs
 
 \_exists(catalog Catalog, entry Entry) : (Boolean)\
 &emsp;**where** entry exists in catalog\
@@ -28,14 +28,20 @@ A set of Bindings with\
 &emsp;**where** entry does not exist in catalog\
 &emsp;**then** return false
 
-**Actions**\
-catalog(name String, features Features) : (catalog Catalog)\
-&emsp;**where** name does not exist in Catalogs\
-&emsp;**then** create a Catalog with that name and the given set of features with no entries
+\isCatalog(name Catalog) : (Boolean)\
+&emsp;**where** name exists in catalogs\
+&emsp;**then** return true\
+&emsp;**where** else\
+&emsp;**then** return false
 
-log(catalog Catalog, entry Entry, bindings {feature: Feature, value: Value}[]) : (entry Entry)\
-&emsp;**where** entry does not exist in catalog and the features in bindings match this catalog's features\
-&emsp;**then** create a Binding for each object in bindings and associate them with this entry. Add this entry to the catalog
+**Actions**\
+catalog(name String, features Features, default\_ String) : (catalog Catalog)\
+&emsp;**where** name does not exist in Catalogs\
+&emsp;**then** create a Catalog with that name and the given set of features with no entries and the default value as default\_
+
+addEntry(catalog Catalog, entry Entry) : (entry Entry)\
+&emsp;**where** entry does not exist in catalog\
+&emsp;**then** create bindings for every feature in the catalog with value assigned to default value, attach these bindings to a new entry and add it to the catalog
 
 update(catalog Catalog, entry Entry, feature Feature, value Value) : (entry Entry)\
 &emsp;**where** entry exists in catalog and the feature is in this catalog's features\
@@ -44,7 +50,3 @@ update(catalog Catalog, entry Entry, feature Feature, value Value) : (entry Entr
 delete(catalog Catalog, entry Entry)\
 &emsp;**where** entry exists in catalog\
 &emsp;**then** delete this entry
-
-deleteCatalog(catalog Catalog)\
-&emsp;**where** catalog exists in Catalogs\
-&emsp;**then** delete this catalog

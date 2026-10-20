@@ -2,6 +2,8 @@
 
 ### Preface
 
+Update: Reactions are now broken down into three individuals composition modules, [Portal](../../bag-of-holding/design/compositions/Portal.md), [Edit](../../bag-of-holding/design/compositions/Edit.md), and [Collect](../../bag-of-holding/design/compositions/Collect.md). Please see their specifications [here](../../bag-of-holding/design/compositions/)
+
 Assume:\
 Cataloging.catalog("Abilities", \["name", "serial", "desc", "effect"\])
 
