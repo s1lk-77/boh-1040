@@ -28,14 +28,19 @@ const FeatureInput = ({
 }: FeatureInputProps) => {
   const [value, setValue] = useState<string>("");
 
-  const strictUpdate = useCallback((newString: string) => {
-    if (PLAYER_NAME_REGEX.test(newString) || newString === "") {
-      setValue(newString);
-    } else if (newString.at(-1) === " " && newString.at(-2) !== "-") {
-      newString = newString.replace(" ", "-");
-      setValue(newString);
-    }
-  }, []);
+  const strictUpdate = useCallback(
+    (newString: string) => {
+      if (PLAYER_NAME_REGEX.test(newString) || newString === "") {
+        setValue(newString);
+        onFeatureChange(newString);
+      } else if (newString.at(-1) === " " && newString.at(-2) !== "-") {
+        newString = newString.replace(" ", "-");
+        setValue(newString);
+        onFeatureChange(newString);
+      }
+    },
+    [onFeatureChange],
+  );
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

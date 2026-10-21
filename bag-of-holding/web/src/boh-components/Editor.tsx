@@ -37,6 +37,7 @@ const Editor = ({
     if (!client) {
       return;
     }
+
     const snapShot = featuresRef.current;
     featuresRef.current = {};
     setClearFlag(true);
