@@ -10,9 +10,10 @@ interface CatalogProps {
   entries: BaseCard[];
   onDisplay: (lookup: string) => void;
   w?: string;
+  useColor?: boolean;
 }
 
-const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
+const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
   const [filtered, setFiltered] = useState<BaseCard[]>([]);
 
@@ -47,7 +48,7 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
       <Group
         p="xs"
         ta="center"
-        bg="gray.4"
+        bg={useColor ? "red.4" : "gray.4"}
         bd="solid black 2px"
         style={{
           borderTopLeftRadius: "var(--mantine-radius-md)",
@@ -56,7 +57,13 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
           borderBottomRightRadius: "0px",
         }}
       >
-        <Filter />
+        <Filter
+          fill={
+            useColor
+              ? "var(--mantine-color-red-2)"
+              : "var(--mantine-color-gray-2)"
+          }
+        />
         <Input
           flex={1}
           mr="xl"

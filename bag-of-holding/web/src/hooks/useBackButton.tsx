@@ -1,6 +1,6 @@
 import { type ReactNode, useCallback, useRef } from "react";
 import { Button, Text } from "@mantine/core";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeftToLine } from "lucide-react";
 
 export interface IBack {
   BackButton: ReactNode;
@@ -27,7 +27,7 @@ const useBackButton = (): IBack => {
         callbackRef.current?.();
       }}
     >
-      <ArrowLeft size={24} />
+      <ArrowLeftToLine size={24} />
     </Button>
   );
 

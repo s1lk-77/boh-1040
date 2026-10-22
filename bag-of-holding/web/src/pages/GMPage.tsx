@@ -201,22 +201,22 @@ function GMPage() {
               <Group w="100%">
                 <Button
                   c="black"
-                  bg="none"
+                  bg={viewMode === "view" ? "red.2" : "none"}
                   className="hoverTransparentButton"
                   fw="normal"
                   onClick={() => setViewMode("view")}
-                  bd={viewMode === "view" ? "2px solid black" : "none"}
+                  // bd={viewMode === "view" ? "2px solid black" : "none"}
                 >
                   <Text mr="0.5rem">Viewer</Text>
                   <Eye />
                 </Button>
                 <Button
                   c="black"
-                  bg="none"
+                  bg={viewMode === "edit" ? "red.2" : "none"}
                   className="hoverTransparentButton"
                   fw="normal"
                   onClick={() => setViewMode("edit")}
-                  bd={viewMode === "edit" ? "2px solid black" : "none"}
+                  // bd={viewMode === "edit" ? "2px solid black" : "none"}
                 >
                   <Text mr="0.5rem">Editor</Text>
                   <Edit />
@@ -276,7 +276,7 @@ function GMPage() {
             </Stack>
           </Panel>
           <Panel h="90%" flex={1} mih={0}>
-            <Catalog entries={cards} onDisplay={onDisplay} w="100%" />
+            <Catalog entries={cards} onDisplay={onDisplay} w="100%" useColor />
           </Panel>
         </Group>
       </Stack>

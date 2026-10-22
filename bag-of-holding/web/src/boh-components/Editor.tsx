@@ -149,11 +149,11 @@ const Editor = ({
       <Text>{log}</Text>
       <Group w="100%">
         <Button
-          className="hoverButton"
+          className="hoverRedButton"
           flex={1}
           onClick={mode === "add" ? onAdd : onUpdate}
           c="black"
-          bg="yellow.2"
+          bg="red.2"
           bd="2px solid black"
         >
           <Text mr="0.5rem">
