@@ -38,15 +38,28 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
   return (
     <Flex
       direction="column"
-      bd="solid black 2px"
-      bg="gray.2"
+      bg="gray.3"
       w={w ?? STANDARD_FRAME_WIDTH}
       flex={1}
       mih={0}
+      bdrs="md"
     >
-      <Group p="xs" ta="center" bg="gray.4">
+      <Group
+        p="xs"
+        ta="center"
+        bg="gray.4"
+        bd="solid black 2px"
+        style={{
+          borderTopLeftRadius: "var(--mantine-radius-md)",
+          borderTopRightRadius: "var(--mantine-radius-md)",
+          borderBottomLeftRadius: "0px",
+          borderBottomRightRadius: "0px",
+        }}
+      >
         <Filter />
         <Input
+          flex={1}
+          mr="xl"
           placeholder="type to filter..."
           value={filter}
           onChange={onFilter}
@@ -62,7 +75,7 @@ const Catalog = ({ entries, onDisplay, w }: CatalogProps) => {
           }}
         />
       </Group>
-      <Divider size="sm" mb={0} color="black" aria-hidden />
+      <Divider mb={0} aria-hidden />
       <ScrollArea
         flex={1}
         mih={0}

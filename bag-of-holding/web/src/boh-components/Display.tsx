@@ -41,7 +41,15 @@ const Display = ({
         />
       )}
       {showToolBar && (
-        <Group justify="space-between" align="center" h="15%" wrap="nowrap">
+        <Group
+          justify="space-between"
+          align="center"
+          py="md"
+          mb="sm"
+          wrap="nowrap"
+          bg="gray.3"
+          bdrs="md"
+        >
           <Button
             h="auto"
             c="black"

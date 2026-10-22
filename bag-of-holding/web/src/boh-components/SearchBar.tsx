@@ -67,9 +67,9 @@ const SearchBar = ({
       w={STANDARD_FRAME_WIDTH}
       h="15%"
       align="center"
-      bg="gray.1"
-      bd="2px solid black"
+      bg="gray.3"
       pl="sm"
+      bdrs="md"
     >
       <Input
         data-autofocus
