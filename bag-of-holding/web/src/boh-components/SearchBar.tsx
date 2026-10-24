@@ -6,6 +6,7 @@ import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import { Search } from "lucide-react";
+import "../../styles.css";
 
 interface SearchBarProps extends FlexProps {
   onSuccess: (value: BaseCard) => void;
@@ -123,7 +124,7 @@ const SearchBar = ({
         bg="none"
         aria-label="Search"
       >
-        <Search />
+        <Search className="hoverTransparentButton" />
       </Button>
     </Flex>
   );
