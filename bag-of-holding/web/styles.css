@@ -46,6 +46,18 @@ body {
   transform: rotate(-70deg);
 }
 
+.hoverRotateXs {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hoverRotateXs:hover {
+  transform: rotate(15deg);
+}
+
+.hoverRotateXs:active {
+  transform: rotate(15deg);
+}
+
 .lightNavButton:active {
   background: var(--mantine-color-gray-4) !important;
 }

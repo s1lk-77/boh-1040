@@ -145,6 +145,7 @@ function GMPage() {
                   input: {
                     fontFamily: "Fira Code, monospace",
                     fontWeight: 450,
+                    border: "2px solid black",
                   },
                 }}
               />
@@ -165,7 +166,7 @@ function GMPage() {
                 tabIndex={0}
                 aria-label="Cancel editing title"
                 color="var(--mantine-color-red-8)"
-                className="u-pointer hoverTransparentButton"
+                className="u-pointer hoverRotateXs"
                 onClick={() => setEditingName(false)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
@@ -269,7 +270,7 @@ function GMPage() {
                       />
                     </>
                   ) : (
-                    <Text c="gray.6">No card selected</Text>
+                    <Text c="gray.6">Select a card to view it!</Text>
                   )}
                 </Stack>
               )}

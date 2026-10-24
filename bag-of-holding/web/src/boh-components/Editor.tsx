@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BaseCard, type Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
 import { Trash, Upload } from "lucide-react";
+import { LOG_DEFAULT } from "../../../shared/constants";
 
 interface EditorProps {
   features: Feature[];
@@ -128,7 +129,15 @@ const Editor = ({
   return (
     <Stack align="center" w="100%" pt="sm">
       {mode === "update" ? (
-        <Text fw="bold">@{card?.MYlookup}</Text>
+        <Text fw="bold">
+          Ability{" "}
+          <Text
+            span
+            style={{ fontFamily: "fira code, monospace", fontWeight: 700 }}
+          >
+            {card?.MYlookup}
+          </Text>
+        </Text>
       ) : (
         <Text fw="bold">Add Entry</Text>
       )}
@@ -146,7 +155,6 @@ const Editor = ({
           />
         </Fragment>
       ))}
-      <Text>{log}</Text>
       <Group w="100%">
         <Button
           className="hoverRedButton"
@@ -187,6 +195,9 @@ const Editor = ({
           </>
         )}
       </Group>
+      <Text c={log === "" ? "gray.7" : "red"}>
+        {mode === "add" && log === "" ? LOG_DEFAULT : log}
+      </Text>
     </Stack>
   );
 };

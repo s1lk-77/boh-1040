@@ -99,12 +99,13 @@ function GMLoginPage() {
                   input: {
                     fontFamily: "Fira Code, monospace",
                     fontWeight: 450,
+                    border: "2px solid black",
                   },
                 }}
               />
               <Group>
                 <Button
-                  className="hoverButton"
+                  className="hoverGrayButton"
                   bd="2px solid black"
                   bg="none"
                   c="black"
@@ -143,6 +144,7 @@ function GMLoginPage() {
                   input: {
                     fontFamily: "Fira Code, monospace",
                     fontWeight: 450,
+                    border: "2px solid black",
                   },
                 }}
               />
@@ -155,6 +157,19 @@ function GMLoginPage() {
                   onClick={createGame}
                 >
                   Confirm
+                </Button>
+                <Button
+                  className="hoverGrayButton"
+                  bd="2px solid black"
+                  bg="none"
+                  c="black"
+                  onClick={() => {
+                    setGameName("");
+                    setCreateMode(false);
+                    setDneError(false);
+                  }}
+                >
+                  Cancel
                 </Button>
               </Group>
             </>

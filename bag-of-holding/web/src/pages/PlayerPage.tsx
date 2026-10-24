@@ -95,7 +95,11 @@ function PlayerPage() {
   );
 
   useEffect(() => {
-    setBackCb(() => navigate("../.."));
+    setBackCb(() =>
+      navigate("../..", {
+        state: { gameCode, playerName },
+      }),
+    );
   }, [setBackCb]);
 
   return (

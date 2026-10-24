@@ -1,8 +1,14 @@
 import { useClient } from "../ClientProvider";
-import { useState, useCallback, useEffect, type ChangeEvent } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  type ChangeEvent,
+  useRef,
+} from "react";
 import { Button, Stack, Group, Input, Title, Text } from "@mantine/core";
 import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../../../shared/constants";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import CenterLayout from "../components/CenterLayout";
 import { ExternalLink } from "lucide-react";
 
@@ -12,6 +18,7 @@ import { ExternalLink } from "lucide-react";
 function HomePage() {
   const client = useClient();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [gameCode, setGameCode] = useState<string>("");
   const [playerName, setPlayerName] = useState<string>("");
@@ -19,6 +26,14 @@ function HomePage() {
   const [playerNameError, setPlayerNameError] = useState<boolean>(false);
   const [dneError, setDneError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const locFlagRef = useRef<boolean>(false);
+  useEffect(() => {
+    if (!locFlagRef.current) {
+      setGameCode(location?.state?.gameCode ?? "");
+      setPlayerName(location?.state?.playerName ?? "");
+    }
+  }, [location]);
 
   const updatePlayerName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newName: string = e.target.value;
@@ -126,7 +141,11 @@ function HomePage() {
             autoCapitalize="off"
             onKeyDown={reopenKeydown}
             styles={{
-              input: { fontFamily: "Fira Code, monospace", fontWeight: 450 },
+              input: {
+                fontFamily: "Fira Code, monospace",
+                fontWeight: 450,
+                border: "2px solid black",
+              },
             }}
           />
 
@@ -139,7 +158,11 @@ function HomePage() {
             autoCapitalize="off"
             onKeyDown={reopenKeydown}
             styles={{
-              input: { fontFamily: "Fira Code, monospace", fontWeight: 450 },
+              input: {
+                fontFamily: "Fira Code, monospace",
+                fontWeight: 450,
+                border: "2px solid black",
+              },
             }}
           />
           <Group>
@@ -150,7 +173,7 @@ function HomePage() {
               c="black"
               onClick={openBag}
             >
-              Open
+              Open new bag
             </Button>
             <Button
               className="hoverButton"
@@ -159,7 +182,7 @@ function HomePage() {
               c="black"
               onClick={reopenBag}
             >
-              Reopen
+              Reopen bag
             </Button>
           </Group>
           {errorMsg !== null && (
