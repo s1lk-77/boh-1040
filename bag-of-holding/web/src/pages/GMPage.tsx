@@ -270,7 +270,9 @@ function GMPage() {
                       />
                     </>
                   ) : (
-                    <Text c="gray.6">Select a card to view it!</Text>
+                    <Text c="gray.6">
+                      Select a card from the right to view it!
+                    </Text>
                   )}
                 </Stack>
               )}

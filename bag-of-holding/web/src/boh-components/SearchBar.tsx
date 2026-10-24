@@ -1,6 +1,6 @@
 import { Input, Flex, Button, type FlexProps } from "@mantine/core";
-import { useCallback, useRef, useState } from "react";
-import { useFocusTrap } from "@mantine/hooks";
+import { useCallback, useRef, useState, useEffect } from "react";
+import { useFocusTrap, useMergedRef } from "@mantine/hooks";
 import { useClient } from "../ClientProvider";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { BaseCard } from "../../../shared/types";
@@ -11,12 +11,14 @@ interface SearchBarProps extends FlexProps {
   onSuccess: (value: BaseCard) => void;
   gameCode: string;
   playerName: string;
+  onClose: () => void;
 }
 
 const SearchBar = ({
   onSuccess,
   gameCode,
   playerName,
+  onClose,
   ...props
 }: SearchBarProps) => {
   const [value, setValue] = useState<string>("");
@@ -24,6 +26,26 @@ const SearchBar = ({
   const [error, setError] = useState<boolean>(false);
   const client = useClient();
   const focusTrapRef = useFocusTrap();
+  const searchRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(searchRef, focusTrapRef);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Check if the ref exists, and if the clicked target is NOT inside the element
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        onClose(); // Action to take when clicked outside
+      }
+    };
+
+    window.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      window.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const onSubmit = useCallback(async () => {
     setValue("");
@@ -63,7 +85,7 @@ const SearchBar = ({
   return (
     <Flex
       {...props}
-      ref={focusTrapRef}
+      ref={mergedRef}
       w={STANDARD_FRAME_WIDTH}
       h="15%"
       align="center"

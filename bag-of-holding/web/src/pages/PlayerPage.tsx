@@ -128,6 +128,9 @@ function PlayerPage() {
 
         {searching && (
           <SearchBar
+            onClose={() => {
+              setSearching(false);
+            }}
             gameCode={gameCode ?? "moonrise"}
             playerName={playerName ?? "silvanvs"}
             onSuccess={(card: BaseCard) => {
