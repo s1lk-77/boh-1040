@@ -24,7 +24,7 @@ And for you lovely GMs:
 
 _Alpha Version Note:_
 
-_In the alpha, we aim to focus on supporting the player, as this is a player-facing app. Players will be able to join and rejoin a game with a self-defined username. Once they are redirected to their home page, they can see a list of abilities they own with their names, lookup codes. They can click on an ability to see a display of the card in GameTeX format. They will also be able to use the interface to sift through their ability list and flip each card between its front and back sides. On the GM side, time permitting, a GM will be able to create a game with a game code or reopen a game that they previously created. They will also be able to add, update, and delete ability entries, all which of are needed to support player-side functionality._
+_In the alpha, we aim to focus on supporting the player, as this is a player-facing app. Players will be able to join and rejoin a game with a self-defined username. Once they are redirected to their home page, they can see a catalog of abilities they own in a summarized preview format. They will also be able to filter this catalog to support efficient lookup. Additionally, the player can click on an ability to see a display of its card in GameTeX format. They will be able to use the display interface to sift through their ability list and flip each card between its front and back sides. On the GM side, a GM will be able to create a game with a game code or reopen a game that they previously created. They will also be able to add, update, and delete ability entries, all which of are needed to support player-side functionality._
 
 ---
 
