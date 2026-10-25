@@ -59,7 +59,7 @@ const Display = ({
             className="flip-card-inner"
             initial={false}
             animate={{ rotateY: flipped ? 180 : 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
             onAnimationComplete={() => setIsAnimating(false)}
           >
             <CardFront
