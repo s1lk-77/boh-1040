@@ -6,6 +6,7 @@ import { BaseCard, type Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
 import { Trash, Upload } from "lucide-react";
 import { LOG_DEFAULT } from "../../../shared/constants";
+import { motion } from "motion/react";
 
 interface EditorProps {
   features: Feature[];
@@ -127,92 +128,105 @@ const Editor = ({
   }, [card, client, gameCode]);
 
   return (
-    <Stack align="center" w="100%" pt="sm" mih={0}>
-      {mode === "update" ? (
-        <Text fw="bold">
-          Ability{" "}
-          <Text
-            span
-            style={{ fontFamily: "fira code, monospace", fontWeight: 700 }}
-          >
-            {card?.MYlookup}
-          </Text>
-        </Text>
-      ) : (
-        <Title size="h4" mb={0}>
-          Add Entry
-        </Title>
-      )}
-      <ScrollArea
-        flex={1}
-        mih={0}
-        w="100%"
-        type="auto"
-        style={{ WebkitOverflowScrolling: "touch" }}
-      >
-        <Stack align="center" w="100%">
-          {features.map((feature: Feature, i: number) => (
-            <Fragment key={`${feature.name}${i}`}>
-              <FeatureInput
-                w="100%"
-                feature={feature}
-                onFeatureChange={(value: string) =>
-                  onFeatureChange(feature.name, value)
-                }
-                defaultValue={
-                  card === undefined ? undefined : card[feature.name]
-                }
-                flag={clearFlag}
-                strict={feature.name === "MYlookup"}
-              />
-            </Fragment>
-          ))}
-          <Group w="100%">
-            <Button
-              className="hoverRedButton"
-              flex={1}
-              onClick={mode === "add" ? onAdd : onUpdate}
-              c="black"
-              bg="red.2"
-              bd="2px solid black"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      style={{
+        width: "100%",
+        display: "flex",
+        flex: 1,
+        minHeight: 0,
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Stack align="center" w="100%" pt="sm" mih={0}>
+        {mode === "update" ? (
+          <Text fw="bold">
+            Ability{" "}
+            <Text
+              span
+              style={{ fontFamily: "fira code, monospace", fontWeight: 700 }}
             >
-              <Text mr="0.5rem">
-                {mode === "add" ? `Add to my game` : "Update"}
-              </Text>
-              <Upload />
-            </Button>
-            {mode === "update" && (
-              <>
-                <Button
-                  className="hoverRedButton"
-                  flex={1}
-                  onClick={onDelete}
-                  c="black"
-                  bd="2px solid black"
-                  bg="red.5"
-                >
-                  <Text mr="0.5rem">Delete</Text>
-                  <Trash />
-                </Button>
-                <Button
-                  className="hoverGrayButton"
-                  flex={1}
-                  onClick={() => setMode("add")}
-                  c="black"
-                  bg="none"
-                  bd="2px solid black"
-                >
-                  Cancel
-                </Button>
-              </>
-            )}
-          </Group>
-          <Text c={log === "" ? "gray.7" : "red"}>
-            {mode === "add" && log === "" ? LOG_DEFAULT : log}
+              {card?.MYlookup}
+            </Text>
           </Text>
-        </Stack>
-      </ScrollArea>
-    </Stack>
+        ) : (
+          <Title size="h4" mb={0}>
+            Add Entry
+          </Title>
+        )}
+        <ScrollArea
+          flex={1}
+          mih={0}
+          w="100%"
+          type="auto"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          <Stack align="center" w="100%">
+            {features.map((feature: Feature, i: number) => (
+              <Fragment key={`${feature.name}${i}`}>
+                <FeatureInput
+                  w="100%"
+                  feature={feature}
+                  onFeatureChange={(value: string) =>
+                    onFeatureChange(feature.name, value)
+                  }
+                  defaultValue={
+                    card === undefined ? undefined : card[feature.name]
+                  }
+                  flag={clearFlag}
+                  strict={feature.name === "MYlookup"}
+                />
+              </Fragment>
+            ))}
+            <Group w="100%">
+              <Button
+                className="hoverRedButton"
+                flex={1}
+                onClick={mode === "add" ? onAdd : onUpdate}
+                c="black"
+                bg="red.2"
+                bd="2px solid black"
+              >
+                <Text mr="0.5rem">
+                  {mode === "add" ? `Add to my game` : "Update"}
+                </Text>
+                <Upload />
+              </Button>
+              {mode === "update" && (
+                <>
+                  <Button
+                    className="hoverRedButton"
+                    flex={1}
+                    onClick={onDelete}
+                    c="black"
+                    bd="2px solid black"
+                    bg="red.5"
+                  >
+                    <Text mr="0.5rem">Delete</Text>
+                    <Trash />
+                  </Button>
+                  <Button
+                    className="hoverGrayButton"
+                    flex={1}
+                    onClick={() => setMode("add")}
+                    c="black"
+                    bg="none"
+                    bd="2px solid black"
+                  >
+                    Cancel
+                  </Button>
+                </>
+              )}
+            </Group>
+            <Text c={log === "" ? "gray.7" : "red"}>
+              {mode === "add" && log === "" ? LOG_DEFAULT : log}
+            </Text>
+          </Stack>
+        </ScrollArea>
+      </Stack>
+    </motion.div>
   );
 };
 

@@ -17,6 +17,7 @@ import "../../styles.css";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { AbilCard } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
+import { motion } from "motion/react";
 
 interface UploaderProps {
   gameCode: string;
@@ -145,87 +146,101 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
   }, [cards]);
 
   return (
-    <Stack align="center" w="100%" pt="lg" mih={0}>
-      {mode === "upload" && (
-        <>
-          <Title size="h4">Upload Entries</Title>
-          <Text w={SMALL_FRAME_WIDTH}>
-            The demiplane supports batch uploading ability cards in JSON format.{" "}
-            <br />
-            <br />
-            Your JSON should be an array of objects, each with a "MYlookup",
-            "MYname", "MYtext", and "MYeffect" field. See the download template.
-          </Text>
-          <Group>
-            <FileButton onChange={setFile} accept="application/json">
-              {(props) => (
-                <Button
-                  c="black"
-                  bd="2px solid black"
-                  bg="red.2"
-                  className="hoverRedButton"
-                  {...props}
-                >
-                  Upload JSON
-                </Button>
-              )}
-            </FileButton>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      style={{
+        width: "100%",
+        display: "flex",
+        flex: 1,
+        minHeight: 0,
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Stack align="center" w="100%" pt="lg" mih={0}>
+        {mode === "upload" && (
+          <>
+            <Title size="h4">Upload Entries</Title>
+            <Text w={SMALL_FRAME_WIDTH}>
+              The demiplane supports batch uploading ability cards in JSON
+              format. <br />
+              <br />
+              Your JSON should be an array of objects, each with a "MYlookup",
+              "MYname", "MYtext", and "MYeffect" field. See the download
+              template.
+            </Text>
+            <Group>
+              <FileButton onChange={setFile} accept="application/json">
+                {(props) => (
+                  <Button
+                    c="black"
+                    bd="2px solid black"
+                    bg="red.2"
+                    className="hoverRedButton"
+                    {...props}
+                  >
+                    Upload JSON
+                  </Button>
+                )}
+              </FileButton>
+              <Button
+                onClick={downloadTemplate}
+                c="black"
+                bd="2px solid black"
+                bg="none"
+                className="hoverGrayButton"
+              >
+                Download Template JSON
+              </Button>
+            </Group>
+          </>
+        )}
+
+        {mode === "confirm" && (
+          <>
+            <Text c="gray.8">Found entries:</Text>
+            <ScrollArea
+              w={SMALL_FRAME_WIDTH}
+              mih={0}
+              type="auto"
+              scrollbars="y"
+              offsetScrollbars="present"
+            >
+              <Flex
+                direction="column"
+                mih="100%"
+                align="center"
+                justify="center"
+                h="100%"
+              >
+                {cards.map((card, i) => (
+                  <Fragment key={card.MYlookup + i}>
+                    <Text>
+                      {card.MYname} (
+                      <Text span className="u-fira-code">
+                        {card.MYlookup}
+                      </Text>
+                      )
+                    </Text>
+                  </Fragment>
+                ))}
+              </Flex>
+            </ScrollArea>
             <Button
-              onClick={downloadTemplate}
               c="black"
               bd="2px solid black"
-              bg="none"
-              className="hoverGrayButton"
+              bg="red.2"
+              className="hoverRedButton"
+              loading={uploading}
+              onClick={onConfirmAdd}
             >
-              Download Template JSON
+              Yes, Add Them!
             </Button>
-          </Group>
-        </>
-      )}
-
-      {mode === "confirm" && (
-        <>
-          <Text c="gray.8">Found entries:</Text>
-          <ScrollArea
-            w={SMALL_FRAME_WIDTH}
-            mih={0}
-            type="auto"
-            scrollbars="y"
-            offsetScrollbars="present"
-          >
-            <Flex
-              direction="column"
-              mih="100%"
-              align="center"
-              justify="center"
-              h="100%"
-            >
-              {cards.map((card, i) => (
-                <Fragment key={card.MYlookup + i}>
-                  <Text>
-                    {card.MYname} (
-                    <Text span className="u-fira-code">
-                      {card.MYlookup}
-                    </Text>
-                    )
-                  </Text>
-                </Fragment>
-              ))}
-            </Flex>
-          </ScrollArea>
-          <Button
-            c="black"
-            bd="2px solid black"
-            bg="red.2"
-            className="hoverRedButton"
-            loading={uploading}
-            onClick={onConfirmAdd}
-          >
-            Yes, Add Them!
-          </Button>
-        </>
-      )}
-    </Stack>
+          </>
+        )}
+      </Stack>
+    </motion.div>
   );
 };
 
