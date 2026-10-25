@@ -15,7 +15,7 @@ import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
 import { Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
@@ -117,6 +117,8 @@ function GMPage() {
     setGameName(newName);
     setEditingName(false);
   }, [gameCode, client, updatedGameName]);
+
+  const initialRef = useRef<boolean>(true);
 
   const features: Feature[] = BASE_FEATURES.concat(ABIL_FEATURES);
   return (
@@ -306,7 +308,13 @@ function GMPage() {
             </Stack>
           </Panel>
           <Panel h="90%" flex={1} mih={0}>
-            <Catalog entries={cards} onDisplay={onDisplay} w="100%" useColor />
+            <Catalog
+              entries={cards}
+              onDisplay={onDisplay}
+              w="100%"
+              useColor
+              initialRef={initialRef}
+            />
           </Panel>
         </Group>
       </Stack>

@@ -13,7 +13,7 @@ const Entry = ({ name, lookup, onClick, desc = undefined }: EntryProps) => {
     desc === undefined || desc === "" ? "no description text given" : desc;
   return (
     <Stack
-      w="92%"
+      w="100%"
       className="hoverButton"
       component="button"
       onClick={onClick}
@@ -27,6 +27,7 @@ const Entry = ({ name, lookup, onClick, desc = undefined }: EntryProps) => {
         background: "white",
         cursor: "pointer",
       }}
+      my="sm"
     >
       <Group justify="space-between" px="sm">
         <Title size="h3">{name === "" ? "Unnamed Ability" : name}</Title>

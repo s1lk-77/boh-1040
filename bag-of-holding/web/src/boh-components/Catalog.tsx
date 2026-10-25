@@ -12,16 +12,30 @@ import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
 import { ArrowDownZA, ArrowUpAZ, ArrowUpDown, Filter } from "lucide-react";
-import { type ChangeEvent, useCallback, useEffect, useState } from "react";
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 interface CatalogProps {
   entries: BaseCard[];
   onDisplay: (lookup: string) => void;
   w?: string;
   useColor?: boolean;
+  initialRef: React.RefObject<boolean>;
 }
 
-const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
+const Catalog = ({
+  entries,
+  onDisplay,
+  w,
+  initialRef,
+  useColor = false,
+}: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
   const [sort, setSort] = useState<"az" | "za" | "">("");
   const [processed, setProcessed] = useState<BaseCard[]>([]);
@@ -138,24 +152,65 @@ const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
           {processed.length === 0 && (
             <Text c="gray.6">We couldn't find anything.</Text>
           )}
-          {processed.map((entry, i) => {
-            const key = "MYtext";
-            let desc: string | undefined = undefined;
-            if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
-              desc = entry["MYtext"];
+          <motion.div
+            initial="hidden"
+            animate={initialRef.current ? "show" : { y: 0, opacity: 1 }}
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+            variants={
+              initialRef.current
+                ? {
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.15,
+                      },
+                    },
+                  }
+                : {}
             }
+          >
+            {processed.map((entry, i) => {
+              const key = "MYtext";
+              let desc: string | undefined = undefined;
+              if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
+                desc = entry["MYtext"];
+              }
 
-            return (
-              <Fragment key={`${entry}-${i}`}>
-                <Entry
-                  name={entry.MYname}
-                  lookup={entry.MYlookup}
-                  desc={desc}
-                  onClick={() => onDisplay(entry.MYlookup)}
-                />
-              </Fragment>
-            );
-          })}
+              return (
+                <motion.div
+                  key={`${entry}-${i}`}
+                  variants={
+                    initialRef.current
+                      ? {
+                          hidden: { opacity: 0, y: 30 },
+                          show: {
+                            opacity: 1,
+                            y: 0,
+                            transition: { type: "spring", stiffness: 100 },
+                          },
+                        }
+                      : {}
+                  }
+                  style={{
+                    width: "90%",
+                  }}
+                >
+                  <Entry
+                    name={entry.MYname}
+                    lookup={entry.MYlookup}
+                    desc={desc}
+                    onClick={() => onDisplay(entry.MYlookup)}
+                  />
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </Flex>
       </ScrollArea>
     </Flex>

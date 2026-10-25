@@ -73,6 +73,7 @@ function PlayerPage() {
   const display = useCallback(
     (lookup: string) => {
       console.log(`lookup is ${lookup}`);
+      initialRef.current = false;
       indexRef.current = cards.findIndex((c) => c.MYlookup === lookup);
       if (indexRef.current === -1) {
         console.error("card not found");
@@ -103,6 +104,8 @@ function PlayerPage() {
     );
   }, [setBackCb]);
 
+  const initialRef = useRef<boolean>(true);
+
   return (
     <MobileViewport>
       {page === "home" && BackButton}
@@ -122,7 +125,13 @@ function PlayerPage() {
             <Text my={0}>{playerName}</Text>
           </Flex>
         )}
-        {page === "home" && <Catalog entries={cards} onDisplay={display} />}
+        {page === "home" && (
+          <Catalog
+            entries={cards}
+            onDisplay={display}
+            initialRef={initialRef}
+          />
+        )}
         {page === "display" && (
           <Display
             gameName={gameName ?? "Moonrise"}
