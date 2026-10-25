@@ -9,3 +9,11 @@ Icon[]
 
 # vsCode
 .vscode
+
+node_modules/
+*.tsbuildinfo
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
