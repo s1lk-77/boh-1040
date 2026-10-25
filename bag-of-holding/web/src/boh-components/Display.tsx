@@ -42,7 +42,7 @@ const Display = ({
 
   return (
     <Stack w={STANDARD_FRAME_WIDTH} flex={1} mih={0}>
-      <Flex flex={1} className="flip-card-container">
+      <Flex flex={1} className="flip-card-container" onClick={handleFlip}>
         <motion.div
           className="flip-card-inner"
           initial={false}
