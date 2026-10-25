@@ -1,4 +1,4 @@
-import { Button, Flex, Group, Stack } from "@mantine/core";
+import { Box, Button, Flex, Group, Stack } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import CardBack from "../boh-generics/CardBack";
 import { useEffect, useState } from "react";
@@ -6,6 +6,8 @@ import { BaseCard } from "../../../shared/types";
 import CardFront from "../boh-generics/CardFront";
 import { RefreshCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import "../../styles.css";
+import "../assets/flipcard.css";
+import { motion } from "motion/react";
 
 interface DisplayProps {
   gameName: string;
@@ -25,21 +27,38 @@ const Display = ({
   onIndex,
 }: DisplayProps) => {
   const [flipped, setFlipped] = useState<boolean>(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+
   useEffect(() => {
     setFlipped(defaultFlipped);
   }, [defaultFlipped]);
+
+  function handleFlip() {
+    if (!isAnimating) {
+      setFlipped(!flipped);
+      setIsAnimating(true);
+    }
+  }
+
   return (
     <Stack w={STANDARD_FRAME_WIDTH} flex={1} mih={0}>
-      {flipped ? (
-        <CardBack gameName={gameName} card={card} />
-      ) : (
-        <CardFront
-          owned
-          gameName={gameName}
-          playerName={playerName}
-          card={card}
-        />
-      )}
+      <Flex flex={1} className="flip-card-container">
+        <motion.div
+          className="flip-card-inner"
+          initial={false}
+          animate={{ rotateY: flipped ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          onAnimationComplete={() => setIsAnimating(false)}
+        >
+          <CardFront
+            owned
+            gameName={gameName}
+            playerName={playerName}
+            card={card}
+          />
+          <CardBack gameName={gameName} card={card} />
+        </motion.div>
+      </Flex>
       {showToolBar && (
         <Group
           justify="space-between"
@@ -63,9 +82,7 @@ const Display = ({
             c="black"
             bg="none"
             className="hoverTransparentButton"
-            onClick={() => {
-              setFlipped(!flipped);
-            }}
+            onClick={handleFlip}
           >
             <Flex direction="column">
               <RefreshCcw size={30} className="hoverRotate" />

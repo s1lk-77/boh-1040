@@ -1,0 +1,51 @@
+/* Container providing the 3D canvas depth context */
+.flip-card-container {
+  perspective: 1000px; /* Essential for the 3D depth pop effect */
+  cursor: pointer;
+}
+
+/* The wrapper animated by Framer Motion */
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d; /* Required to render children in 3D space */
+}
+
+/* Shared styling for both faces */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hides the element when its back faces the screen */
+
+  /* Flex centering for demo content layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+}
+
+/* Specific styling for the front face */
+.flip-card-front {
+  transform: rotateY(0deg);
+}
+
+/* Specific styling for the back face */
+.flip-card-back {
+  transform: rotateY(
+    180deg
+  ); /* Pre-flips the back design so it mirrors correctly */
+}
+
+/* Optional outer layout wrapper to center on screen */
+.flip-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}

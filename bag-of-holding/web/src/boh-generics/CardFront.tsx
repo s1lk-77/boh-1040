@@ -4,6 +4,7 @@ import { SMALL_FRAME_WIDTH } from "../../../shared/constants";
 import { formatDate } from "../utilities";
 import { BaseCard } from "../../../shared/types";
 import "../../styles.css";
+import "../assets/flipcard.css";
 
 interface CardFrontProps {
   owned: boolean;
@@ -27,6 +28,7 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
       bl={bl}
       br={br}
       bg="yellow.5"
+      className="flip-card-front"
     >
       <Stack align="center">
         <Title size="h2">

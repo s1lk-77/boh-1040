@@ -3,6 +3,7 @@ import Card from "./Card";
 import { SMALL_FRAME_WIDTH } from "../../../shared/constants";
 import { formatDate } from "../utilities";
 import { BaseCard } from "../../../shared/types";
+import "../assets/flipcard.css";
 
 interface CardBackProps {
   heading?: string;
@@ -28,6 +29,7 @@ const CardBack = ({
       bl={bl}
       br={br}
       bg="yellow.5"
+      className="flip-card-back"
     >
       <Stack align="center">
         <Title size="h2">{heading}</Title>
