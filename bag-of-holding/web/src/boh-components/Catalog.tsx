@@ -1,9 +1,17 @@
-import { Divider, Flex, ScrollArea, Text, Group, Input } from "@mantine/core";
+import {
+  Divider,
+  Flex,
+  ScrollArea,
+  Text,
+  Group,
+  Input,
+  Button,
+} from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
-import { Filter } from "lucide-react";
+import { ArrowUpDown, Filter } from "lucide-react";
 import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 
 interface CatalogProps {
@@ -66,7 +74,6 @@ const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
         />
         <Input
           flex={1}
-          mr="xl"
           placeholder="type to filter..."
           value={filter}
           onChange={onFilter}
@@ -81,6 +88,14 @@ const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
             },
           }}
         />
+        <Button
+          w="fit-content"
+          bg={useColor ? "red.3" : "gray.2"}
+          c="black"
+          className="hoverTransparentButton"
+        >
+          <ArrowUpDown />
+        </Button>
       </Group>
       <Divider mb={0} aria-hidden />
       <ScrollArea
