@@ -56,17 +56,17 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 **Step 1: Click button**
 
-<img src="./documentations/images/Demo1.png" height="400">
+<img src="./documentations/images/StartSearchBeta.png" height="400">
 
 **Step 2: Enter lookup code**
 
-<img src="./documentations/images/Demo2.png" height="400">
+<img src="./documentations/images/SearchBeta.png" height="400">
 
 **Step 3: Profit**
 
 <p>
-<img src="./documentations/images/Demo3.png" height="400">
-<img src="./documentations/images/DemoAbil.png" height="400">
+<img src="./documentations/images/CardsBeta.png" height="400">
+<img src="./documentations/images/AbilFrontBeta.png" height="400">
 </p>
 
 Notice how you did 0 walking and got ahold of your cookie much, much faster? All you need is your phone and the internet, which lucky for you is supported everywhere at MIT!
