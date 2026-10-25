@@ -23,25 +23,35 @@ interface CatalogProps {
 
 const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
-  const [filtered, setFiltered] = useState<BaseCard[]>([]);
+  const [sort, setSorted] = useState<"az" | "za" | "">("");
+  const [processed, setProcessed] = useState<BaseCard[]>([]);
 
-  const onFilter = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const newValue = e.target.value;
-      setFilter(newValue);
-      setFiltered(
-        entries.filter(
-          (c) =>
-            c.MYname.toLowerCase().includes(newValue.toLowerCase()) ||
-            c.MYtext?.toLowerCase().includes(newValue.toLowerCase()),
-        ),
-      );
-    },
-    [entries],
-  );
+  const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setFilter(newValue);
+  }, []);
 
   useEffect(() => {
-    setFiltered(entries);
+    let sortFunc = (a: BaseCard, b: BaseCard) => 0;
+    if (sort === "az") {
+      sortFunc = (a: BaseCard, b: BaseCard) => a.MYname.localeCompare(b.MYname);
+    } else if (sort === "za") {
+      sortFunc = (a: BaseCard, b: BaseCard) => b.MYname.localeCompare(a.MYname);
+    }
+
+    setProcessed(
+      entries
+        .filter(
+          (c) =>
+            c.MYname.toLowerCase().includes(filter.toLowerCase()) ||
+            c.MYtext?.toLowerCase().includes(filter.toLowerCase()),
+        )
+        .toSorted(sortFunc),
+    );
+  }, [filter, entries, sort]);
+
+  useEffect(() => {
+    setProcessed(entries);
   }, [entries]);
 
   return (
@@ -105,10 +115,10 @@ const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         <Flex direction="column" align="center" gap="sm" mt="sm">
-          {filtered.length === 0 && (
+          {processed.length === 0 && (
             <Text c="gray.6">We couldn't find anything.</Text>
           )}
-          {filtered.map((entry, i) => {
+          {processed.map((entry, i) => {
             const key = "MYtext";
             let desc: string | undefined = undefined;
             if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
