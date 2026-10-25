@@ -1,11 +1,5 @@
-import {
-  Stack,
-  Button,
-  Popover,
-  type StackProps,
-  type MantineColorScheme,
-} from "@mantine/core";
-import { CircleHelp } from "lucide-react";
+import { Stack, Button, Popover, type StackProps } from "@mantine/core";
+import { CircleHelp, CircleEllipsis } from "lucide-react";
 import "../../styles.css";
 import { useState } from "react";
 
@@ -14,6 +8,7 @@ interface HelpToolProps extends StackProps {
   fillColor?: string;
   flushRight?: boolean;
   popLeft?: boolean;
+  useEllipsis?: boolean;
 }
 
 const HelpTool = ({
@@ -21,6 +16,7 @@ const HelpTool = ({
   flushRight = false,
   fillColor = "var(--mantine-color-gray-4)",
   popLeft = false,
+  useEllipsis = false,
   ...props
 }: HelpToolProps) => {
   const [opened, setOpened] = useState(false);
@@ -53,7 +49,11 @@ const HelpTool = ({
             className="hoverTransparentButton"
             onClick={() => setOpened((o) => !o)}
           >
-            <CircleHelp fill={opened ? fillColor : "none"} />
+            {useEllipsis ? (
+              <CircleEllipsis fill={opened ? fillColor : "none"} />
+            ) : (
+              <CircleHelp fill={opened ? fillColor : "none"} />
+            )}
           </Button>
         </Popover.Target>
         <Popover.Dropdown

@@ -141,7 +141,7 @@ function HomePage() {
             the journeyman's
           </Text>
 
-          <Title order={1} c="black" className="u-goth" size="5rem">
+          <Title order={1} c="black" className="u-goth" size="5rem" ta="center">
             Bag of Holding
           </Title>
           <Text c="gray.7" ta="center">
@@ -223,7 +223,22 @@ function HomePage() {
           )}
         </Stack>
         <Flex direction="column" align="center" gap="xs">
-          <Text>A digital pocket for your ability cards</Text>
+          <Text pos="relative">
+            A digital pocket for your ability cards
+            <HelpTool
+              fillColor="var(--mantine-color-red-3)"
+              useEllipsis
+              mt="-5"
+              ml="-10"
+            >
+              <b>Bag of Holding (BoH)</b> is a digital assistant that
+              inventories your out-of-game cards and stores them in an
+              accessible digital pocket, eliminating the tedium of physical
+              cutouts while fully preserving the GameTeX look. BoH is designed
+              for mobile devices smaller than an iPad, with a full-screen editor
+              dashboard for GMs.
+            </HelpTool>
+          </Text>
           <Group>
             <Button
               bg="none"
