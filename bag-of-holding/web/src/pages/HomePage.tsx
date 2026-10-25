@@ -187,8 +187,8 @@ function HomePage() {
                 <Text fw="bold" span>
                   open a new bag
                 </Text>
-                , enter the game code provided by the GMs and pick a name (your
-                name, for example). To{" "}
+                , enter the game code provided by your GMs and pick a name (e.g.
+                your name). To{" "}
                 <Text fw="bold" span>
                   reopen your bag
                 </Text>
@@ -224,7 +224,7 @@ function HomePage() {
         </Stack>
         <Flex direction="column" align="center" gap="xs">
           <Text pos="relative">
-            A digital pocket for your ability cards
+            An upgraded pocket for your ability cards
             <HelpTool
               fillColor="var(--mantine-color-red-3)"
               useEllipsis
