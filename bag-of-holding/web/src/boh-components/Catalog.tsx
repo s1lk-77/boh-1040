@@ -11,7 +11,7 @@ import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
-import { ArrowUpDown, Filter } from "lucide-react";
+import { ArrowDownZA, ArrowUpAZ, ArrowUpDown, Filter } from "lucide-react";
 import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 
 interface CatalogProps {
@@ -23,7 +23,7 @@ interface CatalogProps {
 
 const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
-  const [sort, setSorted] = useState<"az" | "za" | "">("");
+  const [sort, setSort] = useState<"az" | "za" | "">("");
   const [processed, setProcessed] = useState<BaseCard[]>([]);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +53,19 @@ const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
   useEffect(() => {
     setProcessed(entries);
   }, [entries]);
+
+  const toggleSort = useCallback(() => {
+    setSort((state) => {
+      switch (state) {
+        case "":
+          return "az";
+        case "az":
+          return "za";
+        case "za":
+          return "";
+      }
+    });
+  }, []);
 
   return (
     <Flex
@@ -103,8 +116,15 @@ const Catalog = ({ entries, onDisplay, w, useColor = false }: CatalogProps) => {
           bg={useColor ? "red.3" : "gray.2"}
           c="black"
           className="hoverTransparentButton"
+          onClick={toggleSort}
         >
-          <ArrowUpDown />
+          {sort === "" ? (
+            <ArrowUpDown />
+          ) : sort === "az" ? (
+            <ArrowUpAZ />
+          ) : (
+            <ArrowDownZA />
+          )}
         </Button>
       </Group>
       <Divider mb={0} aria-hidden />
