@@ -48,6 +48,7 @@
     "db:reset": "podman compose down -v",
     "db:check": "bun scripts/check-db.ts",
     "build:css": "postcss web/src/styles.css -o web/src/compiled-mantine.css",
-    "test": "bun test --env-file=.env"
+    "test": "bun test --env-file=.env",
+    "preview": "bun run db:up && NODE_ENV=production PORT=3000 PUBLIC_ORIGIN=http://127.0.0.1:3000 bun run start"
   }
 }

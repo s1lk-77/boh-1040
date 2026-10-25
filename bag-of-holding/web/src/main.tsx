@@ -6,6 +6,7 @@ import { ClientProvider } from "./ClientProvider";
 import App from "./App.tsx";
 
 import "@mantine/core/styles.css";
+import "../styles.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

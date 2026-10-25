@@ -1,5 +1,5 @@
-body {
-  background-color: var(--mantine-color-red-2);
+html {
+  background-color: var(--mantine-color-red-2) !important;
 }
 
 .hoverButton:hover {
@@ -92,7 +92,7 @@ body {
 }
 
 .u-goth {
-  font-family: "UnifrakturCook", cursive;
+  font-family: "UnifrakturCook", cursive !important;
   font-weight: 700;
   font-style: normal;
 }
