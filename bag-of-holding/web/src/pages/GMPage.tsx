@@ -16,6 +16,7 @@ import { Edit, Upload, X, Eye } from "lucide-react";
 import "../../styles.css";
 import Display from "../boh-components/Display";
 import HelpTool from "../components/HelpTool";
+import Uploader from "../boh-components/Uploader";
 
 /**
  * The GM's dashboard page.
@@ -32,7 +33,7 @@ function GMPage() {
   const [editingName, setEditingName] = useState<boolean>(false);
   const focusTrapRef = useFocusTrap(editingName);
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<"edit" | "view">("view");
+  const [viewMode, setViewMode] = useState<"edit" | "view" | "upload">("view");
 
   /**
    * Loads game name
@@ -223,14 +224,16 @@ function GMPage() {
                   <Text mr="0.5rem">Editor</Text>
                   <Edit />
                 </Button>
-                {/* <Button
+                <Button
                   c="black"
-                  bg="none"
+                  bg={viewMode === "upload" ? "red.2" : "none"}
                   className="hoverTransparentButton"
                   fw="normal"
+                  onClick={() => setViewMode("upload")}
                 >
-                  Upload
-                </Button> */}
+                  <Text mr="0.5rem">Uploader</Text>
+                  <Upload />
+                </Button>
                 <HelpTool
                   flushRight
                   fillColor="var(--mantine-color-red-4)"
@@ -245,7 +248,7 @@ function GMPage() {
               </Group>
             </Panel.Header>
             <Stack mt={0} flex={1} px="lg">
-              {viewMode === "edit" ? (
+              {viewMode === "edit" && (
                 <Editor
                   features={
                     editorMode === "update"
@@ -261,7 +264,8 @@ function GMPage() {
                     setEditorMode("add");
                   }}
                 />
-              ) : (
+              )}
+              {viewMode === "view" && (
                 <Stack h="100%" w="100%" py="xl" align="center">
                   {selectedCard ? (
                     <>
@@ -288,6 +292,7 @@ function GMPage() {
                   )}
                 </Stack>
               )}
+              {viewMode == "upload" && <Uploader />}
             </Stack>
           </Panel>
           <Panel h="90%" flex={1} mih={0}>

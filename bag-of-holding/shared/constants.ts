@@ -20,3 +20,13 @@ export type PlayerPage = "home" | "display" | "settings";
 // default log message
 export const LOG_DEFAULT =
   "(Or select a card from the right to edit its content)";
+
+// json template
+export const ABIL_TEMPLATE = [
+  {
+    MYlookup: "578091",
+    MYname: "Summon Cthulhu",
+    MYtext: "Summons Cthulhu and makes you look really really cool.",
+    MYeffect: "You see me summoning Cthulhu.",
+  },
+];
