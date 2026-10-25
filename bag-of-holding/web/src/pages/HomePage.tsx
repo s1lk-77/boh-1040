@@ -26,7 +26,7 @@ function HomePage() {
   const [playerName, setPlayerName] = useState<string>("");
   const [gameCodeError, setGameCodeError] = useState<boolean>(false);
   const [playerNameError, setPlayerNameError] = useState<boolean>(false);
-  const [dneError, setDneError] = useState<boolean>(false);
+  const [dneError, setDneError] = useState<"code" | "name" | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const locFlagRef = useRef<boolean>(false);
@@ -40,7 +40,7 @@ function HomePage() {
   const updatePlayerName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newName: string = e.target.value;
     setPlayerNameError(false);
-    setDneError(false);
+    setDneError(null);
     if (PLAYER_NAME_REGEX.test(newName) || newName === "") {
       setPlayerName(newName);
     } else if (newName.at(-1) === " " && newName.at(-2) !== "-") {
@@ -52,7 +52,7 @@ function HomePage() {
   const updateGameCode = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newCode: string = e.target.value;
     setGameCodeError(false);
-    setDneError(false);
+    setDneError(null);
     if (GAME_CODE_REGEX.test(newCode)) {
       setGameCode(newCode.toLowerCase());
     }
@@ -60,8 +60,17 @@ function HomePage() {
 
   const openBag = useCallback(async () => {
     if (client === null) return;
+    if (gameCode === "") {
+      setGameCodeError(true);
+      return;
+    }
+    if (playerName === "") {
+      setPlayerNameError(true);
+      return;
+    }
     const res = await client["/portal/open-bag"]({ gameCode, playerName });
     if ("error" in res) {
+      setDneError("code");
       console.error(res.error);
     } else {
       navigate(`bag/${res.playerName}@${res.gameCode}`, {
@@ -82,7 +91,7 @@ function HomePage() {
     }
     const res = await client["/portal/reopen-bag"]({ gameCode, playerName });
     if ("error" in res) {
-      setDneError(true);
+      setDneError("name");
       console.error(res.error);
     } else {
       navigate(`bag/${res.playerName}@${res.gameCode}`, {
@@ -104,9 +113,13 @@ function HomePage() {
   useEffect(() => {
     if (playerNameError || gameCodeError)
       setErrorMsg("Did you forget something?");
-    else if (dneError)
+    else if (dneError === "code")
       setErrorMsg(
-        "The Wizard of the Court couldn't find this bag in the demiplane :(",
+        "The Wizard of the Court couldn't find the demiplane you're looking for :(",
+      );
+    else if (dneError === "name")
+      setErrorMsg(
+        "The Wizard of the Court couldn't find the bag you're looking for :(",
       );
     else setErrorMsg(null);
   }, [playerNameError, gameCodeError, dneError]);
@@ -204,7 +217,7 @@ function HomePage() {
             </Button>
           </Group>
           {errorMsg !== null && (
-            <Text pos="absolute" top="105%" c="red">
+            <Text pos="absolute" top="105%" c="red" ta="center">
               {errorMsg}
             </Text>
           )}

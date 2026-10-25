@@ -1,10 +1,16 @@
 import { Stack, Text, Title, Input, Button, Group, Flex } from "@mantine/core";
 import CenterLayout from "../components/CenterLayout";
-import { useEffect, useState, useCallback, type ChangeEvent } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  type ChangeEvent,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import { GAME_CODE_REGEX } from "../../../shared/constants";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Feather } from "lucide-react";
 import HelpTool from "../components/HelpTool";
 import "../../styles.css";
 
@@ -21,11 +27,14 @@ function GMLoginPage() {
   const [gameCodeError, setGameCodeError] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [dneError, setDneError] = useState<boolean>(false);
+  const [validateError, setValidateError] = useState<boolean>(false);
+  const busyRef = useRef<boolean>(false);
 
   const updateGameCode = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     let newCode: string = e.target.value;
     setGameCodeError(false);
     setDneError(false);
+    setValidateError(false);
     if (GAME_CODE_REGEX.test(newCode)) {
       setGameCode(newCode.toLowerCase());
     }
@@ -44,7 +53,7 @@ function GMLoginPage() {
   }, [client, gameCode, gameName]);
 
   const reopenGame = useCallback(async () => {
-    if (client === null) return;
+    if (!client || busyRef.current) return;
     const res = await client["/portal/reopen-game"]({ gameCode });
     if ("error" in res) {
       console.error(res.error);
@@ -69,8 +78,10 @@ function GMLoginPage() {
   useEffect(() => {
     if (gameCodeError) setErrorMsg("We need a game code!");
     else if (dneError) setErrorMsg("The demiplane rejected this connection :(");
+    else if (validateError)
+      setErrorMsg("Game code taken. Please pick another one!");
     else setErrorMsg(null);
-  }, [gameCodeError, dneError]);
+  }, [gameCodeError, dneError, validateError]);
 
   const openReadme = useCallback(() => {
     window.open(
@@ -79,6 +90,29 @@ function GMLoginPage() {
       "noopener noreferrer",
     );
   }, []);
+
+  const maybeCreateGame = useCallback(async () => {
+    if (!client || busyRef.current) return;
+    if (gameCode === "") {
+      setGameCodeError(true);
+      return;
+    }
+    const snapshot = gameCode;
+    busyRef.current = true;
+    const res = await client["/portal/validate"]({ gameCode });
+    busyRef.current = false;
+    if ("error" in res) {
+      console.error("error");
+      return;
+    }
+
+    if (res.available) {
+      setCreateMode(true);
+      setGameCode(snapshot);
+    } else {
+      setValidateError(true);
+    }
+  }, [gameCode, client]);
 
   return (
     <CenterLayout asOverlay>
@@ -124,13 +158,7 @@ function GMLoginPage() {
                   bd="2px solid black"
                   bg="none"
                   c="black"
-                  onClick={() => {
-                    if (gameCode === "") {
-                      setGameCodeError(true);
-                      return;
-                    }
-                    setCreateMode(true);
-                  }}
+                  onClick={maybeCreateGame}
                 >
                   Create this game
                 </Button>
@@ -149,20 +177,29 @@ function GMLoginPage() {
           {createMode && (
             <>
               <Title>Pick a name for your game!</Title>
-              <Input
-                placeholder="Enter game name"
-                value={gameName}
-                onChange={(e) => setGameName(e.target.value)}
-                autoComplete="off"
-                autoCapitalize="off"
-                styles={{
-                  input: {
-                    fontFamily: "Fira Code, monospace",
-                    fontWeight: 450,
-                    border: "2px solid black",
-                  },
-                }}
-              />
+              <Flex pos="relative">
+                <Text
+                  pos="absolute"
+                  left="105%"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  (You can change it later)
+                </Text>
+                <Input
+                  placeholder="Enter game name"
+                  value={gameName}
+                  onChange={(e) => setGameName(e.target.value)}
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  styles={{
+                    input: {
+                      fontFamily: "Fira Code, monospace",
+                      fontWeight: 450,
+                      border: "2px solid black",
+                    },
+                  }}
+                />
+              </Flex>
               <Group>
                 <Button
                   className="hoverButton"
