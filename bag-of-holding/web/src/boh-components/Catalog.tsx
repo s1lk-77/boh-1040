@@ -82,138 +82,163 @@ const Catalog = ({
   }, []);
 
   return (
-    <Flex
-      direction="column"
-      bg="gray.3"
-      w={w ?? STANDARD_FRAME_WIDTH}
-      flex={1}
-      mih={0}
-      bdrs="md"
+    <motion.div
+      initial={initialRef.current ? { opacity: 0 } : { y: -5, opacity: 0 }}
+      animate={initialRef.current ? { opacity: 1 } : { y: 0, opacity: 1 }}
+      exit={
+        initialRef.current ? { opacity: 0, scale: 0.3 } : { y: -5, opacity: 0 }
+      }
+      transition={
+        initialRef.current
+          ? { duration: 0.1 }
+          : {
+              duration: 0.3,
+              scale: { type: "spring", visualDuration: 0.3, bounce: 0.5 },
+            }
+      }
+      style={{
+        flex: 1,
+        minHeight: 0,
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+      key={"catalog"}
     >
-      <Group
-        p="xs"
-        ta="center"
-        bg={useColor ? "red.4" : "gray.4"}
-        bd="solid black 2px"
-        style={{
-          borderTopLeftRadius: "var(--mantine-radius-md)",
-          borderTopRightRadius: "var(--mantine-radius-md)",
-          borderBottomLeftRadius: "0px",
-          borderBottomRightRadius: "0px",
-        }}
-      >
-        <Filter
-          fill={
-            useColor
-              ? "var(--mantine-color-red-2)"
-              : "var(--mantine-color-gray-2)"
-          }
-        />
-        <Input
-          flex={1}
-          placeholder="type to filter..."
-          value={filter}
-          onChange={onFilter}
-          styles={{
-            input: {
-              fontFamily: "Fira Code, monospace",
-              fontWeight: 450,
-              border: "2px solid black",
-              "&:focus": {
-                borderColor: "var(--mantine-color-grape-6)",
-              },
-            },
-          }}
-        />
-        <Button
-          w="fit-content"
-          bg={useColor ? "red.3" : "gray.2"}
-          c="black"
-          className="hoverTransparentButton"
-          onClick={toggleSort}
-        >
-          {sort === "" ? (
-            <ArrowUpDown />
-          ) : sort === "az" ? (
-            <ArrowUpAZ />
-          ) : (
-            <ArrowDownZA />
-          )}
-        </Button>
-      </Group>
-      <Divider mb={0} aria-hidden />
-      <ScrollArea
+      <Flex
+        direction="column"
+        bg="gray.3"
+        w={w ?? STANDARD_FRAME_WIDTH}
         flex={1}
         mih={0}
-        type="auto"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        bdrs="md"
       >
-        <Flex direction="column" align="center" gap="sm" mt="sm">
-          {processed.length === 0 && (
-            <Text c="gray.6">We couldn't find anything.</Text>
-          )}
-          <motion.div
-            initial="hidden"
-            animate={initialRef.current ? "show" : { y: 0, opacity: 1 }}
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-            variants={
-              initialRef.current
-                ? {
-                    hidden: { opacity: 0 },
-                    show: {
-                      opacity: 1,
-                      transition: {
-                        staggerChildren: 0.15,
-                      },
-                    },
-                  }
-                : {}
+        <Group
+          p="xs"
+          ta="center"
+          bg={useColor ? "red.4" : "gray.4"}
+          bd="solid black 2px"
+          style={{
+            borderTopLeftRadius: "var(--mantine-radius-md)",
+            borderTopRightRadius: "var(--mantine-radius-md)",
+            borderBottomLeftRadius: "0px",
+            borderBottomRightRadius: "0px",
+          }}
+        >
+          <Filter
+            fill={
+              useColor
+                ? "var(--mantine-color-red-2)"
+                : "var(--mantine-color-gray-2)"
             }
+          />
+          <Input
+            flex={1}
+            placeholder="type to filter..."
+            value={filter}
+            onChange={onFilter}
+            styles={{
+              input: {
+                fontFamily: "Fira Code, monospace",
+                fontWeight: 450,
+                border: "2px solid black",
+                "&:focus": {
+                  borderColor: "var(--mantine-color-grape-6)",
+                },
+              },
+            }}
+          />
+          <Button
+            w="fit-content"
+            bg={useColor ? "red.3" : "gray.2"}
+            c="black"
+            className="hoverTransparentButton"
+            onClick={toggleSort}
           >
-            {processed.map((entry, i) => {
-              const key = "MYtext";
-              let desc: string | undefined = undefined;
-              if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
-                desc = entry["MYtext"];
+            {sort === "" ? (
+              <ArrowUpDown />
+            ) : sort === "az" ? (
+              <ArrowUpAZ />
+            ) : (
+              <ArrowDownZA />
+            )}
+          </Button>
+        </Group>
+        <Divider mb={0} aria-hidden />
+        <ScrollArea
+          flex={1}
+          mih={0}
+          type="auto"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          <Flex direction="column" align="center" gap="sm" mt="sm">
+            {processed.length === 0 && (
+              <Text c="gray.6">We couldn't find anything.</Text>
+            )}
+            <motion.div
+              initial="hidden"
+              animate={initialRef.current ? "show" : { y: 0, opacity: 1 }}
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              variants={
+                initialRef.current
+                  ? {
+                      hidden: { opacity: 0 },
+                      show: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.15,
+                        },
+                      },
+                    }
+                  : {}
               }
+            >
+              {processed.map((entry, i) => {
+                const key = "MYtext";
+                let desc: string | undefined = undefined;
+                if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
+                  desc = entry["MYtext"];
+                }
 
-              return (
-                <motion.div
-                  key={`${entry}-${i}`}
-                  variants={
-                    initialRef.current
-                      ? {
-                          hidden: { opacity: 0, y: 30 },
-                          show: {
-                            opacity: 1,
-                            y: 0,
-                            transition: { type: "spring", stiffness: 100 },
-                          },
-                        }
-                      : {}
-                  }
-                  style={{
-                    width: "90%",
-                  }}
-                >
-                  <Entry
-                    name={entry.MYname}
-                    lookup={entry.MYlookup}
-                    desc={desc}
-                    onClick={() => onDisplay(entry.MYlookup)}
-                  />
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </Flex>
-      </ScrollArea>
-    </Flex>
+                return (
+                  <motion.div
+                    key={`${entry}-${i}`}
+                    variants={
+                      initialRef.current
+                        ? {
+                            hidden: { opacity: 0, y: 30 },
+                            show: {
+                              opacity: 1,
+                              y: 0,
+                              transition: { type: "spring", stiffness: 100 },
+                            },
+                          }
+                        : {}
+                    }
+                    style={{
+                      width: "90%",
+                    }}
+                  >
+                    <Entry
+                      name={entry.MYname}
+                      lookup={entry.MYlookup}
+                      desc={desc}
+                      onClick={() => onDisplay(entry.MYlookup)}
+                    />
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </Flex>
+        </ScrollArea>
+      </Flex>
+    </motion.div>
   );
 };
 

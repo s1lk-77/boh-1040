@@ -104,6 +104,7 @@ function PlayerPage() {
     );
   }, [setBackCb]);
 
+  // flags
   const initialRef = useRef<boolean>(true);
 
   return (
@@ -158,6 +159,7 @@ function PlayerPage() {
           toggleSearch={() => setSearching(!searching)}
           goHome={() => setPage("home")}
           showHome={page !== "home"}
+          searching={searching}
         />
       </Stack>
     </MobileViewport>

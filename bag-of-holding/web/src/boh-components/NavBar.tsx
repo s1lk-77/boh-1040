@@ -1,18 +1,20 @@
 import { Button, Group, GroupProps } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import { Settings, CornerDownLeft, Plus } from "lucide-react";
+import { Settings, CircleSmall, Plus, X } from "lucide-react";
 import "../../styles.css";
 
 interface NavBarProps extends GroupProps {
   toggleSearch: () => void;
   showHome?: boolean;
   goHome: () => void;
+  searching?: boolean;
 }
 
 const NavBar = ({
   showHome = true,
   toggleSearch,
   goHome,
+  searching = false,
   ...props
 }: NavBarProps) => {
   return (
@@ -25,15 +27,6 @@ const NavBar = ({
       <Button h="auto" c="black" bg="none" className="hoverTransparentButton">
         <Settings />
       </Button>
-      <Button
-        onClick={toggleSearch}
-        h="auto"
-        c="black"
-        bg="none"
-        className="hoverTransparentButton"
-      >
-        <Plus />
-      </Button>
       {showHome && (
         <Button
           h="auto"
@@ -42,9 +35,22 @@ const NavBar = ({
           onClick={goHome}
           className="hoverTransparentButton"
         >
-          <CornerDownLeft />
+          <CircleSmall />
         </Button>
       )}
+      <Button
+        onClick={toggleSearch}
+        h="auto"
+        c="black"
+        bg="none"
+        className="hoverTransparentButton"
+      >
+        {searching ? (
+          <X color="var(--mantine-color-red-8)" className="hoverRotateXs" />
+        ) : (
+          <Plus />
+        )}
+      </Button>
     </Group>
   );
 };

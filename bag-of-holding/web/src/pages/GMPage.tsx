@@ -165,7 +165,7 @@ function GMPage() {
               <Upload
                 role="button"
                 tabIndex={0}
-                aria-label="Save title"
+                aria-label="Update game name"
                 className="u-pointer hoverTransparentButton"
                 onClick={uploadName}
                 onKeyDown={(e) => {
@@ -177,7 +177,7 @@ function GMPage() {
               <X
                 role="button"
                 tabIndex={0}
-                aria-label="Cancel editing title"
+                aria-label="Cancel editing game name"
                 color="var(--mantine-color-red-8)"
                 className="u-pointer hoverRotateXs"
                 onClick={() => setEditingName(false)}

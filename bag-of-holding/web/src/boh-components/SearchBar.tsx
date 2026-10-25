@@ -7,6 +7,7 @@ import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import { Search } from "lucide-react";
 import "../../styles.css";
+import { motion } from "motion/react";
 
 interface SearchBarProps extends FlexProps {
   onSuccess: (value: BaseCard) => void;
@@ -88,44 +89,51 @@ const SearchBar = ({
       {...props}
       ref={mergedRef}
       w={STANDARD_FRAME_WIDTH}
-      h="15%"
+      h="12%"
       align="center"
       bg="gray.3"
       pl="sm"
       bdrs="md"
     >
-      <Input
-        data-autofocus
-        autoFocus
-        styles={{
-          input: {
-            border: "2px solid black",
-            "&:focus": {
-              borderColor: "var(--mantine-color-grape-6)",
-            },
-            fontFamily: "Fira Code, monospace",
-            fontWeight: 450,
-          },
-        }}
-        flex={1}
-        placeholder="@..."
-        value={value}
-        error={error}
-        onChange={(e) => {
-          if (error) setError(false);
-          setValue(e.target.value);
-        }}
-        onKeyDown={handleKeyDown}
-      />
-      <Button
-        onClick={onSubmit}
-        h="auto"
-        c="black"
-        bg="none"
-        aria-label="Search"
+      <motion.div
+        style={{ width: "100%", display: "flex", alignItems: "center" }}
+        initial={{ y: 10 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", bounce: 0 }}
       >
-        <Search className="hoverTransparentButton" />
-      </Button>
+        <Input
+          data-autofocus
+          autoFocus
+          styles={{
+            input: {
+              border: "2px solid black",
+              "&:focus": {
+                borderColor: "var(--mantine-color-grape-6)",
+              },
+              fontFamily: "Fira Code, monospace",
+              fontWeight: 450,
+            },
+          }}
+          flex={1}
+          placeholder="@..."
+          value={value}
+          error={error}
+          onChange={(e) => {
+            if (error) setError(false);
+            setValue(e.target.value);
+          }}
+          onKeyDown={handleKeyDown}
+        />
+        <Button
+          onClick={onSubmit}
+          h="auto"
+          c="black"
+          bg="none"
+          aria-label="Search"
+        >
+          <Search className="hoverTransparentButton" />
+        </Button>
+      </motion.div>
     </Flex>
   );
 };
