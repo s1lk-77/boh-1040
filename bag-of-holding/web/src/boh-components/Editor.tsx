@@ -197,7 +197,7 @@ const Editor = ({
               {mode === "update" && (
                 <>
                   <Button
-                    className="hoverRedButton"
+                    className="hoverDarkRedButton"
                     flex={1}
                     onClick={onDelete}
                     c="black"
