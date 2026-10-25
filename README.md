@@ -73,7 +73,7 @@ Notice how you did 0 walking and got ahold of your cookie much, much faster? All
 
 The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just pop over to [bagofholding.mit-sdg.dev](https://bagofholding.mit-sdg.dev/#/), type in a (GM provided) game code, pick any name you choose, and the Bag is yours!
 
-<img src="./documentations/images/DemoMain.png" height="400">
+<img src="./documentations/images/HomeBeta.png" height="400">
 
 [I'm a GM, how do I set this up?](/documentations/GM-guide.md)
 
