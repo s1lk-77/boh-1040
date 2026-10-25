@@ -12,6 +12,22 @@ describe("start", () => {
   });
 });
 
+describe("validate", () => {
+  test("validate false", async () => {
+    await client["/portal/create-game"]({
+      gameCode: "moonrise",
+      gameName: "Moonrise",
+    });
+    const res1 = await client["/portal/validate"]({ gameCode: "moonrise" });
+    expect(res1).toEqual({ available: false });
+  });
+
+  test("validate true", async () => {
+    const res1 = await client["/portal/validate"]({ gameCode: "moonrise" });
+    expect(res1).toEqual({ available: true });
+  });
+});
+
 describe("createGame", () => {
   test("valid createGame, followed by invalid create game", async () => {
     const res1 = await client["/portal/create-game"]({

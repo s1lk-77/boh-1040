@@ -431,9 +431,9 @@ Authored path: `Edit.DeleteEntry`.
 when RequestBoundary.request (gameCode, lookup, path: "/edit/delete-entry", requestId)
 where
   Naming._getKey (context: gameCode, suffix: lookup) has (key: entry)
-  Cataloging._exists (catalog: gameCode, entry) has (exists: true)
+  Cataloging._exists (catalog: "abils", entry) has (exists: true)
 then
-  Cataloging.delete (catalog: gameCode, entry)
+  Cataloging.delete (catalog: "abils", entry)
 ```
 
 ### Edit.DeleteEntry:entryDelete#2
@@ -443,7 +443,9 @@ Authored path: `Edit.DeleteEntry`.
 - Covered by [Edit](../design/compositions/Edit.md), line 24.
 
 ```reaction
-when Cataloging.delete (catalog: gameCode, entry), asked by Edit.DeleteEntry:entryDelete
+when Cataloging.delete (catalog: "abils", entry), asked by Edit.DeleteEntry:entryDelete
+where
+  earlier, RequestBoundary.request (gameCode, lookup, path: "/edit/delete-entry", requestId)
 then
   Inventorying.remove (item: entry, owner: gameCode)
 ```
@@ -576,8 +578,8 @@ then
 ### Portal.Create:gameCode
 
 Authored path: `Portal.Create`.
-- Covered by [Portal](../design/compositions/Portal.md), line 16.
-- Covered by [Portal](../design/compositions/Portal.md), line 19.
+- Covered by [Portal](../design/compositions/Portal.md), line 22.
+- Covered by [Portal](../design/compositions/Portal.md), line 25.
 
 ```reaction
 when RequestBoundary.request (gameCode, gameName, path: "/portal/create-game", requestId)
@@ -590,8 +592,8 @@ then
 ### Portal.Create:gameCode#2
 
 Authored path: `Portal.Create`.
-- Covered by [Portal](../design/compositions/Portal.md), line 16.
-- Covered by [Portal](../design/compositions/Portal.md), line 19.
+- Covered by [Portal](../design/compositions/Portal.md), line 22.
+- Covered by [Portal](../design/compositions/Portal.md), line 25.
 
 ```reaction
 when Joining.create (id: gameCode, name: gameName), asked by Portal.Create:gameCode
@@ -602,8 +604,8 @@ then
 ### Portal.Create:gameCode#3
 
 Authored path: `Portal.Create`.
-- Covered by [Portal](../design/compositions/Portal.md), line 16.
-- Covered by [Portal](../design/compositions/Portal.md), line 19.
+- Covered by [Portal](../design/compositions/Portal.md), line 22.
+- Covered by [Portal](../design/compositions/Portal.md), line 25.
 
 ```reaction
 when Inventorying.make (owner: gameCode), asked by Portal.Create:gameCode#2
@@ -616,8 +618,8 @@ then
 ### Portal.Create:refused
 
 Authored path: `Portal.Create`.
-- Covered by [Portal](../design/compositions/Portal.md), line 16.
-- Covered by [Portal](../design/compositions/Portal.md), line 19.
+- Covered by [Portal](../design/compositions/Portal.md), line 22.
+- Covered by [Portal](../design/compositions/Portal.md), line 25.
 
 ```reaction
 when RequestBoundary.request (gameCode, gameName, path: "/portal/create-game", requestId)
@@ -630,8 +632,8 @@ then
 ### Portal.Join:gameNotFound
 
 Authored path: `Portal.Join`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 12.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 18.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/open-bag", playerName, requestId)
@@ -644,8 +646,8 @@ then
 ### Portal.Join:openedBag
 
 Authored path: `Portal.Join`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 12.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 18.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/open-bag", playerName, requestId)
@@ -659,8 +661,8 @@ then
 ### Portal.Join:openedBag#2
 
 Authored path: `Portal.Join`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 12.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 18.
 
 ```reaction
 when Joining.join (id: gameCode, member: playerName), asked by Portal.Join:openedBag
@@ -671,8 +673,8 @@ then
 ### Portal.Join:openedBag#3
 
 Authored path: `Portal.Join`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 12.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 18.
 
 ```reaction
 when Naming.uniquify (context: gameCode, suffix: playerName, key: pid), asked by Portal.Join:openedBag#2
@@ -683,8 +685,8 @@ then
 ### Portal.Join:openedBag#4
 
 Authored path: `Portal.Join`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 12.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 18.
 
 ```reaction
 when Inventorying.make (owner: pid), asked by Portal.Join:openedBag#3
@@ -698,8 +700,8 @@ then
 ### Portal.Join:playerAlreadyExists
 
 Authored path: `Portal.Join`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 12.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 18.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/open-bag", playerName, requestId)
@@ -712,8 +714,8 @@ then
 ### Portal.Name
 
 Authored path: `Portal.Name`.
-- Covered by [Portal](../design/compositions/Portal.md), line 23.
-- Covered by [Portal](../design/compositions/Portal.md), line 26.
+- Covered by [Portal](../design/compositions/Portal.md), line 29.
+- Covered by [Portal](../design/compositions/Portal.md), line 32.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/name", requestId)
@@ -726,8 +728,8 @@ then
 ### Portal.Rejoin:gameNotFound
 
 Authored path: `Portal.Rejoin`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 13.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 19.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/reopen-bag", playerName, requestId)
@@ -740,8 +742,8 @@ then
 ### Portal.Rejoin:playerNotFound
 
 Authored path: `Portal.Rejoin`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 13.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 19.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/reopen-bag", playerName, requestId)
@@ -754,8 +756,8 @@ then
 ### Portal.Rejoin:reopenBag
 
 Authored path: `Portal.Rejoin`.
-- Covered by [Portal](../design/compositions/Portal.md), line 9.
-- Covered by [Portal](../design/compositions/Portal.md), line 13.
+- Covered by [Portal](../design/compositions/Portal.md), line 15.
+- Covered by [Portal](../design/compositions/Portal.md), line 19.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/reopen-bag", playerName, requestId)
@@ -769,8 +771,8 @@ then
 ### Portal.Reopen:gameCode
 
 Authored path: `Portal.Reopen`.
-- Covered by [Portal](../design/compositions/Portal.md), line 16.
-- Covered by [Portal](../design/compositions/Portal.md), line 20.
+- Covered by [Portal](../design/compositions/Portal.md), line 22.
+- Covered by [Portal](../design/compositions/Portal.md), line 26.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/reopen-game", requestId)
@@ -783,8 +785,8 @@ then
 ### Portal.Reopen:refused
 
 Authored path: `Portal.Reopen`.
-- Covered by [Portal](../design/compositions/Portal.md), line 16.
-- Covered by [Portal](../design/compositions/Portal.md), line 20.
+- Covered by [Portal](../design/compositions/Portal.md), line 22.
+- Covered by [Portal](../design/compositions/Portal.md), line 26.
 
 ```reaction
 when RequestBoundary.request (gameCode, path: "/portal/reopen-game", requestId)
@@ -836,6 +838,34 @@ then
   RequestBoundary.respond (requestId)
 ```
 
+### Portal.Validate:validatedFalse
+
+Authored path: `Portal.Validate`.
+- Covered by [Portal](../design/compositions/Portal.md), line 9.
+- Covered by [Portal](../design/compositions/Portal.md), line 12.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/portal/validate", requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: true)
+then
+  RequestBoundary.respond (available: false, requestId)
+```
+
+### Portal.Validate:validatedTrue
+
+Authored path: `Portal.Validate`.
+- Covered by [Portal](../design/compositions/Portal.md), line 9.
+- Covered by [Portal](../design/compositions/Portal.md), line 12.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/portal/validate", requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: false)
+then
+  RequestBoundary.respond (available: true, requestId)
+```
+
 ## Endpoint input contracts
 
 Before recording an action ask, the boundary rejects a body that is not an
@@ -855,3 +885,4 @@ not listed here have no explicit input contract.
 - `/portal/open-bag` — requires `gameCode`, `playerName`
 - `/portal/reopen-bag` — requires `gameCode`, `playerName`
 - `/portal/reopen-game` — requires `gameCode`
+- `/portal/validate` — requires `gameCode`

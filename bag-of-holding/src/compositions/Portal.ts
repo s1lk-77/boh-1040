@@ -145,4 +145,28 @@ const Name = endpoint(
   },
 );
 
-export const portalCmp = { Join, Rejoin, Create, Reopen, Start, Name };
+const Validate = endpoint(
+  "/portal/validate",
+  ({ gameCode }) =>
+    receive({ gameCode }).then(
+      where(Joining._isContext({ id: gameCode }).is({ isContext: false }))
+        .then(respond({ available: true }))
+        .named("validatedTrue"),
+      where(Joining._isContext({ id: gameCode }).is({ isContext: true }))
+        .then(respond({ available: false }))
+        .named("validatedFalse"),
+    ),
+  {
+    input: { required: ["gameCode"] },
+  },
+);
+
+export const portalCmp = {
+  Join,
+  Rejoin,
+  Create,
+  Reopen,
+  Start,
+  Name,
+  Validate,
+};

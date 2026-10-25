@@ -76,7 +76,7 @@ export type BoHWire = {
   };
   "/edit/delete-entry": {
     input: {
-      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["remove"]>[0], ["owner"]>]>>;
       "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
     };
     output: {
@@ -161,6 +161,17 @@ export type BoHWire = {
     output: Record<string, never>;
     error: { error: AppWideError | "BAD_CATALOG_OP" };
   };
+  "/portal/validate": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>>;
+    };
+    output: {
+      "available": false;
+    } | {
+      "available": true;
+    };
+    error: { error: AppWideError | "INVALID_INPUT" };
+  };
 };
 
 export type HttpAppWideError = never;
@@ -228,7 +239,7 @@ export type BoHWireHttp = {
   };
   "/edit/delete-entry": {
     input: {
-      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Inventorying"]["remove"]>[0], ["owner"]>]>>;
       "lookup": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["suffix"]>>;
     };
     output: {
@@ -312,5 +323,16 @@ export type BoHWireHttp = {
     input: Record<string, never>;
     output: Record<string, never>;
     error: { error: HttpAppWideError | "CONFLICT" };
+  };
+  "/portal/validate": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>>;
+    };
+    output: {
+      "available": false;
+    } | {
+      "available": true;
+    };
+    error: { error: HttpAppWideError | "INVALID_REQUEST" };
   };
 };
