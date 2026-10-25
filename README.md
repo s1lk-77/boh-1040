@@ -35,6 +35,8 @@ Changelog:
   - Color scheme polish
   - Border weight adjustments
   - Title font
+- KNOWN BUGS
+  - Mantine currently incorrectly trunacting long ability descriptions on the GM interface. Will be fixed in v0.0.1
 
 ## Why the Bag? <sub>User Journey</sub>
 
@@ -125,6 +127,6 @@ Bag of Holding is a webapp! It was built with several things:
 
 [Concept Designs](documentations/concepts/concept-design.md)
 
-## UI/UX Design
+### UI/UX Design
 
 See [UI Documentations](documentations/) and the files within.
