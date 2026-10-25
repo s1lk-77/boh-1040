@@ -11,11 +11,11 @@ body {
 }
 
 .hoverRedButton:hover {
-  background: var(--mantine-color-red-8) !important;
+  background: var(--mantine-color-red-6) !important;
 }
 
 .hoverRedButton:active {
-  background: var(--mantine-color-red-8) !important;
+  background: var(--mantine-color-red-6) !important;
 }
 
 .hoverGrayButton:hover {

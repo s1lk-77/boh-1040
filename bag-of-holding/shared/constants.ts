@@ -18,4 +18,5 @@ export const SMALL_FRAME_WIDTH = "min(90%, 28rem)";
 export type PlayerPage = "home" | "display" | "settings";
 
 // default log message
-export const LOG_DEFAULT = "(Or select a card from the right to edit it)";
+export const LOG_DEFAULT =
+  "(Or select a card from the right to edit its content)";

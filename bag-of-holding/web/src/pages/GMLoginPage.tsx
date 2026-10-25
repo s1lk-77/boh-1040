@@ -1,10 +1,11 @@
-import { Stack, Text, Title, Input, Button, Group } from "@mantine/core";
+import { Stack, Text, Title, Input, Button, Group, Flex } from "@mantine/core";
 import CenterLayout from "../components/CenterLayout";
 import { useEffect, useState, useCallback, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import { GAME_CODE_REGEX } from "../../../shared/constants";
 import { ExternalLink } from "lucide-react";
+import HelpTool from "../components/HelpTool";
 
 /**
  * The GM login page
@@ -87,22 +88,31 @@ function GMLoginPage() {
             <>
               <Title>Welcome, GM!</Title>
 
-              <Input
-                placeholder="Enter game code"
-                value={gameCode}
-                onChange={updateGameCode}
-                autoComplete="off"
-                autoCapitalize="off"
-                error={gameCodeError}
-                onKeyDown={reopenKeydown}
-                styles={{
-                  input: {
-                    fontFamily: "Fira Code, monospace",
-                    fontWeight: 450,
-                    border: "2px solid black",
-                  },
-                }}
-              />
+              <Flex pos="relative">
+                <HelpTool fillColor="var(--mantine-color-red-3)">
+                  <Text>
+                    To <b>create a new game</b>, enter an alphanumeric game code
+                    of choice. Shorter is good! To <b>reopen your game</b>, just
+                    re-enter the same code.
+                  </Text>
+                </HelpTool>
+                <Input
+                  placeholder="Enter game code"
+                  value={gameCode}
+                  onChange={updateGameCode}
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  error={gameCodeError}
+                  onKeyDown={reopenKeydown}
+                  styles={{
+                    input: {
+                      fontFamily: "Fira Code, monospace",
+                      fontWeight: 450,
+                      border: "2px solid black",
+                    },
+                  }}
+                />
+              </Flex>
               <Group>
                 <Button
                   className="hoverGrayButton"
@@ -126,14 +136,14 @@ function GMLoginPage() {
                   c="black"
                   onClick={reopenGame}
                 >
-                  Reopen this game
+                  Reopen game
                 </Button>
               </Group>
             </>
           )}
           {createMode && (
             <>
-              <Title>Pick a name for your game</Title>
+              <Title>Pick a name for your game!</Title>
               <Input
                 placeholder="Enter game name"
                 value={gameName}

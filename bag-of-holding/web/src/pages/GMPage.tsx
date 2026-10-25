@@ -15,6 +15,7 @@ import { useFocusTrap } from "@mantine/hooks";
 import { Edit, Upload, X, Eye } from "lucide-react";
 import "../../styles.css";
 import Display from "../boh-components/Display";
+import HelpTool from "../components/HelpTool";
 
 /**
  * The GM's dashboard page.
@@ -199,7 +200,7 @@ function GMPage() {
         <Group flex={1} mih={0} align="flex-start" w="70dvw">
           <Panel h="90%" flex={1} gap="0">
             <Panel.Header m={0}>
-              <Group w="100%">
+              <Group w="100%" pos="relative">
                 <Button
                   c="black"
                   bg={viewMode === "view" ? "red.2" : "none"}
@@ -230,6 +231,17 @@ function GMPage() {
                 >
                   Upload
                 </Button> */}
+                <HelpTool
+                  flushRight
+                  fillColor="var(--mantine-color-red-4)"
+                  popLeft
+                >
+                  <Text>
+                    Use the <b>Viewer</b> to preview GameTeX renderings of the
+                    abilities cards in your catalog. Use the <b>Editor</b> to
+                    add new abilites, update existing ones, or delete abilities.
+                  </Text>
+                </HelpTool>
               </Group>
             </Panel.Header>
             <Stack mt={0} flex={1} px="lg">
@@ -271,7 +283,7 @@ function GMPage() {
                     </>
                   ) : (
                     <Text c="gray.6">
-                      Select a card from the right to view it!
+                      Select a card from the right to "GameTeX render" it!
                     </Text>
                   )}
                 </Stack>

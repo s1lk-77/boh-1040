@@ -6,7 +6,7 @@ import {
   type ChangeEvent,
   useRef,
 } from "react";
-import { Button, Stack, Group, Input, Title, Text } from "@mantine/core";
+import { Flex, Button, Stack, Group, Input, Title, Text } from "@mantine/core";
 import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../../../shared/constants";
 import { useNavigate, useLocation } from "react-router";
 import CenterLayout from "../components/CenterLayout";
@@ -167,13 +167,14 @@ function HomePage() {
                 },
               }}
             />
-            <HelpTool>
+            <HelpTool fillColor="var(--mantine-color-red-3)">
               <Text size="sm">
                 To{" "}
                 <Text fw="bold" span>
                   open a new bag
                 </Text>
-                , enter the game code provided by the GMs and pick a name. To{" "}
+                , enter the game code provided by the GMs and pick a name (your
+                name, for example). To{" "}
                 <Text fw="bold" span>
                   reopen your bag
                 </Text>
@@ -189,7 +190,7 @@ function HomePage() {
               c="black"
               onClick={openBag}
             >
-              Open new bag
+              Open this bag
             </Button>
             <Button
               className="hoverButton"
@@ -207,27 +208,29 @@ function HomePage() {
             </Text>
           )}
         </Stack>
-        <Group>
-          <Button
-            bg="none"
-            c="black"
-            bd="1px solid black"
-            className="hoverGrayButton"
-            onClick={openReadme}
-          >
-            {"README"}
-            <ExternalLink size={15} />
-          </Button>
-          <Button
-            bg="none"
-            c="black"
-            bd="1px solid black"
-            onClick={openGMView}
-            className="hoverGrayButton"
-          >
-            I'm a GM
-          </Button>
-        </Group>
+        <Flex align="center">
+          <Group>
+            <Button
+              bg="none"
+              c="black"
+              bd="1px solid black"
+              className="hoverGrayButton"
+              onClick={openReadme}
+            >
+              {"README"}
+              <ExternalLink size={15} />
+            </Button>
+            <Button
+              bg="none"
+              c="black"
+              bd="1px solid black"
+              onClick={openGMView}
+              className="hoverGrayButton"
+            >
+              I'm a GM
+            </Button>
+          </Group>
+        </Flex>
       </Stack>
     </CenterLayout>
   );

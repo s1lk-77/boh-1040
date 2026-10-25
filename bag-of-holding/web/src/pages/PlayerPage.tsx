@@ -11,6 +11,7 @@ import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Display from "../boh-components/Display";
 import useBackButton from "../hooks/useBackButton";
+import HelpTool from "../components/HelpTool";
 
 /**
  * The player home page.
@@ -105,6 +106,12 @@ function PlayerPage() {
   return (
     <MobileViewport>
       {page === "home" && BackButton}
+      <HelpTool flushRight pt="sm">
+        <Text size="sm">
+          Click <b>"+"</b> (bottom right) to collect new abilities. Click on any
+          card to view its full display.
+        </Text>
+      </HelpTool>
       <Stack h="100%" w="100%" align="center" pb="lg" pt="sm" mih={0}>
         <Text>MIT Assassins' Guild</Text>
         {page === "home" && (
