@@ -4,14 +4,14 @@ _Tired of holding 50 pieces of paper in your sweaty hands and emptying out four 
 
 ---
 
-Live action roleplay (LARP) claims its standing as a one-of-a-kind genre in the cosmos of games for it being so incredibly immersive. LARP games put you right into their world, physically, using a combination of cleverly demarcated real-life spaces and the vast remainder of your imagination. Here at [MIT Assassins' Guild](https://assassin.mit.edu/web/Who_are_we%3F), our signature LARP style is the information-dense, mechanics-heavy "secrets & powers" games. These games can feature a novel's worth of text, with up to hundreds of items, player abilities, puzzle clues, etc. Traditionally, game pieces like abilities are packaged as card-sized physical cutouts, which have not only been labor intensive to produce, but also adversarial to pocket space and difficult to inventory. Puzzle clues are even more laborious, often requiring a player to manually copy the clue text into their notes. This can get frustrating, especially when a game is ten days long...
+Live action roleplay (LARP) claims its standing as a one-of-a-kind genre in the cosmos of games. LARP games put you right into their world, physically, using a combination of cleverly demarcated real-life spaces and the vast remainder of your imagination. Here at [MIT Assassins' Guild](https://assassin.mit.edu/web/Who_are_we%3F), our signature LARP style is the information-dense, mechanics-heavy "secrets & powers" games. These games can feature a novel's worth of text, with up to hundreds of items, player abilities, puzzle clues, etc. Traditionally, game pieces like abilities are packaged as card-sized physical cutouts, which have not only been labor intensive to produce, but also adversarial to pocket space and difficult to inventory. Puzzle clues are even more laborious, often requiring a player to manually copy the clue text into their notes. This can get frustrating, especially when a game is ten days long...
 
-__Bag of Holding (BoH)__ is a digital assistant that inventories a player’s out-of-game documents and stores them in an accessible digital pocket, eliminating the tedium of physical cutouts while fully preserving the "GameTeX ability card" look. Primarily player-facing, BoH is designed for mobile devices smaller than an iPad, with a complementary wide-screen dashboard for GMs to upload game information.
+**Bag of Holding (BoH)** is a digital assistant that inventories a player’s out-of-game documents and stores them in an accessible digital pocket, eliminating the tedium of physical cutouts while fully preserving the "GameTeX ability card" look. Primarily player-facing, BoH is designed for mobile devices smaller than an iPad, with a complementary wide-screen dashboard for GMs to upload game information.
 
 Here in this wonderous Bag, you can:
 
 - **Collect** the goodies you find in game by entering their _lookup code_ and retrieving a digital copy of your rewards! They stay with you as long as you log back in with the same player name.
-- **Filter** your abilities (and potentially other things) by name! See them all in a list so you can find them fast!
+- **Filter** your abilities by name and description! See them all in a list so you can find them fast!
 - **Display** any of your abilities as a card on your screen, which you can flip over and show other players just like you would normally!
 
 And for you lovely GMs:
@@ -20,13 +20,23 @@ And for you lovely GMs:
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
+## Beta Version Notes
+
+BoH's core functionality is complete with across-the-board UX improvements. The player's catalog now supports alphabetical sorting, and the ability card display flips with an animation that we hope is the crux of "making this still feel real." The GM interface supports GameTeX rendering ability entries, as well as batch uploading an ability list via a correctly formatted JSON. While we do not endorse the use of AI, we acknowledge that an LLM would now be able to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired JSON format. Building a dedicated integration pipeline is still among our top priorities.
+
+Changelog:
+
+- Functionality
+  - [GM] JSON upload & template JSON download
+  - Alphabetical sorting
+- UI
+  - Card flip animation
+  - Help button & help tool messages for all pages
+  - Color scheme polish
+  - Border weight adjustments
+  - Title font
+
 ## Why the Bag? <sub>User Journey</sub>
-
-_Alpha Version Note:_
-
-_In the alpha, we aim to focus on supporting the player, as this is a player-facing app. Players will be able to join and rejoin a game with a self-defined username. Once they are redirected to their home page, they can see a catalog of abilities they own in a summarized preview format. They will also be able to filter this catalog to support efficient lookup. Additionally, the player can click on an ability to see a display of its card in GameTeX format. They will be able to use the display interface to sift through their ability list and flip each card between its front and back sides. On the GM side, a GM will be able to create a game with a game code or reopen a game that they previously created. They will also be able to add, update, and delete ability entries, all which of are needed to support player-side functionality._
-
----
 
 So you might have encountered a sign that told you this:
 
@@ -61,18 +71,30 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 Notice how you did 0 walking and got ahold of your cookie much, much faster? All you need is your phone and the internet, which lucky for you is supported everywhere at MIT!
 
-The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just go to `[placeholder-link]`, type in a (GM provided) game code, pick any player name you choose, and the Bag is yours!
+The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just pop over to [bagofholding.mit-sdg.dev](https://bagofholding.mit-sdg.dev/#/), type in a (GM provided) game code, pick any name you choose, and the Bag is yours!
 
 <img src="./documentations/images/DemoMain.png" height="400">
 
 [I'm a GM, how do I set this up?](/documentations/GM-guide.md)
 
-## Repository Structure
+## [For Developers] Project Documentation
+
+Bag of Holding is a webapp! It was built with several things:
+
+- Frontend: [React 19](https://react.dev/), [Mantine UI](https://mantine.dev/), & [Motion](https://motion.dev/) (formerly Framer Motion)
+- Backend: [Sync Engine](https://github.com/mit-sdg/sync-engine), [Bun](https://bun.com/)
+- Database: [MongoDB](https://www.mongodb.com/)
+
+**AI Disclosure:** Except for 3 test cases in `./tests/Integration.test.ts`, Bag of Holding was not created using generative AI.
+
+### Repository Structure
 
 ```
 /
 |- README.md
 |- documentations/
+|  |- testing/
+|  |- ui-ux/
 |  |- images/
 |  |  |- ...
 |  |- concepts/
@@ -80,25 +102,29 @@ The Bag is super easy to acquire. It's completely free, unlike all those MacGuff
 |  |  |- ...
 |  |- GM-guide.md
 |  |- HLDD.md
-|  |- UI-design.md
-|- bag-of-holding
-|  |- design/
+|- design/
+|- src/
+|  |-main.tsx
+|- web/
+|  index.html
 |  |- src/
-|  |  |-main.tsx
-|  |- web/
-|  |  index.html
-|  |  |- src/
-|  |  |  |  |-main.tsx
+|  |  |  |-main.tsx
 ```
 
-## High Level Design Doc
+- Sync Engine's required design files are in `design/`. Their implementations live in `src/`, whose entry point is `src/main.ts`.
+- React's entry point is `web/src/main.tsx`. `web/src/ClientProvider.tsx` supplies the Sync client in a custom hook. All other components live in subdirectories with pages in `web/src/pages` and custom hooks in `web/src/hooks`.
+- Constants and type declarations are in `shared/`.
+- The global CSS file is `web/styles.css`, and all other CSS files are in `web/src/assets/`.
+- Tests are in `tests/`. See [test documentations](./documentations/testing/testing-README.md).
 
-[Problem Framing & Stakeholders](/documentations/HLDD.md)
+### High Level Design Doc
 
-## Concept Specifications
+[Problem Framing](/documentations/HLDD.md)
+
+### Technical Design
 
 [Concept Designs](documentations/concepts/concept-design.md)
 
-## UI Sketches
+## UI/UX Design
 
-[UI Designs](documentations/UI-design.md)
+See [UI Documentations](documentations/) and the files within.
