@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from "react-router";
 import CenterLayout from "../components/CenterLayout";
 import { ExternalLink } from "lucide-react";
 import HelpTool from "../components/HelpTool";
+import "../../styles.css";
 
 /**
  * The home page of the app.
@@ -123,15 +124,15 @@ function HomePage() {
       <Stack align="center" h="96dvh" justify="space-between">
         <Text>MIT Assassins' Guild</Text>
         <Stack align="center" pos="relative">
-          <Text>the journeyman's</Text>
+          <Text c="gray.7" ta="center">
+            the journeyman's
+          </Text>
 
-          <Title order={1} c="black">
+          <Title order={1} c="black" className="u-goth" size="5rem">
             Bag of Holding
           </Title>
-          <Text>the one pocket to fit them all</Text>
-          <Text ta="center">
-            a great relievance in the Force, as if millions of trees suddenly
-            cried out in salvation
+          <Text c="gray.7" ta="center">
+            the one pocket to fit them all...
           </Text>
           <Stack pos="relative">
             <Input
@@ -208,7 +209,8 @@ function HomePage() {
             </Text>
           )}
         </Stack>
-        <Flex align="center">
+        <Flex direction="column" align="center" gap="xs">
+          <Text>A digital pocket for your ability cards</Text>
           <Group>
             <Button
               bg="none"

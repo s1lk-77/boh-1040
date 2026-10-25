@@ -6,6 +6,7 @@ import { useClient } from "../ClientProvider";
 import { GAME_CODE_REGEX } from "../../../shared/constants";
 import { ExternalLink } from "lucide-react";
 import HelpTool from "../components/HelpTool";
+import "../../styles.css";
 
 /**
  * The GM login page
@@ -86,13 +87,17 @@ function GMLoginPage() {
         <Stack align="center" pos="relative">
           {!createMode && (
             <>
-              <Title>Welcome, GM!</Title>
+              <Title>Welcome, Gamemaster</Title>
 
               <Flex pos="relative">
                 <HelpTool fillColor="var(--mantine-color-red-3)">
                   <Text>
                     To <b>create a new game</b>, enter an alphanumeric game code
-                    of choice. Shorter is good! To <b>reopen your game</b>, just
+                    of choice (e.g.{" "}
+                    <Text span className="u-fira-code">
+                      starlight
+                    </Text>
+                    ). Shorter is good! To <b>reopen your game</b>, just
                     re-enter the same code.
                   </Text>
                 </HelpTool>
