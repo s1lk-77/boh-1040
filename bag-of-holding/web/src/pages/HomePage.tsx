@@ -11,6 +11,7 @@ import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../../../shared/constants";
 import { useNavigate, useLocation } from "react-router";
 import CenterLayout from "../components/CenterLayout";
 import { ExternalLink } from "lucide-react";
+import HelpTool from "../components/HelpTool";
 
 /**
  * The home page of the app.
@@ -123,48 +124,63 @@ function HomePage() {
         <Text>MIT Assassins' Guild</Text>
         <Stack align="center" pos="relative">
           <Text>the journeyman's</Text>
+
           <Title order={1} c="black">
             Bag of Holding
           </Title>
           <Text>the one pocket to fit them all</Text>
-          <Text>
+          <Text ta="center">
             a great relievance in the Force, as if millions of trees suddenly
             cried out in salvation
           </Text>
+          <Stack pos="relative">
+            <Input
+              placeholder="Enter game code"
+              value={gameCode}
+              onChange={updateGameCode}
+              error={gameCodeError || dneError}
+              autoComplete="off"
+              autoCapitalize="off"
+              onKeyDown={reopenKeydown}
+              styles={{
+                input: {
+                  fontFamily: "Fira Code, monospace",
+                  fontWeight: 450,
+                  border: "2px solid black",
+                },
+              }}
+            />
 
-          <Input
-            placeholder="Enter game code"
-            value={gameCode}
-            onChange={updateGameCode}
-            error={gameCodeError || dneError}
-            autoComplete="off"
-            autoCapitalize="off"
-            onKeyDown={reopenKeydown}
-            styles={{
-              input: {
-                fontFamily: "Fira Code, monospace",
-                fontWeight: 450,
-                border: "2px solid black",
-              },
-            }}
-          />
-
-          <Input
-            placeholder="Enter your name"
-            value={playerName}
-            onChange={updatePlayerName}
-            error={playerNameError || dneError}
-            autoComplete="off"
-            autoCapitalize="off"
-            onKeyDown={reopenKeydown}
-            styles={{
-              input: {
-                fontFamily: "Fira Code, monospace",
-                fontWeight: 450,
-                border: "2px solid black",
-              },
-            }}
-          />
+            <Input
+              placeholder="Enter your name"
+              value={playerName}
+              onChange={updatePlayerName}
+              error={playerNameError || dneError}
+              autoComplete="off"
+              autoCapitalize="off"
+              onKeyDown={reopenKeydown}
+              styles={{
+                input: {
+                  fontFamily: "Fira Code, monospace",
+                  fontWeight: 450,
+                  border: "2px solid black",
+                },
+              }}
+            />
+            <HelpTool>
+              <Text size="sm">
+                To{" "}
+                <Text fw="bold" span>
+                  open a new bag
+                </Text>
+                , enter the game code provided by the GMs and pick a name. To{" "}
+                <Text fw="bold" span>
+                  reopen your bag
+                </Text>
+                , re-enter the game code and the name you picked.
+              </Text>
+            </HelpTool>
+          </Stack>
           <Group>
             <Button
               className="hoverGrayButton"
