@@ -1,6 +1,15 @@
 import Panel from "../components/Panel";
 import CenterLayout from "../components/CenterLayout";
-import { Button, Box, Group, Input, Stack, Text, Title } from "@mantine/core";
+import {
+  Button,
+  Box,
+  Group,
+  Input,
+  Stack,
+  Text,
+  Title,
+  Scroller,
+} from "@mantine/core";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
@@ -199,55 +208,54 @@ function GMPage() {
           )}
         </Box>
         <Group flex={1} mih={0} align="flex-start" w="70dvw">
-          <Panel h="90%" flex={1} gap="0">
+          <Panel h="90%" flex={1} mih={0} gap="0">
             <Panel.Header m={0}>
-              <Group w="100%" pos="relative">
-                <Button
-                  c="black"
-                  bg={viewMode === "view" ? "red.2" : "none"}
-                  className="hoverTransparentButton"
-                  fw="normal"
-                  onClick={() => setViewMode("view")}
-                  // bd={viewMode === "view" ? "2px solid black" : "none"}
-                >
-                  <Text mr="0.5rem">Viewer</Text>
-                  <Eye />
-                </Button>
-                <Button
-                  c="black"
-                  bg={viewMode === "edit" ? "red.2" : "none"}
-                  className="hoverTransparentButton"
-                  fw="normal"
-                  onClick={() => setViewMode("edit")}
-                  // bd={viewMode === "edit" ? "2px solid black" : "none"}
-                >
-                  <Text mr="0.5rem">Editor</Text>
-                  <Edit />
-                </Button>
-                <Button
-                  c="black"
-                  bg={viewMode === "upload" ? "red.2" : "none"}
-                  className="hoverTransparentButton"
-                  fw="normal"
-                  onClick={() => setViewMode("upload")}
-                >
-                  <Text mr="0.5rem">Uploader</Text>
-                  <Upload />
-                </Button>
-                <HelpTool
-                  flushRight
-                  fillColor="var(--mantine-color-red-4)"
-                  popLeft
-                >
-                  <Text>
-                    Use the <b>Viewer</b> to preview GameTeX renderings of the
-                    abilities cards in your catalog. Use the <b>Editor</b> to
-                    add new abilites, update existing ones, or delete abilities.
-                  </Text>
-                </HelpTool>
-              </Group>
+              <Scroller w="100%">
+                <Group pos="relative" wrap="nowrap">
+                  <Button
+                    c="black"
+                    bg={viewMode === "view" ? "red.2" : "none"}
+                    className="hoverTransparentButton"
+                    fw="normal"
+                    onClick={() => setViewMode("view")}
+                    // bd={viewMode === "view" ? "2px solid black" : "none"}
+                  >
+                    <Text mr="0.5rem">Viewer</Text>
+                    <Eye />
+                  </Button>
+                  <Button
+                    c="black"
+                    bg={viewMode === "edit" ? "red.2" : "none"}
+                    className="hoverTransparentButton"
+                    fw="normal"
+                    onClick={() => setViewMode("edit")}
+                    // bd={viewMode === "edit" ? "2px solid black" : "none"}
+                  >
+                    <Text mr="0.5rem">Editor</Text>
+                    <Edit />
+                  </Button>
+                  <Button
+                    c="black"
+                    bg={viewMode === "upload" ? "red.2" : "none"}
+                    className="hoverTransparentButton"
+                    fw="normal"
+                    onClick={() => setViewMode("upload")}
+                  >
+                    <Text mr="0.5rem">Uploader</Text>
+                    <Upload />
+                  </Button>
+                  <HelpTool fillColor="var(--mantine-color-red-4)" popLeft>
+                    <Text>
+                      Use the <b>Viewer</b> to preview GameTeX renderings of the
+                      abilities cards in your catalog. Use the <b>Editor</b> to
+                      add new abilites, update existing ones, or delete
+                      abilities.
+                    </Text>
+                  </HelpTool>
+                </Group>
+              </Scroller>
             </Panel.Header>
-            <Stack mt={0} flex={1} px="lg">
+            <Stack mt={0} flex={1} px="lg" mih={0}>
               {viewMode === "edit" && (
                 <Editor
                   features={
@@ -292,7 +300,9 @@ function GMPage() {
                   )}
                 </Stack>
               )}
-              {viewMode == "upload" && <Uploader />}
+              {viewMode == "upload" && (
+                <Uploader gameCode={gameCode ?? ""} onReload={loadCompendium} />
+              )}
             </Stack>
           </Panel>
           <Panel h="90%" flex={1} mih={0}>

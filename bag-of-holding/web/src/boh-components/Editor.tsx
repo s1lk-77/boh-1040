@@ -1,4 +1,4 @@
-import { Button, Group, Stack, Text } from "@mantine/core";
+import { Button, Group, Stack, Text, Title, ScrollArea } from "@mantine/core";
 import { Fragment } from "react/jsx-runtime";
 import FeatureInput from "../boh-generics/FeatureInput";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -127,7 +127,7 @@ const Editor = ({
   }, [card, client, gameCode]);
 
   return (
-    <Stack align="center" w="100%" pt="sm">
+    <Stack align="center" w="100%" pt="sm" mih={0}>
       {mode === "update" ? (
         <Text fw="bold">
           Ability{" "}
@@ -139,65 +139,79 @@ const Editor = ({
           </Text>
         </Text>
       ) : (
-        <Text fw="bold">Add Entry</Text>
+        <Title size="h4" mb={0}>
+          Add Entry
+        </Title>
       )}
-      {features.map((feature: Feature, i: number) => (
-        <Fragment key={`${feature.name}${i}`}>
-          <FeatureInput
-            w="100%"
-            feature={feature}
-            onFeatureChange={(value: string) =>
-              onFeatureChange(feature.name, value)
-            }
-            defaultValue={card === undefined ? undefined : card[feature.name]}
-            flag={clearFlag}
-            strict={feature.name === "MYlookup"}
-          />
-        </Fragment>
-      ))}
-      <Group w="100%">
-        <Button
-          className="hoverRedButton"
-          flex={1}
-          onClick={mode === "add" ? onAdd : onUpdate}
-          c="black"
-          bg="red.2"
-          bd="2px solid black"
-        >
-          <Text mr="0.5rem">
-            {mode === "add" ? `Add to my game` : "Update"}
-          </Text>
-          <Upload />
-        </Button>
-        {mode === "update" && (
-          <>
+      <ScrollArea
+        flex={1}
+        mih={0}
+        w="100%"
+        type="auto"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+        <Stack align="center" w="100%">
+          {features.map((feature: Feature, i: number) => (
+            <Fragment key={`${feature.name}${i}`}>
+              <FeatureInput
+                w="100%"
+                feature={feature}
+                onFeatureChange={(value: string) =>
+                  onFeatureChange(feature.name, value)
+                }
+                defaultValue={
+                  card === undefined ? undefined : card[feature.name]
+                }
+                flag={clearFlag}
+                strict={feature.name === "MYlookup"}
+              />
+            </Fragment>
+          ))}
+          <Group w="100%">
             <Button
               className="hoverRedButton"
               flex={1}
-              onClick={onDelete}
+              onClick={mode === "add" ? onAdd : onUpdate}
               c="black"
-              bd="2px solid black"
-              bg="red.5"
-            >
-              <Text mr="0.5rem">Delete</Text>
-              <Trash />
-            </Button>
-            <Button
-              className="hoverGrayButton"
-              flex={1}
-              onClick={() => setMode("add")}
-              c="black"
-              bg="none"
+              bg="red.2"
               bd="2px solid black"
             >
-              Cancel
+              <Text mr="0.5rem">
+                {mode === "add" ? `Add to my game` : "Update"}
+              </Text>
+              <Upload />
             </Button>
-          </>
-        )}
-      </Group>
-      <Text c={log === "" ? "gray.7" : "red"}>
-        {mode === "add" && log === "" ? LOG_DEFAULT : log}
-      </Text>
+            {mode === "update" && (
+              <>
+                <Button
+                  className="hoverRedButton"
+                  flex={1}
+                  onClick={onDelete}
+                  c="black"
+                  bd="2px solid black"
+                  bg="red.5"
+                >
+                  <Text mr="0.5rem">Delete</Text>
+                  <Trash />
+                </Button>
+                <Button
+                  className="hoverGrayButton"
+                  flex={1}
+                  onClick={() => setMode("add")}
+                  c="black"
+                  bg="none"
+                  bd="2px solid black"
+                >
+                  Cancel
+                </Button>
+              </>
+            )}
+          </Group>
+          <Text c={log === "" ? "gray.7" : "red"}>
+            {mode === "add" && log === "" ? LOG_DEFAULT : log}
+          </Text>
+        </Stack>
+      </ScrollArea>
     </Stack>
   );
 };
