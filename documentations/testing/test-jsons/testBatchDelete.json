@@ -1,0 +1,26 @@
+[
+  {
+    "MYlookup": "delete-1",
+    "MYname": "Delete Me! (1)",
+    "MYtext": "I am a delete test",
+    "MYeffect": "-"
+  },
+  {
+    "MYlookup": "delete-2",
+    "MYname": "Delete Me! (2)",
+    "MYtext": "I am a delete test",
+    "MYeffect": "-"
+  },
+  {
+    "MYlookup": "delete-3",
+    "MYname": "Delete Me! (3)",
+    "MYtext": "I am a delete test",
+    "MYeffect": "-"
+  },
+  {
+    "MYlookup": "delete-4",
+    "MYname": "Delete Me! (4)",
+    "MYtext": "I am a delete test",
+    "MYeffect": "-"
+  }
+]

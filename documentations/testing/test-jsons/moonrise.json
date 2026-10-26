@@ -1,0 +1,32 @@
+[
+  {
+    "MYlookup": "sp-906",
+    "MYname": "Spell: Wilt 906Ω",
+    "MYtext": "Once per game, you may throw 5 spell packets. Anyone who is hit has RA -3 for 5 minutes.",
+    "MYeffect": "906Ω\n\nThis is yfnse's Wilt debuff :). RA -3 and you're welcome."
+  },
+  {
+    "MYlookup": "sp-706",
+    "MYname": "Spell: Wilt 706Ω",
+    "MYtext": "Once per game, you may throw 5 spell packets. Anyone who is hit has RA -1 for 5 minutes.",
+    "MYeffect": "706Ω\n\nThis is an evil Wilt debuff :). RA -1 and you're welcome."
+  },
+  {
+    "MYlookup": "sp-615",
+    "MYname": "Spell: Radiance 615",
+    "MYtext": "You may fire your dart gun for 1 damage. You must pass it behind your back between shots.",
+    "MYeffect": "615"
+  },
+  {
+    "MYlookup": "388",
+    "MYname": "Control",
+    "MYtext": "Every 5 minutes, you may rock paper scissors with your host to possess them.",
+    "MYeffect": "I am a lich"
+  },
+  {
+    "MYlookup": "sp-739",
+    "MYname": "Spell: Detach 739",
+    "MYtext": "This is secretly the most powerful spell in game. You can remove items now. You're welcome.",
+    "MYeffect": "739\n\nYou see me doing this very cool thing called removing stuck items."
+  }
+]

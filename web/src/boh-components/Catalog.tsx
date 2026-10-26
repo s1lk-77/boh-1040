@@ -71,21 +71,46 @@ const Catalog = ({
     }
   }, []);
 
-  const onSingleDelete = useCallback(async (lookup: string) => {
+  const onSingleDelete = useCallback(
+    async (lookup: string) => {
+      if (!client) return;
+
+      if (selectionRef.current.has(lookup)) {
+        selectionRef.current.delete(lookup);
+      }
+
+      const res = await client["/edit/delete-entry"]({ gameCode, lookup });
+      if ("error" in res) {
+        console.error(`error deleting entry ${lookup} of game ${gameCode}`);
+        return;
+      }
+
+      onReload();
+    },
+    [client, gameCode],
+  );
+
+  const onBatchDelete = useCallback(async () => {
     if (!client) return;
 
-    if (selectionRef.current.has(lookup)) {
-      selectionRef.current.delete(lookup);
+    if (selectionRef.current.size === 0) {
+      return;
     }
 
-    const res = await client["/edit/delete-entry"]({ gameCode, lookup });
+    const batch: string[] = Array.from(selectionRef.current);
+    selectionRef.current = new Set();
+    setShowDelete(false);
+
+    const res = await Promise.all(
+      batch.map((lookup) => client["/edit/delete-entry"]({ gameCode, lookup })),
+    );
     if ("error" in res) {
-      console.error(`error deleting entry ${lookup} of game ${gameCode}`);
+      console.error(`error batch deleting entries from game ${gameCode}`);
       return;
     }
 
     onReload();
-  }, []);
+  }, [client, gameCode]);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -220,6 +245,7 @@ const Catalog = ({
               bg={useColor ? "darkred" : "gray.2"}
               c="white"
               className="hoverBlackButton"
+              onClick={onBatchDelete}
             >
               <Trash />
             </Button>
