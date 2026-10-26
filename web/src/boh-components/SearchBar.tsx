@@ -53,15 +53,16 @@ const SearchBar = ({
     setValue("");
     if (busyRef.current) return;
     if (!client) return;
+    const lookup = value.charAt(0) === "@" ? value.slice(1) : value;
 
     // call endpoint
     // set busy flag
     busyRef.current = true;
-    console.log(`${playerName}@${gameCode} @ ${value}`);
+    console.log(`${playerName}@${gameCode} @ ${lookup}`);
     try {
       const res = await client["/collect/print"]({
         gameCode,
-        lookup: value,
+        lookup,
         playerName,
       });
       if ("error" in res) {
