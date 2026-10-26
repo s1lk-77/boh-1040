@@ -6,13 +6,23 @@ import {
   type ChangeEvent,
   useRef,
 } from "react";
-import { Flex, Button, Stack, Group, Input, Title, Text } from "@mantine/core";
+import {
+  Flex,
+  Button,
+  Stack,
+  Group,
+  Input,
+  Title,
+  Text,
+  Image,
+} from "@mantine/core";
 import { GAME_CODE_REGEX, PLAYER_NAME_REGEX } from "../../../shared/constants";
 import { useNavigate, useLocation } from "react-router";
 import CenterLayout from "../components/CenterLayout";
 import { ExternalLink } from "lucide-react";
 import HelpTool from "../components/HelpTool";
 import "../../styles.css";
+import logo from "../assets/GuildLogo.png";
 
 /**
  * The home page of the app.
@@ -135,7 +145,13 @@ function HomePage() {
   return (
     <CenterLayout asOverlay>
       <Stack align="center" h="96dvh" justify="space-between">
-        <Text>MIT Assassins' Guild</Text>
+        <Image
+          src={logo}
+          alt="no image"
+          h="12dvh"
+          fit="scale-down"
+          mt="-4dvh"
+        />
         <Stack align="center" pos="relative">
           <Text c="red.4" ta="center">
             the journeyman's

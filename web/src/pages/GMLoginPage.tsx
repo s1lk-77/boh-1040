@@ -1,4 +1,13 @@
-import { Stack, Text, Title, Input, Button, Group, Flex } from "@mantine/core";
+import {
+  Stack,
+  Text,
+  Title,
+  Input,
+  Button,
+  Group,
+  Flex,
+  Image,
+} from "@mantine/core";
 import CenterLayout from "../components/CenterLayout";
 import {
   useEffect,
@@ -13,6 +22,7 @@ import { GAME_CODE_REGEX } from "../../../shared/constants";
 import { ExternalLink, Feather } from "lucide-react";
 import HelpTool from "../components/HelpTool";
 import "../../styles.css";
+import logo from "../assets/GuildLogo.png";
 
 /**
  * The GM login page
@@ -117,7 +127,13 @@ function GMLoginPage() {
   return (
     <CenterLayout asOverlay>
       <Stack align="center" h="96dvh" justify="space-between">
-        <Text>MIT Assassins' Guild</Text>
+        <Image
+          src={logo}
+          alt="no image"
+          h="12dvh"
+          fit="scale-down"
+          mt="-4dvh"
+        />
         <Stack align="center" pos="relative">
           {!createMode && (
             <>
