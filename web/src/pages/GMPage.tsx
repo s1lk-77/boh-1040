@@ -178,7 +178,7 @@ function GMPage() {
                 role="button"
                 tabIndex={0}
                 aria-label="Cancel editing game name"
-                color="var(--mantine-color-red-8)"
+                color="black"
                 className="u-pointer hoverRotateXs"
                 onClick={() => setEditingName(false)}
                 onKeyDown={(e) => {
@@ -192,10 +192,14 @@ function GMPage() {
             <Title
               order={1}
               h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+              className="u-goth"
+              size="5rem"
+              c="black"
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
+                textShadow: "2px 2px 4px var(--mantine-color-gray-2)",
               }}
             >
               {gameName}{" "}

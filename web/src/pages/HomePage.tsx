@@ -137,19 +137,26 @@ function HomePage() {
       <Stack align="center" h="96dvh" justify="space-between">
         <Text>MIT Assassins' Guild</Text>
         <Stack align="center" pos="relative">
-          <Text c="gray.7" ta="center">
+          <Text c="red.4" ta="center">
             the journeyman's
           </Text>
 
-          <Title order={1} c="black" className="u-goth" size="5rem" ta="center">
+          <Title
+            order={1}
+            c="black"
+            className="u-goth"
+            size="5rem"
+            ta="center"
+            style={{ textShadow: "2px 2px 4px var(--mantine-color-gray-2)" }}
+          >
             Bag of Holding
           </Title>
-          <Text c="gray.7" ta="center">
+          <Text c="red.4" ta="center">
             the one pocket to fit them all...
           </Text>
           <Stack pos="relative">
             <Input
-              placeholder="Enter game code"
+              placeholder="Enter game code..."
               value={gameCode}
               onChange={updateGameCode}
               error={gameCodeError || dneError}
@@ -161,12 +168,13 @@ function HomePage() {
                   fontFamily: "Fira Code, monospace",
                   fontWeight: 450,
                   border: "2px solid black",
+                  backgroundColor: "var(--mantine-color-gray-2)",
                 },
               }}
             />
 
             <Input
-              placeholder="Enter your name"
+              placeholder="Enter your name..."
               value={playerName}
               onChange={updatePlayerName}
               error={playerNameError || dneError}
@@ -178,6 +186,7 @@ function HomePage() {
                   fontFamily: "Fira Code, monospace",
                   fontWeight: 450,
                   border: "2px solid black",
+                  backgroundColor: "var(--mantine-color-gray-2)",
                 },
               }}
             />
@@ -198,9 +207,9 @@ function HomePage() {
           </Stack>
           <Group>
             <Button
-              className="hoverGrayButton"
+              className="hoverLightRedButton"
               bd="2px solid black"
-              bg="none"
+              bg="red.6"
               c="black"
               onClick={openBag}
             >
@@ -217,14 +226,14 @@ function HomePage() {
             </Button>
           </Group>
           {errorMsg !== null && (
-            <Text pos="absolute" top="105%" c="red" ta="center">
+            <Text pos="absolute" top="105%" c="gray.2" ta="center">
               {errorMsg}
             </Text>
           )}
         </Stack>
         <Flex direction="column" align="center" gap="xs">
           <Text pos="relative">
-            An upgraded pocket for your ability cards
+            A better pocket for your ability cards
             <HelpTool
               fillColor="var(--mantine-color-red-3)"
               useEllipsis
@@ -241,21 +250,21 @@ function HomePage() {
           </Text>
           <Group>
             <Button
-              bg="none"
+              bg="red.6"
               c="black"
               bd="1px solid black"
-              className="hoverGrayButton"
+              className="hoverLightRedButton"
               onClick={openReadme}
             >
               {"README"}
               <ExternalLink size={15} />
             </Button>
             <Button
-              bg="none"
+              bg="red.6"
               c="black"
               bd="1px solid black"
               onClick={openGMView}
-              className="hoverGrayButton"
+              className="hoverLightRedButton"
             >
               I'm a GM
             </Button>

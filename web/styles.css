@@ -2,6 +2,10 @@ html {
   background-color: var(--mantine-color-red-2) !important;
 }
 
+:root {
+  --mantine-color-placeholder: var(--mantine-color-gray-6) !important;
+}
+
 .hoverButton:hover {
   background: var(--mantine-color-yellow-8) !important;
 }
@@ -16,6 +20,14 @@ html {
 
 .hoverRedButton:active {
   background: var(--mantine-color-red-6) !important;
+}
+
+.hoverLightRedButton:hover {
+  background: var(--mantine-color-red-3) !important;
+}
+
+.hoverLightRedButton:active {
+  background: var(--mantine-color-red-3) !important;
 }
 
 .hoverDarkRedButton:hover {

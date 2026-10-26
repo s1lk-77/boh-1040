@@ -148,15 +148,16 @@ function GMLoginPage() {
                       fontFamily: "Fira Code, monospace",
                       fontWeight: 450,
                       border: "2px solid black",
+                      backgroundColor: "var(--mantine-color-gray-2)",
                     },
                   }}
                 />
               </Flex>
               <Group>
                 <Button
-                  className="hoverGrayButton"
                   bd="2px solid black"
-                  bg="none"
+                  className="hoverLightRedButton"
+                  bg="red.6"
                   c="black"
                   onClick={maybeCreateGame}
                 >
@@ -176,7 +177,7 @@ function GMLoginPage() {
           )}
           {createMode && (
             <>
-              <Title>Pick a name for your game!</Title>
+              <Title ta="center">Pick a name for your game!</Title>
               <Flex pos="relative">
                 <Text
                   pos="absolute"
@@ -196,6 +197,7 @@ function GMLoginPage() {
                       fontFamily: "Fira Code, monospace",
                       fontWeight: 450,
                       border: "2px solid black",
+                      backgroundColor: "var(--mantine-color-gray-2)",
                     },
                   }}
                 />
@@ -211,9 +213,9 @@ function GMLoginPage() {
                   Confirm
                 </Button>
                 <Button
-                  className="hoverGrayButton"
+                  className="hoverLightRedButton"
+                  bg="red.6"
                   bd="2px solid black"
-                  bg="none"
                   c="black"
                   onClick={() => {
                     setGameName("");
@@ -227,27 +229,27 @@ function GMLoginPage() {
             </>
           )}
           {errorMsg !== null && (
-            <Text pos="absolute" top="105%" c="red">
+            <Text pos="absolute" top="105%" c="gray.2">
               {errorMsg}
             </Text>
           )}
         </Stack>
         <Group>
           <Button
-            bg="none"
+            className="hoverLightRedButton"
+            bg="red.6"
             c="black"
             bd="1px solid black"
-            className="hoverGrayButton"
             onClick={openReadme}
           >
             README
             <ExternalLink size={15} />
           </Button>
           <Button
-            bg="none"
+            className="hoverLightRedButton"
+            bg="red.6"
             c="black"
             bd="1px solid black"
-            className="hoverGrayButton"
             onClick={openPlayerView}
           >
             I'm a player
