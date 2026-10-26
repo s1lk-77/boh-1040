@@ -24,6 +24,8 @@ interface UploaderProps {
   onReload: () => Promise<void>;
 }
 
+class UploaderError extends Error {}
+
 const Uploader = ({ gameCode, onReload }: UploaderProps) => {
   const client = useClient();
 
@@ -63,14 +65,14 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
       const text = event.target?.result;
       if (!(typeof text === "string")) {
         console.error("read file is not a string");
-        return;
+        throw new UploaderError("Invalid JSON file format.");
       }
 
       try {
         const parsedData = JSON.parse(text);
 
         if (!Array.isArray(parsedData)) {
-          throw new Error("Expected JSON to parse into an array");
+          throw new UploaderError("The uploaded JSON was not an array");
         }
 
         // dynamic type checking
@@ -94,16 +96,24 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
         if (cardsToAdd.length >= 0) {
           setCards(cardsToAdd);
           setMode("confirm");
+        } else {
+          throw new UploaderError(
+            "The Grimoire translator couldn't find any cards in your file :(",
+          );
         }
       } catch (err) {
-        setError("Invalid JSON file format.");
+        if (err instanceof UploaderError) {
+          setError(err.message);
+        } else {
+          setError("Invalid JSON file format");
+        }
       }
     };
 
     // Event handler if the file reader runs into an error
     reader.onerror = () => {
       console.error("Error reading file");
-      setError("Error reading file.");
+      setError("Oh no, something went wrong.");
     };
 
     // Read the file as a plain text string
@@ -123,7 +133,7 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
       });
       if ("error" in addedEntry) {
         console.error("error adding entry");
-        return;
+        continue;
       }
 
       const entriesToUpdate = Object.keys(card).map((key) => {
@@ -179,13 +189,20 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
                     bg="red.2"
                     className="hoverRedButton"
                     {...props}
+                    onClick={() => {
+                      setError("");
+                      props.onClick();
+                    }}
                   >
                     Upload JSON
                   </Button>
                 )}
               </FileButton>
               <Button
-                onClick={downloadTemplate}
+                onClick={() => {
+                  setError("");
+                  downloadTemplate();
+                }}
                 c="black"
                 bd="2px solid black"
                 bg="none"
@@ -194,6 +211,7 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
                 Download Template JSON
               </Button>
             </Group>
+            {error !== "" && <Text c="red">{error}</Text>}
           </>
         )}
 
@@ -227,16 +245,31 @@ const Uploader = ({ gameCode, onReload }: UploaderProps) => {
                 ))}
               </Flex>
             </ScrollArea>
-            <Button
-              c="black"
-              bd="2px solid black"
-              bg="red.2"
-              className="hoverRedButton"
-              loading={uploading}
-              onClick={onConfirmAdd}
-            >
-              Yes, Add Them!
-            </Button>
+            <Group w="100%" justify="center">
+              <Button
+                c="black"
+                bd="2px solid black"
+                bg="red.2"
+                className="hoverRedButton"
+                loading={uploading}
+                onClick={onConfirmAdd}
+              >
+                Yes, Add Them!
+              </Button>
+              <Button
+                c="black"
+                bd="2px solid black"
+                bg="none"
+                className="hoverGrayButton"
+                onClick={() => {
+                  setFile(null);
+                  setCards([]);
+                  setMode("upload");
+                }}
+              >
+                Cancel
+              </Button>
+            </Group>
           </>
         )}
       </Stack>
