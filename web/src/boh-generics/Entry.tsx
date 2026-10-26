@@ -12,6 +12,7 @@ interface EntryProps {
   selecting?: boolean;
   onSelect?: (lookup: string) => void;
   onDelete?: (lookup: string) => void;
+  selectionRef: React.RefObject<Set<string>>;
 }
 
 const Entry = ({
@@ -22,12 +23,22 @@ const Entry = ({
   selecting = false,
   onSelect = () => {},
   onDelete = () => {},
+  selectionRef,
 }: EntryProps) => {
   const [selected, setSelected] = useState<boolean>(false);
 
   useEffect(() => {
     if (!selecting) setSelected(false);
   }, [selecting]);
+
+  useEffect(() => {
+    if (!selectionRef) return;
+    if (selectionRef.current.has(lookup)) {
+      setSelected(true);
+    } else {
+      setSelected(false);
+    }
+  }, [lookup]);
 
   const resolvedDesc: string =
     desc === undefined || desc === "" ? "no description text given" : desc;

@@ -343,6 +343,7 @@ const Catalog = ({
                       selecting={selecting}
                       onSelect={onSelect}
                       onDelete={onSingleDelete}
+                      selectionRef={selectionRef}
                     />
                   </motion.div>
                 );
