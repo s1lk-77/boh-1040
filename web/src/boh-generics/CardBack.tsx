@@ -41,6 +41,7 @@ const CardBack = ({
         scrollbars="y"
         offsetScrollbars="present"
         bd="1px solid black"
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         <Stack mih="100%" align="center" justify="center" h="100%">
           <Text style={{ whiteSpace: "pre-wrap" }} ta="center">

@@ -42,6 +42,7 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
         type="auto"
         scrollbars="y"
         offsetScrollbars="present"
+        style={{ WebkitOverflowScrolling: "touch" }}
       >
         <Stack mih="100%" align="center" justify="center" h="100%">
           <Text style={{ whiteSpace: "pre-wrap" }}>
