@@ -1,4 +1,5 @@
 import {
+  Box,
   Divider,
   Flex,
   ScrollArea,
@@ -200,29 +201,35 @@ const Catalog = ({
             borderBottomRightRadius: "0px",
           }}
         >
-          <Filter
-            fill={
-              useColor
-                ? "var(--mantine-color-red-2)"
-                : "var(--mantine-color-gray-2)"
-            }
-          />
-          <Input
-            flex={1}
-            placeholder="type to filter..."
-            value={filter}
-            onChange={onFilter}
-            styles={{
-              input: {
-                fontFamily: "Fira Code, monospace",
-                fontWeight: 450,
-                border: "2px solid black",
-                "&:focus": {
-                  borderColor: "var(--mantine-color-grape-6)",
-                },
-              },
-            }}
-          />
+          {entries.length > 1 ? (
+            <>
+              <Filter
+                fill={
+                  useColor
+                    ? "var(--mantine-color-red-2)"
+                    : "var(--mantine-color-gray-2)"
+                }
+              />
+              <Input
+                flex={1}
+                placeholder="type to filter..."
+                value={filter}
+                onChange={onFilter}
+                styles={{
+                  input: {
+                    fontFamily: "Fira Code, monospace",
+                    fontWeight: 450,
+                    border: "2px solid black",
+                    "&:focus": {
+                      borderColor: "var(--mantine-color-grape-6)",
+                    },
+                  },
+                }}
+              />
+            </>
+          ) : (
+            <Box flex={1}></Box>
+          )}
 
           <Button
             w="fit-content"
