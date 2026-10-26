@@ -44,7 +44,9 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
         offsetScrollbars="present"
       >
         <Stack mih="100%" align="center" justify="center" h="100%">
-          <Text>{!card.MYtext ? "no description given" : card.MYtext}</Text>
+          <Text style={{ whiteSpace: "pre-wrap" }}>
+            {!card.MYtext ? "no description given" : card.MYtext}
+          </Text>
         </Stack>
       </ScrollArea>
     </Card>

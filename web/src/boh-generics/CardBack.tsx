@@ -43,7 +43,9 @@ const CardBack = ({
         bd="1px solid black"
       >
         <Stack mih="100%" align="center" justify="center" h="100%">
-          <Text>{!card.MYeffect ? "-" : card.MYeffect}</Text>
+          <Text style={{ whiteSpace: "pre-wrap" }} ta="center">
+            {!card.MYeffect ? "-" : card.MYeffect}
+          </Text>
         </Stack>
       </ScrollArea>
     </Card>
