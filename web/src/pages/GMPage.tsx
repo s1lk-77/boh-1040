@@ -194,12 +194,12 @@ function GMPage() {
               h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
               className="u-goth"
               size="5rem"
-              c="black"
+              c="red.3"
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
-                textShadow: "2px 2px 4px var(--mantine-color-gray-2)",
+                textShadow: "2px 2px 4px black",
               }}
             >
               {gameName}{" "}

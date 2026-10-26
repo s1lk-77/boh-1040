@@ -2,6 +2,14 @@
 
 ## Design Philosophies
 
+**An Ode to the Color Red**
+
+I really leaned into the cheesiness of it.
+
+Is BOLD red the most UX friendly color for a website? No. But my target audience is Assassins’ Guild, and I know the melodrama and humor will find itself at home. Whats a game without its flavor text anyways. Most Guild publicity things are egregiously red (see slide 5 in the [deck](./deck.pdf)), and I thought it was beyond context-appropriate to make BoH just as cheesy and nerdy looking. It perfectly telegraphs what kind of people we are, and who cares if scares away a few normies xD. The most important thing is the player page does NOT use this red and is designed to maximize UX. As for the GMs... if you're writing a guild game you can appreciate my background and font choice. I TRUST.
+
+If I get user complaints though I will swiftly tone it down.
+
 **Player Side**
 
 1. Minimalist
