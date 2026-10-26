@@ -123,6 +123,10 @@ const SearchBar = ({
             setValue(e.target.value);
           }}
           onKeyDown={handleKeyDown}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
         />
         <Button
           onClick={onSubmit}
