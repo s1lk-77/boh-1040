@@ -49,7 +49,21 @@ const Catalog = ({
   const [processed, setProcessed] = useState<BaseCard[]>([]);
   const [selecting, setSelecting] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
-  const selectionRef = useRef<BaseCard[]>([]);
+  const selectionRef = useRef<Set<string>>(new Set());
+
+  const onSelect = useCallback((lookup: string) => {
+    if (selectionRef.current.has(lookup)) {
+      selectionRef.current.delete(lookup);
+    } else {
+      selectionRef.current.add(lookup);
+    }
+
+    if (selectionRef.current.size > 0) {
+      setShowDelete(true);
+    } else {
+      setShowDelete(false);
+    }
+  }, []);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -181,9 +195,9 @@ const Catalog = ({
           {showDelete && (
             <Button
               w="fit-content"
-              bg="red.6"
-              c="black"
-              className="hoverDarkRedButton"
+              bg={useColor ? "darkred" : "gray.2"}
+              c="white"
+              className="hoverBlackButton"
             >
               <Trash />
             </Button>
@@ -195,7 +209,15 @@ const Catalog = ({
               c="black"
               className="hoverTransparentButton"
               onClick={() => {
-                setSelecting(!selecting);
+                setSelecting((s) => {
+                  if (s) {
+                    setShowDelete(false);
+                    selectionRef.current = new Set();
+                    return false;
+                  } else {
+                    return true;
+                  }
+                });
               }}
             >
               <ListChecks />
@@ -271,6 +293,7 @@ const Catalog = ({
                       desc={desc}
                       onClick={() => onDisplay(entry.MYlookup)}
                       selecting={selecting}
+                      onSelect={onSelect}
                     />
                   </motion.div>
                 );

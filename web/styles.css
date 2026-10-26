@@ -48,6 +48,16 @@ html {
   color: white !important;
 }
 
+.hoverBlackButton:hover {
+  background: black !important;
+  color: white !important;
+}
+
+.hoverBlackButton:active {
+  background: black !important;
+  color: white !important;
+}
+
 .hoverGrayButton:hover {
   background: var(--mantine-color-gray-6) !important;
 }

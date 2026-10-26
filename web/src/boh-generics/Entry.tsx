@@ -2,7 +2,7 @@ import { Button, Box, Flex, Group, Stack, Text, Title } from "@mantine/core";
 import "../../styles.css";
 import { motion } from "motion/react";
 import { Square, Check, Trash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface EntryProps {
   name: string;
@@ -10,8 +10,8 @@ interface EntryProps {
   onClick: () => void;
   desc?: string;
   selecting?: boolean;
-  onSelect?: () => void;
-  onDelete?: () => void;
+  onSelect?: (lookup: string) => void;
+  onDelete?: (lookup: string) => void;
 }
 
 const Entry = ({
@@ -24,6 +24,10 @@ const Entry = ({
   onDelete = () => {},
 }: EntryProps) => {
   const [selected, setSelected] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!selecting) setSelected(false);
+  }, [selecting]);
 
   const resolvedDesc: string =
     desc === undefined || desc === "" ? "no description text given" : desc;
@@ -47,7 +51,7 @@ const Entry = ({
           onClick={() => {
             if (selecting) {
               setSelected(!selected);
-              onSelect();
+              onSelect(lookup);
             } else {
               onClick();
             }
@@ -102,7 +106,7 @@ const Entry = ({
             }}
             onClick={() => {
               setSelected(!selected);
-              onSelect();
+              onSelect(lookup);
             }}
           >
             {selected ? (
@@ -127,7 +131,9 @@ const Entry = ({
                 paddingRight: 0,
               },
             }}
-            onClick={onDelete}
+            onClick={() => {
+              onDelete(lookup);
+            }}
           >
             <Trash />
           </Button>
