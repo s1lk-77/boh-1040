@@ -62,8 +62,10 @@ html {
   background: var(--mantine-color-gray-6) !important;
 }
 
-.hoverTransparentButton:hover {
-  color: var(--mantine-color-gray-5) !important;
+@media (hover: hover) {
+  .hoverTransparentButton:hover {
+    color: var(--mantine-color-gray-5) !important;
+  }
 }
 
 .hoverTransparentButton:active {
@@ -78,8 +80,10 @@ html {
   transition: transform 0.2s ease-in-out;
 }
 
-.hoverRotate:hover {
-  transform: rotate(-70deg);
+@media (hover: hover) {
+  .hoverRotate:hover {
+    transform: rotate(-70deg);
+  }
 }
 
 .hoverRotate:active {
@@ -87,7 +91,7 @@ html {
 }
 
 .hoverRotateXs {
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.1s;
 }
 
 .hoverRotateXs:hover {
