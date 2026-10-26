@@ -10,6 +10,8 @@ interface EntryProps {
   onClick: () => void;
   desc?: string;
   selecting?: boolean;
+  onSelect?: () => void;
+  onDelete?: () => void;
 }
 
 const Entry = ({
@@ -18,6 +20,8 @@ const Entry = ({
   onClick,
   desc = undefined,
   selecting = false,
+  onSelect = () => {},
+  onDelete = () => {},
 }: EntryProps) => {
   const [selected, setSelected] = useState<boolean>(false);
 
@@ -43,6 +47,7 @@ const Entry = ({
           onClick={() => {
             if (selecting) {
               setSelected(!selected);
+              onSelect();
             } else {
               onClick();
             }
@@ -97,6 +102,7 @@ const Entry = ({
             }}
             onClick={() => {
               setSelected(!selected);
+              onSelect();
             }}
           >
             {selected ? (
@@ -121,6 +127,7 @@ const Entry = ({
                 paddingRight: 0,
               },
             }}
+            onClick={onDelete}
           >
             <Trash />
           </Button>
