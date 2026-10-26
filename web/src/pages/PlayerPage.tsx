@@ -131,6 +131,8 @@ function PlayerPage() {
             entries={cards}
             onDisplay={display}
             initialRef={initialRef}
+            onReload={loadCompendium}
+            gameCode={gameCode ?? ""}
           />
         )}
         {page === "display" && (

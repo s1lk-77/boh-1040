@@ -319,6 +319,8 @@ function GMPage() {
               useColor
               initialRef={initialRef}
               useSelect
+              gameCode={gameCode ?? ""}
+              onReload={loadCompendium}
             />
           </Panel>
         </Group>

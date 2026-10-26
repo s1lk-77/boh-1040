@@ -26,6 +26,7 @@ import {
   useRef,
 } from "react";
 import { motion } from "motion/react";
+import { useClient } from "../ClientProvider";
 
 interface CatalogProps {
   entries: BaseCard[];
@@ -33,7 +34,9 @@ interface CatalogProps {
   w?: string;
   useColor?: boolean;
   initialRef: React.RefObject<boolean>;
+  gameCode: string;
   useSelect?: boolean;
+  onReload: () => {};
 }
 
 const Catalog = ({
@@ -41,6 +44,8 @@ const Catalog = ({
   onDisplay,
   w,
   initialRef,
+  gameCode,
+  onReload,
   useColor = false,
   useSelect = false,
 }: CatalogProps) => {
@@ -50,6 +55,7 @@ const Catalog = ({
   const [selecting, setSelecting] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const selectionRef = useRef<Set<string>>(new Set());
+  const client = useClient();
 
   const onSelect = useCallback((lookup: string) => {
     if (selectionRef.current.has(lookup)) {
@@ -63,6 +69,22 @@ const Catalog = ({
     } else {
       setShowDelete(false);
     }
+  }, []);
+
+  const onSingleDelete = useCallback(async (lookup: string) => {
+    if (!client) return;
+
+    if (selectionRef.current.has(lookup)) {
+      selectionRef.current.delete(lookup);
+    }
+
+    const res = await client["/edit/delete-entry"]({ gameCode, lookup });
+    if ("error" in res) {
+      console.error(`error deleting entry ${lookup} of game ${gameCode}`);
+      return;
+    }
+
+    onReload();
   }, []);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -294,6 +316,7 @@ const Catalog = ({
                       onClick={() => onDisplay(entry.MYlookup)}
                       selecting={selecting}
                       onSelect={onSelect}
+                      onDelete={onSingleDelete}
                     />
                   </motion.div>
                 );
