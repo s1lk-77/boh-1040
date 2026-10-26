@@ -318,6 +318,7 @@ function GMPage() {
               w="100%"
               useColor
               initialRef={initialRef}
+              useSelect
             />
           </Panel>
         </Group>

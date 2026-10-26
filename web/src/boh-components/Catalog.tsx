@@ -8,10 +8,16 @@ import {
   Button,
 } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import { Fragment } from "react/jsx-runtime";
 import Entry from "../boh-generics/Entry";
 import { BaseCard } from "../../../shared/types";
-import { ArrowDownZA, ArrowUpAZ, ArrowUpDown, Filter } from "lucide-react";
+import {
+  ArrowDownZA,
+  ArrowUpAZ,
+  ArrowUpDown,
+  Filter,
+  ListChecks,
+  Trash,
+} from "lucide-react";
 import {
   type ChangeEvent,
   useCallback,
@@ -19,7 +25,7 @@ import {
   useState,
   useRef,
 } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 
 interface CatalogProps {
   entries: BaseCard[];
@@ -27,6 +33,7 @@ interface CatalogProps {
   w?: string;
   useColor?: boolean;
   initialRef: React.RefObject<boolean>;
+  useSelect?: boolean;
 }
 
 const Catalog = ({
@@ -35,10 +42,14 @@ const Catalog = ({
   w,
   initialRef,
   useColor = false,
+  useSelect = false,
 }: CatalogProps) => {
   const [filter, setFilter] = useState<string>("");
   const [sort, setSort] = useState<"az" | "za" | "">("");
   const [processed, setProcessed] = useState<BaseCard[]>([]);
+  const [selecting, setSelecting] = useState<boolean>(false);
+  const [showDelete, setShowDelete] = useState<boolean>(false);
+  const selectionRef = useRef<BaseCard[]>([]);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -151,6 +162,7 @@ const Catalog = ({
               },
             }}
           />
+
           <Button
             w="fit-content"
             bg={useColor ? "red.3" : "gray.2"}
@@ -166,6 +178,29 @@ const Catalog = ({
               <ArrowDownZA />
             )}
           </Button>
+          {showDelete && (
+            <Button
+              w="fit-content"
+              bg="red.6"
+              c="black"
+              className="hoverDarkRedButton"
+            >
+              <Trash />
+            </Button>
+          )}
+          {useSelect && (
+            <Button
+              w="fit-content"
+              bg={useColor ? (selecting ? "gray.1" : "red.3") : "gray.2"}
+              c="black"
+              className="hoverTransparentButton"
+              onClick={() => {
+                setSelecting(!selecting);
+              }}
+            >
+              <ListChecks />
+            </Button>
+          )}
         </Group>
         <Divider mb={0} aria-hidden />
         <ScrollArea
@@ -235,6 +270,7 @@ const Catalog = ({
                       lookup={entry.MYlookup}
                       desc={desc}
                       onClick={() => onDisplay(entry.MYlookup)}
+                      selecting={selecting}
                     />
                   </motion.div>
                 );
