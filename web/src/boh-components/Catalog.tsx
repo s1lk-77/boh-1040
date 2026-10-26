@@ -100,6 +100,7 @@ const Catalog = ({
         flex: 1,
         minHeight: 0,
         width: "100%",
+        minWidth: 0,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -112,6 +113,7 @@ const Catalog = ({
         w={w ?? STANDARD_FRAME_WIDTH}
         flex={1}
         mih={0}
+        miw={0}
         bdrs="md"
       >
         <Group
@@ -169,10 +171,11 @@ const Catalog = ({
         <ScrollArea
           flex={1}
           mih={0}
+          miw={0}
           type="auto"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
-          <Flex direction="column" align="center" gap="sm" mt="sm">
+          <Flex direction="column" align="center" gap="sm" mt="sm" miw={0}>
             {processed.length === 0 && (
               <Text c="gray.6">We couldn't find anything.</Text>
             )}
@@ -184,6 +187,7 @@ const Catalog = ({
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                minWidth: 0,
               }}
               variants={
                 initialRef.current
@@ -223,6 +227,7 @@ const Catalog = ({
                     }
                     style={{
                       width: "90%",
+                      minWidth: 0,
                     }}
                   >
                     <Entry

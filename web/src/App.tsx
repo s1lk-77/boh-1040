@@ -52,7 +52,7 @@ function AppContent() {
 
   return (
     <Suspense fallback={<div></div>}>
-      <Box w="100vw" h="100dvh" pos="relative" bg="red.2">
+      <Box w="100vw" h="100dvh" pos="relative" bg="red.8">
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/portal" element={<GMLoginPage />} />

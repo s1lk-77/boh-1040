@@ -1,4 +1,4 @@
-import { Divider, Flex, Group, Stack, Text, Title } from "@mantine/core";
+import { Box, Flex, Group, Stack, Text, Title } from "@mantine/core";
 import "../../styles.css";
 import { motion } from "motion/react";
 
@@ -13,7 +13,10 @@ const Entry = ({ name, lookup, onClick, desc = undefined }: EntryProps) => {
   const resolvedDesc: string =
     desc === undefined || desc === "" ? "no description text given" : desc;
   return (
-    <motion.div whileTap={{ y: 5 }} style={{ width: "100%" }}>
+    <motion.div
+      whileTap={{ y: 5 }}
+      style={{ width: "100%", minWidth: 0, overflow: "hidden" }}
+    >
       <Stack
         w="100%"
         className="hoverButton"
@@ -28,16 +31,21 @@ const Entry = ({ name, lookup, onClick, desc = undefined }: EntryProps) => {
         style={{
           background: "white",
           cursor: "pointer",
+          minWidth: 0,
+          overflow: "hidden",
         }}
         my="sm"
       >
         <Group justify="space-between" px="sm">
           <Title size="h3">{name === "" ? "Unnamed Ability" : name}</Title>
+
           <Text className="u-fira-code">{"@" + lookup}</Text>
         </Group>
-        <Text truncate="end" px="sm">
-          {resolvedDesc}
-        </Text>
+        <Box flex={1} miw={0}>
+          <Text truncate="end" px="sm">
+            {resolvedDesc}
+          </Text>
+        </Box>
         {/* <Divider size="sm" color="black" /> */}
         <Flex direction="column" w="100%" align="flex-end">
           <Text mr="0.2rem" c="gray.7" size="sm">

@@ -307,7 +307,7 @@ function GMPage() {
               )}
             </Stack>
           </Panel>
-          <Panel h="90%" flex={1} mih={0}>
+          <Panel h="90%" flex={1} mih={0} miw={0}>
             <Catalog
               entries={cards}
               onDisplay={onDisplay}
