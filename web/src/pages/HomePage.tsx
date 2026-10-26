@@ -248,8 +248,8 @@ function HomePage() {
           )}
         </Stack>
         <Flex direction="column" align="center" gap="xs">
-          <Text pos="relative">
-            A better pocket for your ability cards
+          <Group pos="relative">
+            <Text>A better pocket for your ability cards</Text>
             <HelpTool
               fillColor="var(--mantine-color-red-3)"
               useEllipsis
@@ -263,7 +263,7 @@ function HomePage() {
               for mobile devices smaller than an iPad, with a full-screen editor
               dashboard for GMs.
             </HelpTool>
-          </Text>
+          </Group>
           <Group>
             <Button
               bg="red.6"

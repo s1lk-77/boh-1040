@@ -8,12 +8,12 @@ import { RefreshCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import "../../styles.css";
 import "../assets/flipcard.css";
 import { motion } from "motion/react";
+import { useFlip } from "../hooks/useFlip";
 
 interface DisplayProps {
   gameName: string;
   playerName: string;
   card: BaseCard;
-  showToolBar?: boolean;
   onIndex: (dir: -1 | 1) => void;
   defaultFlipped?: boolean;
 }
@@ -22,20 +22,24 @@ const Display = ({
   gameName,
   playerName,
   card,
-  showToolBar = true,
   defaultFlipped = false,
   onIndex,
 }: DisplayProps) => {
   const [flipped, setFlipped] = useState<boolean>(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const iFlip = useFlip();
 
   useEffect(() => {
     setFlipped(defaultFlipped);
   }, [defaultFlipped]);
 
+  useEffect(() => {
+    iFlip?.setFlipHandler(handleFlip);
+  }, []);
+
   function handleFlip() {
     if (!isAnimating) {
-      setFlipped(!flipped);
+      setFlipped((f) => !f);
       setIsAnimating(true);
     }
   }
@@ -71,46 +75,6 @@ const Display = ({
             <CardBack gameName={gameName} card={card} />
           </motion.div>
         </Flex>
-        {showToolBar && (
-          <Group
-            justify="space-between"
-            align="center"
-            py="md"
-            mb="sm"
-            wrap="nowrap"
-            bg="gray.3"
-            bdrs="md"
-          >
-            <Button
-              h="auto"
-              c="black"
-              bg="none"
-              className="hoverTransparentButton"
-            >
-              <ArrowLeft onClick={() => onIndex(-1)} />
-            </Button>
-            <Button
-              h="auto"
-              c="black"
-              bg="none"
-              className="hoverTransparentButton"
-              onClick={handleFlip}
-            >
-              <Flex direction="column">
-                <RefreshCcw size={30} className="hoverRotate" />
-                Flip
-              </Flex>
-            </Button>
-            <Button
-              h="auto"
-              c="black"
-              bg="none"
-              className="hoverTransparentButton"
-            >
-              <ArrowRight onClick={() => onIndex(1)} />
-            </Button>
-          </Group>
-        )}
       </Stack>
     </motion.div>
   );

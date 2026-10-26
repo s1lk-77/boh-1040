@@ -31,7 +31,7 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
       className="flip-card-front"
     >
       <Stack align="center">
-        <Title size="h2">
+        <Title size="h2" ta="center">
           {card.MYname === "" ? "Unnamed Ability" : card.MYname}
         </Title>
         <Text className="u-fira-code">{`@${card.MYlookup}`}</Text>

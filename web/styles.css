@@ -96,6 +96,7 @@ html {
 
 .hoverRotateXs:active {
   transform: rotate(15deg);
+  color: darkred !important;
 }
 
 .lightNavButton:active {

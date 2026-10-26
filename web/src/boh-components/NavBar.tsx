@@ -1,22 +1,23 @@
-import { Button, Group, GroupProps } from "@mantine/core";
+import { Button, Group, GroupProps, Flex } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import { Settings, CircleSmall, Plus, X } from "lucide-react";
+import { Settings, RefreshCcw, Plus, X } from "lucide-react";
 import "../../styles.css";
+import { useFlip } from "../hooks/useFlip";
 
 interface NavBarProps extends GroupProps {
   toggleSearch: () => void;
   showHome?: boolean;
-  goHome: () => void;
   searching?: boolean;
 }
 
 const NavBar = ({
   showHome = true,
   toggleSearch,
-  goHome,
   searching = false,
   ...props
 }: NavBarProps) => {
+  const iFlip = useFlip();
+
   return (
     <Group
       {...props}
@@ -32,10 +33,15 @@ const NavBar = ({
           h="auto"
           c="black"
           bg="none"
-          onClick={goHome}
           className="hoverTransparentButton"
+          onClick={() => {
+            iFlip?.flipRef.current?.();
+          }}
         >
-          <CircleSmall />
+          <Flex direction="column">
+            <RefreshCcw size={30} className="hoverRotate" />
+            Flip
+          </Flex>
         </Button>
       )}
       <Button

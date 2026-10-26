@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Flex, Stack, Title, Text } from "@mantine/core";
+import { Flex, Group, Stack, Title, Text, Button } from "@mantine/core";
 import Catalog from "../boh-components/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
@@ -12,6 +12,9 @@ import { unwrapCard } from "../utilities";
 import Display from "../boh-components/Display";
 import useBackButton from "../hooks/useBackButton";
 import HelpTool from "../components/HelpTool";
+import { X } from "lucide-react";
+import "../../styles.css";
+import { useFlip, FlipProvider } from "../hooks/useFlip";
 
 /**
  * The player home page.
@@ -109,61 +112,88 @@ function PlayerPage() {
 
   return (
     <MobileViewport>
-      {page === "home" && BackButton}
-      <HelpTool flushRight pt="sm">
-        <Text size="sm">
-          Click <b>"+"</b> (bottom right) to collect new abilities. Click on any
-          card to view its full display.
-        </Text>
-      </HelpTool>
-      <Stack h="100%" w="100%" align="center" pb="lg" pt="sm" mih={0}>
-        <Text>MIT Assassins' Guild</Text>
+      <FlipProvider>
+        {page === "home" && BackButton}
         {page === "home" && (
-          <Flex direction="column" align="center">
-            <Title order={1} my={0} size="h2">
-              {gameName}
-            </Title>
-            <Text my={0}>{playerName}</Text>
-          </Flex>
+          <HelpTool flushRight pt="sm">
+            <Text size="sm">
+              Click <b>"+"</b> (bottom right) to collect new abilities. Click on
+              any card to view its full display.
+            </Text>
+          </HelpTool>
         )}
-        {page === "home" && (
-          <Catalog
-            entries={cards}
-            onDisplay={display}
-            initialRef={initialRef}
-            onReload={loadCompendium}
-            gameCode={gameCode ?? ""}
-          />
-        )}
-        {page === "display" && (
-          <Display
-            gameName={gameName ?? "Moonrise"}
-            playerName={playerName ?? "silvanvs"}
-            card={selectedCard ?? cards[0] ?? init}
-            showToolBar={!searching}
-            onIndex={onIndex}
-          />
-        )}
+        <Stack
+          h="100%"
+          w="100%"
+          align="center"
+          pb={page === "home" ? "lg" : 0}
+          pt={page === "home" ? "sm" : 0}
+          mih={0}
+        >
+          {page === "home" && (
+            <>
+              <Flex direction="column" align="center">
+                <Title order={1} my={0} size="h2">
+                  {gameName}
+                </Title>
+                <Text my={0}>{playerName}</Text>
+              </Flex>
+            </>
+          )}
+          {page === "display" && (
+            <Group justify="flex-end" w="100%">
+              <Button
+                bg="none"
+                c="red.7"
+                className="hoverRotateXs"
+                onClick={() => {
+                  setPage("home");
+                }}
+              >
+                <X />
+              </Button>
+            </Group>
+          )}
 
-        {searching && (
-          <SearchBar
-            onClose={() => {
-              setSearching(false);
-            }}
-            gameCode={gameCode ?? "moonrise"}
-            playerName={playerName ?? "silvanvs"}
-            onSuccess={(card: BaseCard) => {
-              setCards([...cards, card]);
-            }}
+          {page === "home" && (
+            <Catalog
+              entries={cards}
+              onDisplay={display}
+              initialRef={initialRef}
+              onReload={loadCompendium}
+              gameCode={gameCode ?? ""}
+            />
+          )}
+          {page === "display" && (
+            <Display
+              gameName={gameName ?? "Moonrise"}
+              playerName={playerName ?? "silvanvs"}
+              card={selectedCard ?? cards[0] ?? init}
+              onIndex={onIndex}
+            />
+          )}
+
+          {searching && (
+            <SearchBar
+              onClose={() => {
+                setSearching(false);
+              }}
+              gameCode={gameCode ?? "moonrise"}
+              playerName={playerName ?? "silvanvs"}
+              onSuccess={(card: BaseCard) => {
+                setCards([...cards, card]);
+              }}
+            />
+          )}
+          <NavBar
+            toggleSearch={() => setSearching(!searching)}
+            showHome={page !== "home"}
+            searching={searching}
+            pt={page === "home" ? undefined : "sm"}
+            pb={page === "home" ? undefined : "lg"}
           />
-        )}
-        <NavBar
-          toggleSearch={() => setSearching(!searching)}
-          goHome={() => setPage("home")}
-          showHome={page !== "home"}
-          searching={searching}
-        />
-      </Stack>
+        </Stack>
+      </FlipProvider>
     </MobileViewport>
   );
 }

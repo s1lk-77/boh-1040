@@ -286,14 +286,12 @@ function GMPage() {
                       <Display
                         gameName={gameName!}
                         onIndex={() => {}}
-                        showToolBar={false}
                         playerName="TestPlayer1"
                         card={selectedCard}
                       />
                       <Display
                         gameName={gameName!}
                         onIndex={() => {}}
-                        showToolBar={false}
                         playerName="TestPlayer1"
                         card={selectedCard}
                         defaultFlipped={true}
