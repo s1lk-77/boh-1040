@@ -15,6 +15,12 @@ export interface EntryProps {
   clickable: HTMLDivElement | null;
 }
 
+/**
+ * A Catalog Entry. This is a generic functionality component, providing all the functionalities of a catalog entry.
+ * For aesthetic stylings, see CardEntry.
+ * @param props
+ * @returns
+ */
 export const Entry = ({
   identifier,
   selecting = false,
