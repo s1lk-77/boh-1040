@@ -99,8 +99,17 @@ function GMPage() {
       if (!thisCard) return;
       setSelectedCard(thisCard);
       setEditorMode("update");
+      setViewMode((m) => {
+        if (m === "upload") {
+          return "view";
+        } else if (thisCard.MYlookup === selectedCard?.MYlookup) {
+          return m === "edit" ? "view" : "edit";
+        } else {
+          return m;
+        }
+      });
     },
-    [cards],
+    [cards, selectedCard],
   );
 
   const uploadName = useCallback(async () => {
