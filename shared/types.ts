@@ -17,9 +17,19 @@ export interface Feature {
 
 export type AbilColor = "y" | "m" | "p";
 
+export interface BaseFeatures {
+  MYlookup: Feature;
+  MYname: Feature;
+}
+
+export interface AbilFeatures extends BaseFeatures {
+  MYtext: Feature;
+  MYeffect: Feature;
+}
+
 export type CardType = "Ability" | "Card" | "Player";
 export interface CatalogTypeMap {
-  Ability: { model: AbilCard };
-  Card: { model: BaseCard };
-  Player: { model: BaseCard };
+  Ability: { model: AbilCard; features: AbilFeatures };
+  Card: { model: BaseCard; features: BaseFeatures };
+  Player: { model: BaseCard; features: BaseFeatures };
 }

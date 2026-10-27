@@ -137,4 +137,58 @@ const DeleteEntry = endpoint(
   },
 );
 
-export const editCmp = { AddEntry, UpdateEntry, UpdateName, DeleteEntry };
+// endpoint for updating game name
+const RemovePlayer = endpoint(
+  "/edit/remove-player",
+  ({ gameCode, playerName, pid }) =>
+    receive({ gameCode, playerName }).then(
+      where(
+        Joining._isContext({ id: gameCode }).is({
+          isContext: true,
+        }),
+        Joining._isMember({ id: gameCode, member: playerName }).is({
+          isMember: true,
+        }),
+        Naming._getKey({ context: gameCode, suffix: playerName }).is({
+          key: pid,
+        }),
+      )
+        .then(Inventorying.delete({ owner: pid }).responds({ owner: pid }))
+        .then(Naming.delete({ key: pid }).responds({ key: pid }))
+        .then(
+          Joining.remove({ id: gameCode, member: playerName }).responds({
+            member: playerName,
+          }),
+        )
+        .then(respond({ status: "OK" }))
+        .named("playerRemoved"),
+      where(
+        Joining._isContext({ id: gameCode }).is({
+          isContext: true,
+        }),
+        Joining._isMember({ id: gameCode, member: playerName }).is({
+          isMember: false,
+        }),
+      )
+        .then(respond({ error: "NO_SUCH_CONTEXT" }))
+        .named("refusedMember"),
+      where(
+        Joining._isContext({ id: gameCode }).is({
+          isContext: false,
+        }),
+      )
+        .then(respond({ error: "NO_SUCH_CONTEXT" }))
+        .named("refused"),
+    ),
+  {
+    input: { required: ["gameCode", "playerName"] },
+  },
+);
+
+export const editCmp = {
+  AddEntry,
+  UpdateEntry,
+  UpdateName,
+  DeleteEntry,
+  RemovePlayer,
+};

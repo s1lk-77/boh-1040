@@ -95,6 +95,16 @@ export type BoHWire = {
     };
     error: { error: AppWideError | "BAD_CATALOG_OP" | "BAD_INVENTORY_OP" | "DOES_NOT_EXIST" | "INVALID_INPUT" };
   };
+  "/edit/remove-player": {
+    input: {
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["remove"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["remove"]>[0], ["member"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>]>>;
+    };
+    output: {
+      "status": "OK";
+    };
+    error: { error: AppWideError | "BAD_INVENTORY_OP" | "DOES_NOT_EXIST" | "INVALID_INPUT" | "NO_SUCH_CONTEXT" };
+  };
   "/edit/update-entry": {
     input: {
       "feature": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Cataloging"]["update"]>[0], ["feature"]>>;
@@ -266,6 +276,16 @@ export type BoHWireHttp = {
     };
     output: {
       "entry": Jsonify<AllOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["delete"]>[0], ["key"]>, AtPath<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Naming"]["delete"]>>, ["key"]>]>>;
+    };
+    error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" | "NOT_FOUND" };
+  };
+  "/edit/remove-player": {
+    input: {
+      "gameCode": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["remove"]>[0], ["id"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isContext"]>[0], ["id"]>]>>;
+      "playerName": Jsonify<OneOf<[AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["remove"]>[0], ["member"]>, AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_isMember"]>[0], ["member"]>]>>;
+    };
+    output: {
+      "status": "OK";
     };
     error: { error: HttpAppWideError | "CONFLICT" | "INVALID_REQUEST" | "NOT_FOUND" };
   };

@@ -118,6 +118,32 @@ export class JoiningConcept {
     return { name };
   }
 
+  public async remove({
+    id,
+    member,
+  }: {
+    id: string;
+    member: string;
+  }): Promise<{ member: string }> {
+    const contextObj: WithId<Context> | null = await this.contexts.findOne({
+      identifier: id,
+    });
+
+    if (contextObj === null) {
+      throw new NoSuchContext(`No context with id ${id} exists`);
+    }
+
+    if (!contextObj.members.includes(member)) {
+      throw new NoSuchContext(`No context with this member exists`);
+    }
+
+    await this.contexts.updateOne(
+      { _id: contextObj._id },
+      { $pull: { members: member } },
+    );
+    return { member };
+  }
+
   /* ******* Queries ******* */
 
   /**

@@ -75,6 +75,8 @@ Defined in [Joining](../design/concepts/Joining.md), line 1.
   - Refuses `DUPLICATE_MEMBER`: Cannot add a member that is already in the context
 - `updateName(id: Identifier, name: String) : returns (name: String)`
   - Refuses `NO_SUCH_CONTEXT`: no such context.
+- `remove(id: Identifier, member: String) : returns (member: String)`
+  - Refuses `NO_SUCH_CONTEXT`: no such context.
 
 #### Queries
 
@@ -501,6 +503,91 @@ then
   RequestBoundary.respond (error: "DOES_NOT_EXIST", requestId)
 ```
 
+### Edit.RemovePlayer:playerRemoved
+
+Authored path: `Edit.RemovePlayer`.
+- Covered by [Edit](../design/compositions/Edit.md), line 27.
+- Covered by [Edit](../design/compositions/Edit.md), line 30.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/edit/remove-player", playerName, requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: true)
+  Joining._isMember (id: gameCode, member: playerName) has (isMember: true)
+  Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
+then
+  Inventorying.delete (owner: pid)
+```
+
+### Edit.RemovePlayer:playerRemoved#2
+
+Authored path: `Edit.RemovePlayer`.
+- Covered by [Edit](../design/compositions/Edit.md), line 27.
+- Covered by [Edit](../design/compositions/Edit.md), line 30.
+
+```reaction
+when Inventorying.delete (owner: pid), asked by Edit.RemovePlayer:playerRemoved
+then
+  Naming.delete (key: pid)
+```
+
+### Edit.RemovePlayer:playerRemoved#3
+
+Authored path: `Edit.RemovePlayer`.
+- Covered by [Edit](../design/compositions/Edit.md), line 27.
+- Covered by [Edit](../design/compositions/Edit.md), line 30.
+
+```reaction
+when Naming.delete (key: pid), asked by Edit.RemovePlayer:playerRemoved#2
+where
+  earlier, RequestBoundary.request (gameCode, path: "/edit/remove-player", playerName, requestId)
+then
+  Joining.remove (id: gameCode, member: playerName)
+```
+
+### Edit.RemovePlayer:playerRemoved#4
+
+Authored path: `Edit.RemovePlayer`.
+- Covered by [Edit](../design/compositions/Edit.md), line 27.
+- Covered by [Edit](../design/compositions/Edit.md), line 30.
+
+```reaction
+when Joining.remove (id: gameCode, member: playerName), asked by Edit.RemovePlayer:playerRemoved#3
+where
+  earlier, RequestBoundary.request (gameCode, path: "/edit/remove-player", playerName, requestId)
+then
+  RequestBoundary.respond (requestId, status: "OK")
+```
+
+### Edit.RemovePlayer:refused
+
+Authored path: `Edit.RemovePlayer`.
+- Covered by [Edit](../design/compositions/Edit.md), line 27.
+- Covered by [Edit](../design/compositions/Edit.md), line 30.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/edit/remove-player", playerName, requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: false)
+then
+  RequestBoundary.respond (error: "NO_SUCH_CONTEXT", requestId)
+```
+
+### Edit.RemovePlayer:refusedMember
+
+Authored path: `Edit.RemovePlayer`.
+- Covered by [Edit](../design/compositions/Edit.md), line 27.
+- Covered by [Edit](../design/compositions/Edit.md), line 30.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/edit/remove-player", playerName, requestId)
+where
+  Joining._isContext (id: gameCode) has (isContext: true)
+  Joining._isMember (id: gameCode, member: playerName) has (isMember: false)
+then
+  RequestBoundary.respond (error: "NO_SUCH_CONTEXT", requestId)
+```
+
 ### Edit.UpdateEntry:entryUpdated
 
 Authored path: `Edit.UpdateEntry`.
@@ -890,6 +977,7 @@ not listed here have no explicit input contract.
 - `/collect/production` — requires `gameCode`, `playerName`
 - `/edit/add-entry` — requires `gameCode`, `lookup`
 - `/edit/delete-entry` — requires `gameCode`, `lookup`
+- `/edit/remove-player` — requires `gameCode`, `playerName`
 - `/edit/update-entry` — requires `gameCode`, `lookup`, `feature`, `value`
 - `/edit/update-name` — requires `gameCode`, `gameName`
 - `/portal/create-game` — requires `gameCode`, `gameName`

@@ -9,14 +9,7 @@ import {
   Button,
 } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import AbilEntry from "../boh-components/AbilEntry";
-import {
-  AbilCard,
-  AbilColor,
-  BaseCard,
-  CardType,
-  CatalogTypeMap,
-} from "../../../shared/types";
+import { BaseCard, CardType, CatalogTypeMap } from "../../../shared/types";
 import {
   ArrowDownZA,
   ArrowUpAZ,
@@ -33,7 +26,7 @@ import {
   useRef,
 } from "react";
 import { motion } from "motion/react";
-import PlayerEntry from "../boh-components/PlayerEntry";
+import CardEntry from "./CardEntry";
 
 interface CatalogProps<T extends CardType> {
   cardType: T;
@@ -339,26 +332,15 @@ const Catalog = <T extends CardType>({
                       minWidth: 0,
                     }}
                   >
-                    {cardType === "Ability" && (
-                      <AbilEntry
-                        abil={entry as CatalogTypeMap["Ability"]["model"]}
-                        onClick={() => onDisplay(entry.MYlookup)}
-                        selecting={selecting}
-                        onSelect={onSelect}
-                        onDelete={onSingleDeleteInternal}
-                        selectionRef={selectionRef}
-                      />
-                    )}
-                    {cardType === "Player" && (
-                      <PlayerEntry
-                        player={entry as CatalogTypeMap["Player"]["model"]}
-                        onClick={() => onDisplay(entry.MYlookup)}
-                        selecting={selecting}
-                        onSelect={onSelect}
-                        onDelete={onSingleDeleteInternal}
-                        selectionRef={selectionRef}
-                      />
-                    )}
+                    <CardEntry
+                      cardType={cardType}
+                      card={entry as CatalogTypeMap[T]["model"]}
+                      onClick={() => onDisplay(entry.MYlookup)}
+                      selecting={selecting}
+                      onSelect={onSelect}
+                      onDelete={onSingleDeleteInternal}
+                      selectionRef={selectionRef}
+                    />
                   </motion.div>
                 );
               })}

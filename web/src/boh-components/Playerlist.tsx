@@ -20,9 +20,6 @@ interface PlayerlistProps {
 function Playerlist({ gameCode }: PlayerlistProps) {
   const client = useClient();
   const [players, setPlayers] = useState<BaseCard[]>([]);
-  const [editorMode, setEditorMode] = useState<"add" | "update">("add");
-  const [selectedCard, setSelectedCard] = useState<BaseCard | null>(null);
-  const [viewMode, setViewMode] = useState<"edit" | "view" | "upload">("view");
 
   /**
    * Loads the game's compendium

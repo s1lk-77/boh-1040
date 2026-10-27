@@ -1,79 +1,64 @@
-import {
-  Box,
-  BoxProps,
-  Flex,
-  Group,
-  type MantineColor,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
 import "../../styles.css";
-import { BaseCard } from "../../../shared/types";
+import { useThemeColor } from "../hooks/useThemeColor";
+import { MAGENTA, PINK, YELLOW } from "../../../shared/constants";
+import { Entry, type EntryBaseProps } from "./Entry";
+import { BaseCard, CardType, CatalogTypeMap } from "../../../shared/types";
+import { useState } from "react";
+import { CardEntryPanel } from "./CardEntryPanel";
 
-export interface CardEntryProps {
-  card: BaseCard;
-  cardType: string;
-  cardColor: MantineColor;
-  className: BoxProps["className"];
+interface CardEntryProps<T extends CardType> extends EntryBaseProps {
+  card: CatalogTypeMap[T]["model"];
+  cardType: T;
   onClick: () => void;
 }
 
-export const CardEntry = ({
+const CardEntry = <T extends CardType>({
   card,
   cardType,
-  cardColor,
-  className = "hoverButton",
   onClick,
-}: CardEntryProps) => {
-  const resolvedDesc: string =
-    card.MYtext === undefined || card.MYtext === ""
-      ? "no description text given"
-      : card.MYtext;
+  selecting,
+  onSelect = () => {},
+  onDelete = () => {},
+  selectionRef,
+}: CardEntryProps<T>) => {
+  const { themeColor } = useThemeColor()!;
+  const [selected, setSelected] = useState<boolean>(false);
+
+  const cardColor =
+    themeColor === "y" ? YELLOW : themeColor === "m" ? MAGENTA : PINK;
+  const buttonColor =
+    themeColor === "y"
+      ? "hoverButton"
+      : themeColor === "m"
+        ? "hoverMagentaButton"
+        : "hoverPinkButton";
 
   return (
-    <Stack
-      flex={1}
-      onClick={onClick}
-      className={className}
-      component="div"
-      gap="lg"
-      pt="sm"
-      px={0}
-      ta="left"
-      bd="2px solid black"
-      bg={cardColor}
-      style={{
-        background: "white",
-        cursor: "pointer",
-        minWidth: 0,
-        touchAction: "pan-y",
-      }}
-      my="sm"
+    <Entry
+      identifier={card.MYlookup}
+      selecting={selecting}
+      onSelect={onSelect}
+      onDelete={onDelete}
+      selectionRef={selectionRef}
+      selected={selected}
+      setSelected={setSelected}
     >
-      <Group justify="space-between" px="sm">
-        <Title size="h3" c="black">
-          {card.MYname === "" ? "Unnamed Ability" : card.MYname}
-        </Title>
-
-        <Text className="u-fira-code" c="black">
-          {"@" + card.MYlookup}
-        </Text>
-      </Group>
-      {card.MYtext && (
-        <Box flex={1} miw={0}>
-          <Text truncate="end" px="sm" c="black">
-            {resolvedDesc}
-          </Text>
-        </Box>
-      )}
-      {/* <Divider size="sm" color="black" /> */}
-      <Flex direction="column" w="100%" align="flex-end">
-        <Text mr="0.2rem" c="gray.7" size="sm">
-          {cardType}
-        </Text>
-        {/* <Divider size="xs" color="black" /> */}
-      </Flex>
-    </Stack>
+      <CardEntryPanel
+        card={card}
+        cardType={cardType}
+        cardColor={cardType === "Ability" ? cardColor : "red.3"}
+        className={cardType === "Ability" ? buttonColor : "hoverRedButton"}
+        onClick={() => {
+          if (selecting) {
+            setSelected(!selected);
+            onSelect(card.MYlookup);
+          } else {
+            onClick();
+          }
+        }}
+      />
+    </Entry>
   );
 };
+
+export default CardEntry;
