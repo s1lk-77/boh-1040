@@ -1,14 +1,9 @@
-import {
-  Stack,
-  StackProps,
-  TextInput,
-  type TextProps,
-  Textarea,
-} from "@mantine/core";
+import { Stack, StackProps, TextInput, Textarea } from "@mantine/core";
 import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 import { parseGametexName } from "../utilities";
 import { type Feature } from "../../../shared/types";
 import { PLAYER_NAME_REGEX } from "../../../shared/constants";
+import HelpTool from "../components/HelpTool";
 
 interface FeatureInputProps extends StackProps {
   onFeatureChange: (value: string) => void;
@@ -16,6 +11,7 @@ interface FeatureInputProps extends StackProps {
   defaultValue?: string;
   flag: boolean;
   strict?: boolean;
+  help?: string;
 }
 
 const FeatureInput = ({
@@ -24,6 +20,7 @@ const FeatureInput = ({
   defaultValue,
   flag,
   strict = false,
+  help,
   ...props
 }: FeatureInputProps) => {
   const [value, setValue] = useState<string>("");
@@ -64,7 +61,17 @@ const FeatureInput = ({
   }, [flag]);
 
   return (
-    <Stack gap="xs" {...props}>
+    <Stack gap="xs" {...props} pos="relative">
+      {help && (
+        <HelpTool
+          flushRight
+          fillColor="var(--mantine-color-red-4)"
+          popLeft
+          mt={-7}
+        >
+          {help}
+        </HelpTool>
+      )}
       {feature.isMultiline ? (
         <Textarea
           styles={{

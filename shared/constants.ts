@@ -4,7 +4,12 @@ export const PLAYER_NAME_REGEX = /^[A-Za-z0-9][A-Za-z0-9\-]*$/;
 export const GAME_CODE_REGEX = /^[A-Za-z0-9]*$/;
 
 export const BASE_FEATURES: Readonly<Feature[]> = [
-  { name: "MYlookup", isMultiline: false, required: true },
+  {
+    name: "MYlookup",
+    isMultiline: false,
+    required: true,
+    help: "The exact string a player types in to retrieve this card",
+  },
   { name: "MYname", isMultiline: false, required: false },
 ];
 export const ABIL_FEATURES: Readonly<Feature[]> = [
