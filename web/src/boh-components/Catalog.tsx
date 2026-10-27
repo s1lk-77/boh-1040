@@ -177,6 +177,7 @@ const Catalog = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        touchAction: "pan-y",
       }}
       key={"catalog"}
     >
@@ -285,9 +286,27 @@ const Catalog = ({
           mih={0}
           miw={0}
           type="auto"
-          style={{ WebkitOverflowScrolling: "touch" }}
+          viewportProps={{
+            style: {
+              pointerEvents: "auto",
+              touchAction: "pan-y",
+              WebkitOverflowScrolling: "touch",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+            },
+          }}
         >
-          <Flex direction="column" align="center" gap="sm" mt="sm" miw={0}>
+          <Flex
+            direction="column"
+            align="center"
+            gap="sm"
+            mt="sm"
+            w="100%"
+            flex={1}
+            miw={0}
+            mih={0}
+          >
             {processed.length === 0 && (
               <Text c="gray.6">We couldn't find anything.</Text>
             )}
@@ -300,6 +319,7 @@ const Catalog = ({
                 flexDirection: "column",
                 alignItems: "center",
                 minWidth: 0,
+                touchAction: "pan-y",
               }}
               variants={
                 initialRef.current

@@ -52,10 +52,11 @@ const Entry = ({
         whileTap={{ y: 5 }}
         style={{
           flex: 1,
+          minHeight: 0,
           minWidth: 0,
-          overflow: "hidden",
           display: "flex",
           flexDirection: "column",
+          touchAction: "pan-y",
         }}
       >
         <Stack
@@ -67,7 +68,7 @@ const Entry = ({
                 ? "hoverMagentaButton"
                 : "hoverPinkButton"
           }
-          component="button"
+          component="div"
           onClick={() => {
             if (selecting) {
               setSelected(!selected);
@@ -86,7 +87,7 @@ const Entry = ({
             background: "white",
             cursor: "pointer",
             minWidth: 0,
-            overflow: "hidden",
+            touchAction: "pan-y",
           }}
           my="sm"
         >

@@ -46,9 +46,19 @@ const CardFront = ({ owned, gameName, playerName, card }: CardFrontProps) => {
       <ScrollArea
         w={SMALL_FRAME_WIDTH}
         type="auto"
+        mih={0}
         scrollbars="y"
         offsetScrollbars="present"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        viewportProps={{
+          style: {
+            pointerEvents: "auto",
+            touchAction: "pan-y",
+            WebkitOverflowScrolling: "touch",
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+          },
+        }}
         data-framer-invalidate
       >
         <Stack mih="100%" align="center" justify="center" h="100%">
