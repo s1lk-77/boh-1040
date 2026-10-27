@@ -33,6 +33,7 @@ import {
   useRef,
 } from "react";
 import { motion } from "motion/react";
+import PlayerEntry from "../boh-components/PlayerEntry";
 
 interface CatalogProps<T extends CardType> {
   cardType: T;
@@ -341,6 +342,16 @@ const Catalog = <T extends CardType>({
                     {cardType === "Ability" && (
                       <AbilEntry
                         abil={entry as CatalogTypeMap["Ability"]["model"]}
+                        onClick={() => onDisplay(entry.MYlookup)}
+                        selecting={selecting}
+                        onSelect={onSelect}
+                        onDelete={onSingleDeleteInternal}
+                        selectionRef={selectionRef}
+                      />
+                    )}
+                    {cardType === "Player" && (
+                      <PlayerEntry
+                        player={entry as CatalogTypeMap["Player"]["model"]}
                         onClick={() => onDisplay(entry.MYlookup)}
                         selecting={selecting}
                         onSelect={onSelect}

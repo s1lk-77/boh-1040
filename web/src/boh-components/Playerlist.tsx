@@ -12,13 +12,12 @@ import "../../styles.css";
 
 interface PlayerlistProps {
   gameCode: string;
-  gameName: string;
 }
 
 /**
  * The GM's dashboard page.
  */
-function Playerlist({ gameCode, gameName }: PlayerlistProps) {
+function Playerlist({ gameCode }: PlayerlistProps) {
   const client = useClient();
   const [players, setPlayers] = useState<BaseCard[]>([]);
   const [editorMode, setEditorMode] = useState<"add" | "update">("add");
@@ -28,28 +27,23 @@ function Playerlist({ gameCode, gameName }: PlayerlistProps) {
   /**
    * Loads the game's compendium
    */
-  const loadCompendium = useCallback(async () => {
+  const loadPlayerlist = useCallback(async () => {
     if (!client || gameCode === undefined) return;
-    const res = await client["/collect/admin"]({ gameCode });
+    const res = await client["/collect/list-players"]({ gameCode });
     if ("error" in res) {
-      console.error("could not load compendium");
+      console.error("could not load playerlist");
       return;
     }
-    const rawCards = res.abils.cards;
-    const mappedCards: BaseCard[] = rawCards
-      .map((raw) => unwrapCard(raw.card))
-      .filter((card) => card !== undefined);
-    if (selectedCard) {
-      const maybe = mappedCards.find(
-        (c) => c.MYlookup === selectedCard.MYlookup,
-      );
-      if (maybe) setSelectedCard(maybe);
-    }
-    setPlayers([...mappedCards]);
-  }, [gameCode, client, selectedCard]);
+    const rawList = res.playerlist;
+    const mappedPlayers: BaseCard[] = rawList.map((raw) => {
+      return { MYlookup: raw.playerName, MYname: raw.playerName };
+    });
+    console.log(mappedPlayers);
+    setPlayers([...mappedPlayers]);
+  }, [gameCode, client]);
 
   useEffect(() => {
-    loadCompendium();
+    loadPlayerlist();
   }, []);
 
   const initialRef = useRef<boolean>(true);
@@ -58,13 +52,13 @@ function Playerlist({ gameCode, gameName }: PlayerlistProps) {
     async (lookup: string) => {
       if (!client) return;
 
-      const res = await client["/edit/delete-entry"]({ gameCode, lookup });
+      const res = await Promise.resolve({});
       if ("error" in res) {
         console.error(`error deleting entry ${lookup} of game ${gameCode}`);
         return;
       }
 
-      loadCompendium();
+      loadPlayerlist();
     },
     [client, gameCode],
   );
@@ -73,17 +67,13 @@ function Playerlist({ gameCode, gameName }: PlayerlistProps) {
     async (batch: string[]) => {
       if (!client) return;
 
-      const res = await Promise.all(
-        batch.map((lookup) =>
-          client["/edit/delete-entry"]({ gameCode, lookup }),
-        ),
-      );
+      const res = await Promise.all(batch.map((lookup) => Promise.resolve({})));
       if ("error" in res) {
         console.error(`error batch deleting entries from game ${gameCode}`);
         return;
       }
 
-      loadCompendium();
+      loadPlayerlist();
     },
     [client, gameCode],
   );

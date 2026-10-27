@@ -194,10 +194,7 @@ function GMPage() {
               />
             )}
             {tab === "Player" && (
-              <Playerlist
-                gameCode={gameCode ?? "moonrise"}
-                gameName={gameName ?? "Moonrise"}
-              />
+              <Playerlist gameCode={gameCode ?? "moonrise"} />
             )}
           </Group>
         </Stack>
