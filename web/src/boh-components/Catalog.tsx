@@ -27,7 +27,6 @@ import {
   useRef,
 } from "react";
 import { motion } from "motion/react";
-import { useClient } from "../ClientProvider";
 
 interface CatalogProps {
   entries: BaseCard[];
@@ -35,9 +34,9 @@ interface CatalogProps {
   w?: string;
   useColor?: boolean;
   initialRef: React.RefObject<boolean>;
-  gameCode: string;
   useSelect?: boolean;
-  onReload: () => {};
+  onSingleDelete?: (id: string) => void;
+  onBatchDelete?: (ids: string[]) => void;
 }
 
 const Catalog = ({
@@ -45,8 +44,8 @@ const Catalog = ({
   onDisplay,
   w,
   initialRef,
-  gameCode,
-  onReload,
+  onSingleDelete = undefined,
+  onBatchDelete = undefined,
   useColor = false,
   useSelect = false,
 }: CatalogProps) => {
@@ -56,7 +55,6 @@ const Catalog = ({
   const [selecting, setSelecting] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const selectionRef = useRef<Set<string>>(new Set());
-  const client = useClient();
 
   const onSelect = useCallback((lookup: string) => {
     if (selectionRef.current.has(lookup)) {
@@ -72,46 +70,22 @@ const Catalog = ({
     }
   }, []);
 
-  const onSingleDelete = useCallback(
-    async (lookup: string) => {
-      if (!client) return;
+  const onSingleDeleteInternal = useCallback(async (lookup: string) => {
+    if (selectionRef.current.has(lookup)) {
+      selectionRef.current.delete(lookup);
+    }
+    onSingleDelete?.(lookup);
+  }, []);
 
-      if (selectionRef.current.has(lookup)) {
-        selectionRef.current.delete(lookup);
-      }
-
-      const res = await client["/edit/delete-entry"]({ gameCode, lookup });
-      if ("error" in res) {
-        console.error(`error deleting entry ${lookup} of game ${gameCode}`);
-        return;
-      }
-
-      onReload();
-    },
-    [client, gameCode],
-  );
-
-  const onBatchDelete = useCallback(async () => {
-    if (!client) return;
-
+  const onBatchDeleteInternal = useCallback(async () => {
     if (selectionRef.current.size === 0) {
       return;
     }
-
     const batch: string[] = Array.from(selectionRef.current);
     selectionRef.current = new Set();
     setShowDelete(false);
-
-    const res = await Promise.all(
-      batch.map((lookup) => client["/edit/delete-entry"]({ gameCode, lookup })),
-    );
-    if ("error" in res) {
-      console.error(`error batch deleting entries from game ${gameCode}`);
-      return;
-    }
-
-    onReload();
-  }, [client, gameCode]);
+    onBatchDelete?.(batch);
+  }, []);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -253,7 +227,7 @@ const Catalog = ({
               bg={useColor ? "darkred" : "gray.2"}
               c="white"
               className="hoverBlackButton"
-              onClick={onBatchDelete}
+              onClick={onBatchDeleteInternal}
             >
               <Trash />
             </Button>
@@ -369,7 +343,7 @@ const Catalog = ({
                       onClick={() => onDisplay(entry.MYlookup)}
                       selecting={selecting}
                       onSelect={onSelect}
-                      onDelete={onSingleDelete}
+                      onDelete={onSingleDeleteInternal}
                       selectionRef={selectionRef}
                     />
                   </motion.div>

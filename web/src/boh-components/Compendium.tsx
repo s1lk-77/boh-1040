@@ -77,6 +77,40 @@ function Compendium({ gameCode, gameName }: CompendiumProps) {
 
   const initialRef = useRef<boolean>(true);
 
+  const onSingleDelete = useCallback(
+    async (lookup: string) => {
+      if (!client) return;
+
+      const res = await client["/edit/delete-entry"]({ gameCode, lookup });
+      if ("error" in res) {
+        console.error(`error deleting entry ${lookup} of game ${gameCode}`);
+        return;
+      }
+
+      loadCompendium();
+    },
+    [client, gameCode],
+  );
+
+  const onBatchDelete = useCallback(
+    async (batch: string[]) => {
+      if (!client) return;
+
+      const res = await Promise.all(
+        batch.map((lookup) =>
+          client["/edit/delete-entry"]({ gameCode, lookup }),
+        ),
+      );
+      if ("error" in res) {
+        console.error(`error batch deleting entries from game ${gameCode}`);
+        return;
+      }
+
+      loadCompendium();
+    },
+    [client, gameCode],
+  );
+
   const features: Feature[] = BASE_FEATURES.concat(ABIL_FEATURES);
   return (
     <>
@@ -180,8 +214,8 @@ function Compendium({ gameCode, gameName }: CompendiumProps) {
           useColor
           initialRef={initialRef}
           useSelect
-          gameCode={gameCode ?? ""}
-          onReload={loadCompendium}
+          onSingleDelete={onSingleDelete}
+          onBatchDelete={onBatchDelete}
         />
       </Panel>
     </>
