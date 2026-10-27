@@ -24,4 +24,8 @@ The [compendium](former:Collect.Compendium) collects a game's abilities.
 
 The [player. compendium](former:Collect.PlayerCompendium) collects a player's abilities.
 
-The [playerlist](former:Collect.PlayerList) collects a game's players.
+The [playerlist](former:Collect.PlayerList) collects a game's players. And a GM should be able to [get it](reaction:Collect.ListPlayers).
+
+```endpoints
+Collect.ListPlayers at /collect/list-players
+```

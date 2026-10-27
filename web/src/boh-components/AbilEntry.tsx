@@ -1,10 +1,9 @@
-import { Box, Flex, Group, Stack, Text, Title } from "@mantine/core";
 import "../../styles.css";
 import { useThemeColor } from "../hooks/useThemeColor";
 import { MAGENTA, PINK, YELLOW } from "../../../shared/constants";
 import { Entry, type EntryBaseProps } from "../boh-generics/Entry";
 import { AbilCard } from "../../../shared/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CardEntry } from "../boh-generics/CardEntry";
 
 interface AbilEntryProps extends EntryBaseProps {

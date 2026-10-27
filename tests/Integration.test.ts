@@ -365,3 +365,27 @@ describe("invalid update entries", () => {
     expect(res).toEqual({ error: "CONFLICT" });
   });
 });
+
+/** Tests for the playerlist */
+
+describe("playerlist", () => {
+  test("should get player list", async () => {
+    await client["/portal/open-bag"]({
+      gameCode: "moonrise",
+      playerName: "s1lk77",
+    });
+    await client["/portal/open-bag"]({
+      gameCode: "moonrise",
+      playerName: "canonicly-dead",
+    });
+    const res = await client["/collect/list-players"]({ gameCode: "moonrise" });
+
+    expect(res).toStrictEqual({
+      playerlist: [
+        { playerName: "yfnse" },
+        { playerName: "s1lk77" },
+        { playerName: "canonicly-dead" },
+      ],
+    });
+  });
+});

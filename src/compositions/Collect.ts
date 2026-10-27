@@ -44,16 +44,22 @@ const PlayerCompendium = former(
     }),
 );
 
-const PlayerList = former(
-  "the playerlist",
-  ({ gameCode }, { playerName, pid }) =>
-    each(Joining._getAll({ id: gameCode }).is({ member: playerName }))
-      .where(
-        Naming._getKey({ context: gameCode, suffix: playerName }).is({
-          key: pid,
-        }),
-      )
-      .form({ pid }),
+/** Very simple playerlist with playername forming */
+const PlayerList = former("the playerlist", ({ gameCode }, { playerName }) =>
+  each(Joining._getAll({ id: gameCode }).is({ member: playerName })).form({
+    playerName,
+  }),
+);
+
+const ListPlayers = endpoint(
+  "/collect/list-players",
+  ({ gameCode }) =>
+    receive({ gameCode }).then(
+      respond({ playerlist: PlayerList({ gameCode }) }),
+    ),
+  {
+    input: { required: ["gameCode"] },
+  },
 );
 
 const Print = endpoint(
@@ -171,5 +177,6 @@ export const collectCmp = {
   Production,
   Admin,
   PlayerList,
+  ListPlayers,
   PlayerCompendium,
 };

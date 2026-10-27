@@ -30,6 +30,17 @@ export type BoHWire = {
     };
     error: { error: AppWideError | "DOES_NOT_EXIST" | "INVALID_INPUT" };
   };
+  "/collect/list-players": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_getAll"]>[0], ["id"]>>;
+    };
+    output: {
+      "playerlist": {
+        "playerName": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Joining"]["_getAll"]>>>, ["member"]>>;
+      }[];
+    };
+    error: { error: AppWideError | "INVALID_INPUT" };
+  };
   "/collect/print": {
     input: {
       "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Naming"]["_getKey"]>[0], ["context"]>>;
@@ -192,6 +203,17 @@ export type BoHWireHttp = {
       };
     };
     error: { error: HttpAppWideError | "INVALID_REQUEST" | "NOT_FOUND" };
+  };
+  "/collect/list-players": {
+    input: {
+      "gameCode": Jsonify<AtPath<Parameters<(typeof ApplicationConceptSet.concepts)["Joining"]["_getAll"]>[0], ["id"]>>;
+    };
+    output: {
+      "playerlist": {
+        "playerName": Jsonify<AtPath<QueryRow<Awaited<ReturnType<(typeof ApplicationConceptSet.concepts)["Joining"]["_getAll"]>>>, ["member"]>>;
+      }[];
+    };
+    error: { error: HttpAppWideError | "INVALID_REQUEST" };
   };
   "/collect/print": {
     input: {

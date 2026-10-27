@@ -177,11 +177,10 @@ Authored path: `Collect.PlayerList`.
 - Covered by [Collect](../design/compositions/Collect.md), line 27.
 
 ```former
-Former "the playerlist" — inputs (gameCode); bindings (playerName, pid); promises exactly one record — forms:
+Former "the playerlist" — inputs (gameCode); bindings (playerName); promises exactly one record — forms:
   each Joining._getAll (id: gameCode) has (member: playerName)
-    where Naming._getKey (context: gameCode, suffix: playerName) has (key: pid)
     form a record of
-      pid
+      playerName
 ```
 
 ## Reactions
@@ -212,6 +211,18 @@ where
   Joining._isContext (id: gameCode) has (isContext: false)
 then
   RequestBoundary.respond (error: "DOES_NOT_EXIST", msg: "gameNotFound", requestId)
+```
+
+### Collect.ListPlayers
+
+Authored path: `Collect.ListPlayers`.
+- Covered by [Collect](../design/compositions/Collect.md), line 27.
+- Covered by [Collect](../design/compositions/Collect.md), line 30.
+
+```reaction
+when RequestBoundary.request (gameCode, path: "/collect/list-players", requestId)
+then
+  RequestBoundary.respond (playerlist: former "the playerlist" with (gameCode), requestId)
 ```
 
 ### Collect.Print:alreadyFound
@@ -874,6 +885,7 @@ the path or missing key. A declared default fills an absent key. Endpoints
 not listed here have no explicit input contract.
 
 - `/collect/admin` — requires `gameCode`
+- `/collect/list-players` — requires `gameCode`
 - `/collect/print` — requires `gameCode`, `playerName`, `lookup`
 - `/collect/production` — requires `gameCode`, `playerName`
 - `/edit/add-entry` — requires `gameCode`, `lookup`

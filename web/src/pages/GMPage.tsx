@@ -10,6 +10,8 @@ import { Edit, Upload, X, PlayingCardsFan, UsersRound } from "lucide-react";
 import "../../styles.css";
 import { ThemeColorProvider } from "../hooks/useThemeColor";
 import Compendium from "../boh-components/Compendium";
+import { CardType } from "../../../shared/types";
+import Playerlist from "../boh-components/Playerlist";
 
 /**
  * The GM's dashboard page.
@@ -19,6 +21,7 @@ function GMPage() {
   const client = useClient();
   const [gameName, setGameName] = useState<string | null>(null);
   const [updatedGameName, setUpdatedGameName] = useState<string>("");
+  const [tab, setTab] = useState<CardType>("Ability");
   const { BackButton, setBackCb } = useBackButton();
   const [editingName, setEditingName] = useState<boolean>(false);
   const focusTrapRef = useFocusTrap(editingName);
@@ -162,26 +165,40 @@ function GMPage() {
               <Stack>
                 <Button
                   className="hoverTransparentButton"
-                  bg="none"
+                  bg={tab === "Ability" ? "darkred" : "none"}
                   c="white"
                   px="xs"
+                  onClick={() => {
+                    setTab("Ability");
+                  }}
                 >
                   <PlayingCardsFan />
                 </Button>
                 <Button
                   className="hoverTransparentButton"
-                  bg="none"
+                  bg={tab === "Player" ? "darkred" : "none"}
                   c="white"
                   px="xs"
+                  onClick={() => {
+                    setTab("Player");
+                  }}
                 >
                   <UsersRound />
                 </Button>
               </Stack>
             </Panel>
-            <Compendium
-              gameCode={gameCode ?? "moonrise"}
-              gameName={gameName ?? "Moonrise"}
-            />
+            {tab === "Ability" && (
+              <Compendium
+                gameCode={gameCode ?? "moonrise"}
+                gameName={gameName ?? "Moonrise"}
+              />
+            )}
+            {tab === "Player" && (
+              <Playerlist
+                gameCode={gameCode ?? "moonrise"}
+                gameName={gameName ?? "Moonrise"}
+              />
+            )}
           </Group>
         </Stack>
       </ThemeColorProvider>
