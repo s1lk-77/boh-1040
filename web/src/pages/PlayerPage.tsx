@@ -187,6 +187,9 @@ function PlayerPage() {
                 playerName={playerName ?? "silvanvs"}
                 onSuccess={(card: BaseCard) => {
                   setCards([...cards, card]);
+                  setSelectedCard(card);
+                  setPage("display");
+                  setSearching(false);
                 }}
               />
             )}
