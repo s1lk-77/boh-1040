@@ -22,7 +22,7 @@ function Playerlist({ gameCode }: PlayerlistProps) {
   const [players, setPlayers] = useState<BaseCard[]>([]);
 
   /**
-   * Loads the game's compendium
+   * Loads the game's playerlist
    */
   const loadPlayerlist = useCallback(async () => {
     if (!client || gameCode === undefined) return;
@@ -49,9 +49,12 @@ function Playerlist({ gameCode }: PlayerlistProps) {
     async (lookup: string) => {
       if (!client) return;
 
-      const res = await Promise.resolve({});
+      const res = await client["/edit/remove-player"]({
+        gameCode,
+        playerName: lookup,
+      });
       if ("error" in res) {
-        console.error(`error deleting entry ${lookup} of game ${gameCode}`);
+        console.error(`error removing player ${lookup} of game ${gameCode}`);
         return;
       }
 
@@ -64,9 +67,16 @@ function Playerlist({ gameCode }: PlayerlistProps) {
     async (batch: string[]) => {
       if (!client) return;
 
-      const res = await Promise.all(batch.map((lookup) => Promise.resolve({})));
+      const res = await Promise.all(
+        batch.map((lookup) =>
+          client["/edit/remove-player"]({
+            gameCode,
+            playerName: lookup,
+          }),
+        ),
+      );
       if ("error" in res) {
-        console.error(`error batch deleting entries from game ${gameCode}`);
+        console.error(`error batch removing players from game ${gameCode}`);
         return;
       }
 
@@ -75,7 +85,6 @@ function Playerlist({ gameCode }: PlayerlistProps) {
     [client, gameCode],
   );
 
-  const features: Feature[] = BASE_FEATURES.concat(ABIL_FEATURES);
   return (
     <>
       <Panel h="90%" flex={1} mih={0} miw={0}>
