@@ -149,6 +149,7 @@ function PlayerPage() {
                 onClick={() => {
                   setPage("home");
                 }}
+                pr={0}
               >
                 <X />
               </Button>

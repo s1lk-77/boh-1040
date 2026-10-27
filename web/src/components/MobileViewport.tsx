@@ -25,11 +25,7 @@ function MobileViewport({ children }: MobileViewportProps) {
         bg="gray.1"
         pos="relative"
       >
-        <Box
-          w="100%"
-          h="100%"
-          style={{ overflowY: "auto", scrollbarWidth: "none" }}
-        >
+        <Box w="100%" h="100%">
           <Box p="min(1rem, 2vh)" h="100%">
             {children}
           </Box>
