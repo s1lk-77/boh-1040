@@ -14,6 +14,22 @@ html {
   background: var(--mantine-color-yellow-8) !important;
 }
 
+.hoverPinkButton:hover {
+  background: var(--mantine-color-pink-6) !important;
+}
+
+.hoverPinkButton:active {
+  background: var(--mantine-color-pink-6) !important;
+}
+
+.hoverMagentaButton:hover {
+  background: darkmagenta !important;
+}
+
+.hoverMagentaButton:active {
+  background: darkmagenta !important;
+}
+
 .hoverWhiteButton:hover {
   background: var(--mantine-color-gray-1) !important;
 }

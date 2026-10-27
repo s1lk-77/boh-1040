@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import Entry from "../boh-generics/Entry";
-import { BaseCard } from "../../../shared/types";
+import { AbilColor, BaseCard } from "../../../shared/types";
 import {
   ArrowDownZA,
   ArrowUpAZ,

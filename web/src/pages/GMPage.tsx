@@ -26,6 +26,7 @@ import "../../styles.css";
 import Display from "../boh-components/Display";
 import HelpTool from "../components/HelpTool";
 import Uploader from "../boh-components/Uploader";
+import { ThemeColorProvider } from "../hooks/useThemeColor";
 
 /**
  * The GM's dashboard page.
@@ -124,205 +125,210 @@ function GMPage() {
   return (
     <CenterLayout asOverlay pos="relative">
       {BackButton}
-      <Stack h="100dvh" pt="xl" pb="l" px="l" gap="xl" align="center" mih={0}>
-        <Text>MIT Assassins' Guild</Text>
-        <Box
-          h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {editingName ? (
-            <Group
-              ref={focusTrapRef}
-              h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
-              align="center"
-            >
-              <Input
-                data-autofocus
-                autoFocus
-                value={updatedGameName}
-                onChange={(e) => {
-                  setUpdatedGameName(e.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    uploadName();
-                  } else if (e.key === "Escape") {
-                    setEditingName(false);
-                  }
-                }}
-                styles={{
-                  input: {
-                    fontFamily: "Fira Code, monospace",
-                    fontWeight: 450,
-                    border: "2px solid black",
-                  },
-                }}
-              />
-              <Upload
-                role="button"
-                tabIndex={0}
-                aria-label="Update game name"
-                className="u-pointer hoverTransparentButton"
-                onClick={uploadName}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    uploadName();
-                  }
-                }}
-              />
-              <X
-                role="button"
-                tabIndex={0}
-                aria-label="Cancel editing game name"
-                color="black"
-                className="u-pointer hoverRotateXs"
-                onClick={() => setEditingName(false)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    setEditingName(false);
-                  }
-                }}
-              />
-            </Group>
-          ) : (
-            <Title
-              order={1}
-              h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
-              className="u-goth"
-              size="5rem"
-              c="red.3"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                textShadow: "2px 2px 4px black",
-              }}
-            >
-              {gameName}{" "}
-              <Edit
-                className="u-pointer hoverTransparentButton"
-                onClick={() => {
-                  setUpdatedGameName(gameName ?? "");
-                  setEditingName(true);
-                }}
-              />
-            </Title>
-          )}
-        </Box>
-        <Group flex={1} mih={0} align="flex-start" w="70dvw">
-          <Panel h="90%" flex={1} mih={0} gap="0">
-            <Panel.Header m={0}>
-              <Scroller w="100%">
-                <Group pos="relative" wrap="nowrap">
-                  <Button
-                    c="black"
-                    bg={viewMode === "view" ? "red.2" : "none"}
-                    className="hoverTransparentButton"
-                    fw="normal"
-                    onClick={() => setViewMode("view")}
-                    // bd={viewMode === "view" ? "2px solid black" : "none"}
-                  >
-                    <Text mr="0.5rem">Viewer</Text>
-                    <Eye />
-                  </Button>
-                  <Button
-                    c="black"
-                    bg={viewMode === "edit" ? "red.2" : "none"}
-                    className="hoverTransparentButton"
-                    fw="normal"
-                    onClick={() => setViewMode("edit")}
-                    // bd={viewMode === "edit" ? "2px solid black" : "none"}
-                  >
-                    <Text mr="0.5rem">Editor</Text>
-                    <Edit />
-                  </Button>
-                  <Button
-                    c="black"
-                    bg={viewMode === "upload" ? "red.2" : "none"}
-                    className="hoverTransparentButton"
-                    fw="normal"
-                    onClick={() => setViewMode("upload")}
-                  >
-                    <Text mr="0.5rem">Uploader</Text>
-                    <Upload />
-                  </Button>
-                  <HelpTool fillColor="var(--mantine-color-red-4)" popLeft>
-                    <Text>
-                      Use the <b>Viewer</b> to preview GameTeX renderings of the
-                      abilities cards in your catalog. Use the <b>Editor</b> to
-                      add new abilites, update existing ones, or delete
-                      abilities.
-                    </Text>
-                  </HelpTool>
-                </Group>
-              </Scroller>
-            </Panel.Header>
-            <Stack mt={0} flex={1} px="lg" mih={0}>
-              {viewMode === "edit" && (
-                <Editor
-                  features={
-                    editorMode === "update"
-                      ? features.filter((f) => f.name !== "MYlookup")
-                      : features
-                  }
-                  gameCode={gameCode!}
-                  mode={editorMode}
-                  card={editorMode === "update" ? selectedCard! : undefined}
-                  setMode={setEditorMode}
-                  onReload={() => {
-                    loadCompendium();
-                    setEditorMode("add");
+      <ThemeColorProvider>
+        <Stack h="100dvh" pt="xl" pb="l" px="l" gap="xl" align="center" mih={0}>
+          <Text>MIT Assassins' Guild</Text>
+          <Box
+            h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {editingName ? (
+              <Group
+                ref={focusTrapRef}
+                h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+                align="center"
+              >
+                <Input
+                  data-autofocus
+                  autoFocus
+                  value={updatedGameName}
+                  onChange={(e) => {
+                    setUpdatedGameName(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      uploadName();
+                    } else if (e.key === "Escape") {
+                      setEditingName(false);
+                    }
+                  }}
+                  styles={{
+                    input: {
+                      fontFamily: "Fira Code, monospace",
+                      fontWeight: 450,
+                      border: "2px solid black",
+                    },
                   }}
                 />
-              )}
-              {viewMode === "view" && (
-                <Stack h="100%" w="100%" py="xl" align="center">
-                  {selectedCard ? (
-                    <>
-                      <Display
-                        gameName={gameName!}
-                        onIndex={() => {}}
-                        playerName="TestPlayer1"
-                        card={selectedCard}
-                      />
-                      <Display
-                        gameName={gameName!}
-                        onIndex={() => {}}
-                        playerName="TestPlayer1"
-                        card={selectedCard}
-                        defaultFlipped={true}
-                      />
-                    </>
-                  ) : (
-                    <Text c="gray.6">
-                      Select a card from the right to "GameTeX render" it!
-                    </Text>
-                  )}
-                </Stack>
-              )}
-              {viewMode == "upload" && (
-                <Uploader gameCode={gameCode ?? ""} onReload={loadCompendium} />
-              )}
-            </Stack>
-          </Panel>
-          <Panel h="90%" flex={1} mih={0} miw={0}>
-            <Catalog
-              entries={cards}
-              onDisplay={onDisplay}
-              w="100%"
-              useColor
-              initialRef={initialRef}
-              useSelect
-              gameCode={gameCode ?? ""}
-              onReload={loadCompendium}
-            />
-          </Panel>
-        </Group>
-      </Stack>
+                <Upload
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Update game name"
+                  className="u-pointer hoverTransparentButton"
+                  onClick={uploadName}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      uploadName();
+                    }
+                  }}
+                />
+                <X
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Cancel editing game name"
+                  color="black"
+                  className="u-pointer hoverRotateXs"
+                  onClick={() => setEditingName(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setEditingName(false);
+                    }
+                  }}
+                />
+              </Group>
+            ) : (
+              <Title
+                order={1}
+                h="calc(var(--mantine-h1-font-size) * var(--mantine-h1-line-height))"
+                className="u-goth"
+                size="5rem"
+                c="red.3"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  textShadow: "2px 2px 4px black",
+                }}
+              >
+                {gameName}{" "}
+                <Edit
+                  className="u-pointer hoverTransparentButton"
+                  onClick={() => {
+                    setUpdatedGameName(gameName ?? "");
+                    setEditingName(true);
+                  }}
+                />
+              </Title>
+            )}
+          </Box>
+          <Group flex={1} mih={0} align="flex-start" w="70dvw">
+            <Panel h="90%" flex={1} mih={0} gap="0">
+              <Panel.Header m={0}>
+                <Scroller w="100%">
+                  <Group pos="relative" wrap="nowrap">
+                    <Button
+                      c="black"
+                      bg={viewMode === "view" ? "red.2" : "none"}
+                      className="hoverTransparentButton"
+                      fw="normal"
+                      onClick={() => setViewMode("view")}
+                      // bd={viewMode === "view" ? "2px solid black" : "none"}
+                    >
+                      <Text mr="0.5rem">Viewer</Text>
+                      <Eye />
+                    </Button>
+                    <Button
+                      c="black"
+                      bg={viewMode === "edit" ? "red.2" : "none"}
+                      className="hoverTransparentButton"
+                      fw="normal"
+                      onClick={() => setViewMode("edit")}
+                      // bd={viewMode === "edit" ? "2px solid black" : "none"}
+                    >
+                      <Text mr="0.5rem">Editor</Text>
+                      <Edit />
+                    </Button>
+                    <Button
+                      c="black"
+                      bg={viewMode === "upload" ? "red.2" : "none"}
+                      className="hoverTransparentButton"
+                      fw="normal"
+                      onClick={() => setViewMode("upload")}
+                    >
+                      <Text mr="0.5rem">Uploader</Text>
+                      <Upload />
+                    </Button>
+                    <HelpTool fillColor="var(--mantine-color-red-4)" popLeft>
+                      <Text>
+                        Use the <b>Viewer</b> to preview GameTeX renderings of
+                        the abilities cards in your catalog. Use the{" "}
+                        <b>Editor</b> to add new abilites, update existing ones,
+                        or delete abilities.
+                      </Text>
+                    </HelpTool>
+                  </Group>
+                </Scroller>
+              </Panel.Header>
+              <Stack mt={0} flex={1} px="lg" mih={0}>
+                {viewMode === "edit" && (
+                  <Editor
+                    features={
+                      editorMode === "update"
+                        ? features.filter((f) => f.name !== "MYlookup")
+                        : features
+                    }
+                    gameCode={gameCode!}
+                    mode={editorMode}
+                    card={editorMode === "update" ? selectedCard! : undefined}
+                    setMode={setEditorMode}
+                    onReload={() => {
+                      loadCompendium();
+                      setEditorMode("add");
+                    }}
+                  />
+                )}
+                {viewMode === "view" && (
+                  <Stack h="100%" w="100%" py="xl" align="center">
+                    {selectedCard ? (
+                      <>
+                        <Display
+                          gameName={gameName!}
+                          onIndex={() => {}}
+                          playerName="TestPlayer1"
+                          card={selectedCard}
+                        />
+                        <Display
+                          gameName={gameName!}
+                          onIndex={() => {}}
+                          playerName="TestPlayer1"
+                          card={selectedCard}
+                          defaultFlipped={true}
+                        />
+                      </>
+                    ) : (
+                      <Text c="gray.6">
+                        Select a card from the right to "GameTeX render" it!
+                      </Text>
+                    )}
+                  </Stack>
+                )}
+                {viewMode == "upload" && (
+                  <Uploader
+                    gameCode={gameCode ?? ""}
+                    onReload={loadCompendium}
+                  />
+                )}
+              </Stack>
+            </Panel>
+            <Panel h="90%" flex={1} mih={0} miw={0}>
+              <Catalog
+                entries={cards}
+                onDisplay={onDisplay}
+                w="100%"
+                useColor
+                initialRef={initialRef}
+                useSelect
+                gameCode={gameCode ?? ""}
+                onReload={loadCompendium}
+              />
+            </Panel>
+          </Group>
+        </Stack>
+      </ThemeColorProvider>
     </CenterLayout>
   );
 }

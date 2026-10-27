@@ -2,7 +2,7 @@ import { Box, Button, Flex, Group, Stack } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import CardBack from "../boh-generics/CardBack";
 import { useEffect, useState } from "react";
-import { BaseCard } from "../../../shared/types";
+import { AbilColor, BaseCard } from "../../../shared/types";
 import CardFront from "../boh-generics/CardFront";
 import { RefreshCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import "../../styles.css";

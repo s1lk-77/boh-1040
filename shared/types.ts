@@ -14,3 +14,5 @@ export interface Feature {
   isMultiline: boolean;
   required: boolean;
 }
+
+export type AbilColor = "y" | "m" | "p";

@@ -30,3 +30,8 @@ export const ABIL_TEMPLATE = [
     MYeffect: "You see me summoning Cthulhu.",
   },
 ];
+
+// COLOR SCHEMES!
+export const YELLOW = "var(--mantine-color-yellow-5)";
+export const PINK = "var(--mantine-color-pink-3)";
+export const MAGENTA = "magenta";
