@@ -3,6 +3,8 @@ import "../../styles.css";
 import { motion } from "motion/react";
 import { Square, Check, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useThemeColor } from "../hooks/useThemeColor";
+import { MAGENTA, PINK, YELLOW } from "../../../shared/constants";
 
 interface EntryProps {
   name: string;
@@ -25,6 +27,7 @@ const Entry = ({
   onDelete = () => {},
   selectionRef,
 }: EntryProps) => {
+  const { themeColor } = useThemeColor()!;
   const [selected, setSelected] = useState<boolean>(false);
 
   useEffect(() => {
@@ -49,16 +52,23 @@ const Entry = ({
         whileTap={{ y: 5 }}
         style={{
           flex: 1,
+          minHeight: 0,
           minWidth: 0,
-          overflow: "hidden",
           display: "flex",
           flexDirection: "column",
+          touchAction: "pan-y",
         }}
       >
         <Stack
           flex={1}
-          className="hoverButton"
-          component="button"
+          className={
+            themeColor === "y"
+              ? "hoverButton"
+              : themeColor === "m"
+                ? "hoverMagentaButton"
+                : "hoverPinkButton"
+          }
+          component="div"
           onClick={() => {
             if (selecting) {
               setSelected(!selected);
@@ -72,12 +82,12 @@ const Entry = ({
           px={0}
           ta="left"
           bd="2px solid black"
-          bg="yellow.5"
+          bg={themeColor === "y" ? YELLOW : themeColor === "m" ? MAGENTA : PINK}
           style={{
             background: "white",
             cursor: "pointer",
             minWidth: 0,
-            overflow: "hidden",
+            touchAction: "pan-y",
           }}
           my="sm"
         >

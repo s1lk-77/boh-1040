@@ -1,9 +1,15 @@
 import { Stack, Title, Text, ScrollArea } from "@mantine/core";
 import Card from "./Card";
-import { SMALL_FRAME_WIDTH } from "../../../shared/constants";
+import {
+  MAGENTA,
+  PINK,
+  SMALL_FRAME_WIDTH,
+  YELLOW,
+} from "../../../shared/constants";
 import { formatDate } from "../utilities";
-import { BaseCard } from "../../../shared/types";
+import { AbilColor, BaseCard } from "../../../shared/types";
 import "../assets/flipcard.css";
+import { useThemeColor } from "../hooks/useThemeColor";
 
 interface CardBackProps {
   heading?: string;
@@ -16,6 +22,7 @@ const CardBack = ({
   gameName,
   card,
 }: CardBackProps) => {
+  const { themeColor } = useThemeColor()!;
   const today: Date = new Date();
   const cardType = "Ability Card";
   const tr = "Not Transferable";
@@ -28,7 +35,7 @@ const CardBack = ({
       tr={tr}
       bl={bl}
       br={br}
-      bg="yellow.5"
+      bg={themeColor === "y" ? YELLOW : themeColor === "m" ? MAGENTA : PINK}
       className="flip-card-back"
     >
       <Stack align="center">

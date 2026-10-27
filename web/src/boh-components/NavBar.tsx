@@ -1,19 +1,23 @@
 import { Button, Group, GroupProps, Flex } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import { Settings, RefreshCcw, Plus, X } from "lucide-react";
+import { Palette, RefreshCcw, Plus, X } from "lucide-react";
 import "../../styles.css";
 import { useFlip } from "../hooks/useFlip";
 
 interface NavBarProps extends GroupProps {
   toggleSearch: () => void;
+  toggleSettings: () => void;
   showHome?: boolean;
-  searching?: boolean;
+  searching: boolean;
+  setting: boolean;
 }
 
 const NavBar = ({
   showHome = true,
   toggleSearch,
-  searching = false,
+  toggleSettings,
+  searching,
+  setting,
   ...props
 }: NavBarProps) => {
   const iFlip = useFlip();
@@ -25,8 +29,18 @@ const NavBar = ({
       w={STANDARD_FRAME_WIDTH}
       pos="relative"
     >
-      <Button h="auto" c="black" bg="none" className="hoverTransparentButton">
-        <Settings />
+      <Button
+        h="auto"
+        c="black"
+        bg="none"
+        className="hoverTransparentButton"
+        onClick={toggleSettings}
+      >
+        {setting ? (
+          <X color="var(--mantine-color-red-8)" className="hoverRotateXs" />
+        ) : (
+          <Palette />
+        )}
       </Button>
       {showHome && (
         <Button
