@@ -174,7 +174,6 @@ function PlayerPage() {
                 gameName={gameName ?? "Moonrise"}
                 playerName={playerName ?? "silvanvs"}
                 card={selectedCard ?? cards[0] ?? init}
-                onIndex={onIndex}
               />
             )}
 
@@ -190,6 +189,7 @@ function PlayerPage() {
                   setSelectedCard(card);
                   setPage("display");
                   setSearching(false);
+                  indexRef.current = cards.length;
                 }}
               />
             )}
@@ -210,6 +210,7 @@ function PlayerPage() {
                 setColoring(!coloring);
                 setSearching(false);
               }}
+              onIndex={onIndex}
               showHome={page !== "home"}
               searching={searching}
               setting={coloring}
