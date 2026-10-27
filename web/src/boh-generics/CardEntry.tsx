@@ -46,8 +46,8 @@ const CardEntry = <T extends CardType>({
       <CardEntryPanel
         card={card}
         cardType={cardType}
-        cardColor={cardType === "Ability" ? cardColor : "red.3"}
-        className={cardType === "Ability" ? buttonColor : "hoverRedButton"}
+        cardColor={cardType === "Ability" ? cardColor : "gray.4"}
+        className={cardType === "Ability" ? buttonColor : "hoverGrayButton"}
         onClick={() => {
           if (selecting) {
             setSelected(!selected);
