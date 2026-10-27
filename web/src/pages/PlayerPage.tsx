@@ -7,7 +7,7 @@ import Catalog from "../boh-generics/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
 import SearchBar from "../boh-components/SearchBar";
-import { AbilColor, BaseCard } from "../../../shared/types";
+import { AbilCard, AbilColor, BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Display from "../boh-components/Display";
 import useBackButton from "../hooks/useBackButton";
@@ -162,7 +162,8 @@ function PlayerPage() {
 
             {page === "home" && (
               <Catalog
-                entries={cards}
+                cardType="Ability"
+                entries={cards as AbilCard[]}
                 onDisplay={display}
                 initialRef={initialRef}
               />

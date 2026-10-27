@@ -10,7 +10,13 @@ import {
 } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
 import AbilEntry from "../boh-components/AbilEntry";
-import { AbilCard, AbilColor, BaseCard } from "../../../shared/types";
+import {
+  AbilCard,
+  AbilColor,
+  BaseCard,
+  CardType,
+  CatalogTypeMap,
+} from "../../../shared/types";
 import {
   ArrowDownZA,
   ArrowUpAZ,
@@ -28,8 +34,9 @@ import {
 } from "react";
 import { motion } from "motion/react";
 
-interface CatalogProps {
-  entries: BaseCard[];
+interface CatalogProps<T extends CardType> {
+  cardType: T;
+  entries: Array<CatalogTypeMap[T]["model"]>;
   onDisplay: (lookup: string) => void;
   w?: string;
   useColor?: boolean;
@@ -39,7 +46,8 @@ interface CatalogProps {
   onBatchDelete?: (ids: string[]) => void;
 }
 
-const Catalog = ({
+const Catalog = <T extends CardType>({
+  cardType,
   entries,
   onDisplay,
   w,
@@ -48,10 +56,10 @@ const Catalog = ({
   onBatchDelete = undefined,
   useColor = false,
   useSelect = false,
-}: CatalogProps) => {
+}: CatalogProps<T>) => {
   const [filter, setFilter] = useState<string>("");
   const [sort, setSort] = useState<"az" | "za" | "">("");
-  const [processed, setProcessed] = useState<BaseCard[]>([]);
+  const [processed, setProcessed] = useState<CatalogTypeMap[T]["model"][]>([]);
   const [selecting, setSelecting] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const selectionRef = useRef<Set<string>>(new Set());
@@ -310,12 +318,6 @@ const Catalog = ({
               }
             >
               {processed.map((entry, i) => {
-                const key = "MYtext";
-                let desc: string | undefined = undefined;
-                if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
-                  desc = entry["MYtext"];
-                }
-
                 return (
                   <motion.div
                     key={`${entry}-${i}`}
@@ -336,14 +338,16 @@ const Catalog = ({
                       minWidth: 0,
                     }}
                   >
-                    <AbilEntry
-                      abil={entry as AbilCard}
-                      onClick={() => onDisplay(entry.MYlookup)}
-                      selecting={selecting}
-                      onSelect={onSelect}
-                      onDelete={onSingleDeleteInternal}
-                      selectionRef={selectionRef}
-                    />
+                    {cardType === "Ability" && (
+                      <AbilEntry
+                        abil={entry as CatalogTypeMap["Ability"]["model"]}
+                        onClick={() => onDisplay(entry.MYlookup)}
+                        selecting={selecting}
+                        onSelect={onSelect}
+                        onDelete={onSingleDeleteInternal}
+                        selectionRef={selectionRef}
+                      />
+                    )}
                   </motion.div>
                 );
               })}

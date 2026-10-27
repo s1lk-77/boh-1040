@@ -2,7 +2,7 @@ import Panel from "../components/Panel";
 import { Button, Group, Stack, Text, Scroller } from "@mantine/core";
 import Editor from "../boh-components/Editor";
 import { ABIL_FEATURES, BASE_FEATURES } from "../../../shared/constants";
-import { Feature } from "../../../shared/types";
+import { AbilCard, Feature } from "../../../shared/types";
 import { useClient } from "../ClientProvider";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BaseCard } from "../../../shared/types";
@@ -208,7 +208,8 @@ function Compendium({ gameCode, gameName }: CompendiumProps) {
       </Panel>
       <Panel h="90%" flex={1} mih={0} miw={0}>
         <Catalog
-          entries={cards}
+          cardType="Ability"
+          entries={cards as AbilCard[]}
           onDisplay={onDisplay}
           w="100%"
           useColor

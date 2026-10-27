@@ -16,3 +16,10 @@ export interface Feature {
 }
 
 export type AbilColor = "y" | "m" | "p";
+
+export type CardType = "Ability" | "Card" | "Player";
+export interface CatalogTypeMap {
+  Ability: { model: AbilCard };
+  Card: { model: BaseCard };
+  Player: { model: BaseCard };
+}

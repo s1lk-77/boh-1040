@@ -2,17 +2,20 @@ import { Button, Group, Stack } from "@mantine/core";
 import "../../styles.css";
 import { motion } from "motion/react";
 import { Check, Trash } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect } from "react";
 
-export interface EntryProps {
-  identifier: string;
+export interface EntryBaseProps {
   selecting: boolean;
   onSelect: (lookup: string) => void;
   onDelete: (lookup: string) => void;
   selectionRef: React.RefObject<Set<string>>;
+}
+
+export interface EntryProps extends EntryBaseProps {
+  identifier: string;
   children: React.ReactNode;
-  onClick: () => void;
-  clickable: HTMLDivElement | null;
+  selected: boolean;
+  setSelected: React.Dispatch<SetStateAction<boolean>>;
 }
 
 /**
@@ -23,16 +26,14 @@ export interface EntryProps {
  */
 export const Entry = ({
   identifier,
-  selecting = false,
+  selecting,
   onSelect = () => {},
   onDelete = () => {},
-  onClick,
   selectionRef,
   children,
-  clickable,
+  selected,
+  setSelected,
 }: EntryProps) => {
-  const [selected, setSelected] = useState<boolean>(false);
-
   useEffect(() => {
     if (!selecting) setSelected(false);
   }, [selecting]);
@@ -45,24 +46,6 @@ export const Entry = ({
       setSelected(false);
     }
   }, [identifier]);
-
-  const onClickInternal = useCallback(() => {
-    if (selecting) {
-      setSelected((s) => !s);
-      onSelect(identifier);
-    } else {
-      onClick();
-    }
-  }, [onClick, selecting]);
-
-  useEffect(() => {
-    if (!clickable) return;
-    clickable.addEventListener("click", onClickInternal);
-
-    return () => {
-      clickable.removeEventListener("click", onClickInternal);
-    };
-  }, [clickable]);
 
   return (
     <Group w="100%" gap={0}>

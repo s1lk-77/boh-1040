@@ -15,8 +15,8 @@ export interface CardEntryProps {
   card: BaseCard;
   cardType: string;
   cardColor: MantineColor;
-  refCb: (node: HTMLDivElement | null) => void;
   className: BoxProps["className"];
+  onClick: () => void;
 }
 
 export const CardEntry = ({
@@ -24,7 +24,7 @@ export const CardEntry = ({
   cardType,
   cardColor,
   className = "hoverButton",
-  refCb,
+  onClick,
 }: CardEntryProps) => {
   const resolvedDesc: string =
     card.MYtext === undefined || card.MYtext === ""
@@ -34,7 +34,7 @@ export const CardEntry = ({
   return (
     <Stack
       flex={1}
-      ref={refCb}
+      onClick={onClick}
       className={className}
       component="div"
       gap="lg"
