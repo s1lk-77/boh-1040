@@ -21,7 +21,14 @@ import { unwrapCard } from "../utilities";
 import Catalog from "../boh-components/Catalog";
 import useBackButton from "../hooks/useBackButton";
 import { useFocusTrap } from "@mantine/hooks";
-import { Edit, Upload, X, Eye } from "lucide-react";
+import {
+  Edit,
+  Upload,
+  X,
+  Eye,
+  PlayingCardsFan,
+  UsersRound,
+} from "lucide-react";
 import "../../styles.css";
 import Display from "../boh-components/Display";
 import HelpTool from "../components/HelpTool";
@@ -225,6 +232,26 @@ function GMPage() {
             )}
           </Box>
           <Group flex={1} mih={0} align="flex-start" w="70dvw">
+            <Panel bg="red.6">
+              <Stack>
+                <Button
+                  className="hoverTransparentButton"
+                  bg="none"
+                  c="white"
+                  px="xs"
+                >
+                  <PlayingCardsFan />
+                </Button>
+                <Button
+                  className="hoverTransparentButton"
+                  bg="none"
+                  c="white"
+                  px="xs"
+                >
+                  <UsersRound />
+                </Button>
+              </Stack>
+            </Panel>
             <Panel h="90%" flex={1} mih={0} gap="0">
               <Panel.Header m={0}>
                 <Scroller w="100%">
