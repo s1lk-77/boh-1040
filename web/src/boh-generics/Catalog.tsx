@@ -9,8 +9,7 @@ import {
   Button,
 } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import Entry from "../boh-generics/Entry";
-import { AbilColor, BaseCard } from "../../../shared/types";
+import { BaseCard, CardType, CatalogTypeMap } from "../../../shared/types";
 import {
   ArrowDownZA,
   ArrowUpAZ,
@@ -27,36 +26,37 @@ import {
   useRef,
 } from "react";
 import { motion } from "motion/react";
-import { useClient } from "../ClientProvider";
+import CardEntry from "./CardEntry";
 
-interface CatalogProps {
-  entries: BaseCard[];
+interface CatalogProps<T extends CardType> {
+  cardType: T;
+  entries: Array<CatalogTypeMap[T]["model"]>;
   onDisplay: (lookup: string) => void;
   w?: string;
   useColor?: boolean;
   initialRef: React.RefObject<boolean>;
-  gameCode: string;
   useSelect?: boolean;
-  onReload: () => {};
+  onSingleDelete?: (id: string) => void;
+  onBatchDelete?: (ids: string[]) => void;
 }
 
-const Catalog = ({
+const Catalog = <T extends CardType>({
+  cardType,
   entries,
   onDisplay,
   w,
   initialRef,
-  gameCode,
-  onReload,
+  onSingleDelete = undefined,
+  onBatchDelete = undefined,
   useColor = false,
   useSelect = false,
-}: CatalogProps) => {
+}: CatalogProps<T>) => {
   const [filter, setFilter] = useState<string>("");
   const [sort, setSort] = useState<"az" | "za" | "">("");
-  const [processed, setProcessed] = useState<BaseCard[]>([]);
+  const [processed, setProcessed] = useState<CatalogTypeMap[T]["model"][]>([]);
   const [selecting, setSelecting] = useState<boolean>(false);
   const [showDelete, setShowDelete] = useState<boolean>(false);
   const selectionRef = useRef<Set<string>>(new Set());
-  const client = useClient();
 
   const onSelect = useCallback((lookup: string) => {
     if (selectionRef.current.has(lookup)) {
@@ -72,46 +72,22 @@ const Catalog = ({
     }
   }, []);
 
-  const onSingleDelete = useCallback(
-    async (lookup: string) => {
-      if (!client) return;
+  const onSingleDeleteInternal = useCallback(async (lookup: string) => {
+    if (selectionRef.current.has(lookup)) {
+      selectionRef.current.delete(lookup);
+    }
+    onSingleDelete?.(lookup);
+  }, []);
 
-      if (selectionRef.current.has(lookup)) {
-        selectionRef.current.delete(lookup);
-      }
-
-      const res = await client["/edit/delete-entry"]({ gameCode, lookup });
-      if ("error" in res) {
-        console.error(`error deleting entry ${lookup} of game ${gameCode}`);
-        return;
-      }
-
-      onReload();
-    },
-    [client, gameCode],
-  );
-
-  const onBatchDelete = useCallback(async () => {
-    if (!client) return;
-
+  const onBatchDeleteInternal = useCallback(async () => {
     if (selectionRef.current.size === 0) {
       return;
     }
-
     const batch: string[] = Array.from(selectionRef.current);
     selectionRef.current = new Set();
     setShowDelete(false);
-
-    const res = await Promise.all(
-      batch.map((lookup) => client["/edit/delete-entry"]({ gameCode, lookup })),
-    );
-    if ("error" in res) {
-      console.error(`error batch deleting entries from game ${gameCode}`);
-      return;
-    }
-
-    onReload();
-  }, [client, gameCode]);
+    onBatchDelete?.(batch);
+  }, []);
 
   const onFilter = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -253,7 +229,7 @@ const Catalog = ({
               bg={useColor ? "darkred" : "gray.2"}
               c="white"
               className="hoverBlackButton"
-              onClick={onBatchDelete}
+              onClick={onBatchDeleteInternal}
             >
               <Trash />
             </Button>
@@ -336,12 +312,6 @@ const Catalog = ({
               }
             >
               {processed.map((entry, i) => {
-                const key = "MYtext";
-                let desc: string | undefined = undefined;
-                if ("MYtext" in entry && typeof entry["MYtext"] === "string") {
-                  desc = entry["MYtext"];
-                }
-
                 return (
                   <motion.div
                     key={`${entry}-${i}`}
@@ -362,14 +332,13 @@ const Catalog = ({
                       minWidth: 0,
                     }}
                   >
-                    <Entry
-                      name={entry.MYname}
-                      lookup={entry.MYlookup}
-                      desc={desc}
+                    <CardEntry
+                      cardType={cardType}
+                      card={entry as CatalogTypeMap[T]["model"]}
                       onClick={() => onDisplay(entry.MYlookup)}
                       selecting={selecting}
                       onSelect={onSelect}
-                      onDelete={onSingleDelete}
+                      onDelete={onSingleDeleteInternal}
                       selectionRef={selectionRef}
                     />
                   </motion.div>

@@ -365,3 +365,84 @@ describe("invalid update entries", () => {
     expect(res).toEqual({ error: "CONFLICT" });
   });
 });
+
+/** Tests for the playerlist */
+
+describe("playerlist", () => {
+  test("should get player list", async () => {
+    await client["/portal/open-bag"]({
+      gameCode: "moonrise",
+      playerName: "s1lk77",
+    });
+    await client["/portal/open-bag"]({
+      gameCode: "moonrise",
+      playerName: "canonicly-dead",
+    });
+    const res = await client["/collect/list-players"]({ gameCode: "moonrise" });
+
+    expect(res).toStrictEqual({
+      playerlist: [
+        { playerName: "yfnse" },
+        { playerName: "s1lk77" },
+        { playerName: "canonicly-dead" },
+      ],
+    });
+  });
+});
+
+/** Tests for player removal */
+
+describe("removing players", () => {
+  test("just remove", async () => {
+    const remove = await client["/edit/remove-player"]({
+      gameCode,
+      playerName,
+    });
+    expect(remove).toEqual({ status: "OK" });
+
+    const res = await client["/portal/open-bag"]({
+      gameCode,
+      playerName,
+    });
+    expect(res).toEqual({ gameCode, playerName });
+  });
+
+  test("should remove a player and delete their inventory", async () => {
+    // setup
+    await client["/portal/open-bag"]({
+      gameCode,
+      playerName: "s1lk77",
+    });
+    await client["/edit/add-entry"]({
+      gameCode,
+      lookup,
+    });
+    await client["/collect/print"]({
+      gameCode,
+      playerName,
+      lookup,
+    });
+
+    // actual test
+    await client["/edit/remove-player"]({
+      gameCode,
+      playerName,
+    });
+    const res = await client["/collect/list-players"]({ gameCode });
+
+    expect(res).toStrictEqual({
+      playerlist: [{ playerName: "s1lk77" }],
+    });
+
+    const res2 = await client["/portal/open-bag"]({
+      gameCode,
+      playerName,
+    });
+
+    expect(res2).toEqual({ gameCode, playerName });
+
+    const res3 = await client["/collect/production"]({ gameCode, playerName });
+
+    expect(res3).toStrictEqual({ abils: { cards: [] } });
+  });
+});

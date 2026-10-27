@@ -23,3 +23,9 @@ A GM should be able to [delete an ability from their game](reaction:Edit.DeleteE
 ```endpoints
 Edit.DeleteEntry at /edit/delete-entry
 ```
+
+A GM should be able to [remove a player from their game](reaction:Edit.RemovePlayer)
+
+```endpoints
+Edit.RemovePlayer at /edit/remove-player
+```

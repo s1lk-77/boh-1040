@@ -3,11 +3,11 @@ import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Flex, Group, Stack, Title, Text, Button } from "@mantine/core";
-import Catalog from "../boh-components/Catalog";
+import Catalog from "../boh-generics/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
 import SearchBar from "../boh-components/SearchBar";
-import { AbilColor, BaseCard } from "../../../shared/types";
+import { AbilCard, AbilColor, BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
 import Display from "../boh-components/Display";
 import useBackButton from "../hooks/useBackButton";
@@ -162,11 +162,10 @@ function PlayerPage() {
 
             {page === "home" && (
               <Catalog
-                entries={cards}
+                cardType="Ability"
+                entries={cards as AbilCard[]}
                 onDisplay={display}
                 initialRef={initialRef}
-                onReload={loadCompendium}
-                gameCode={gameCode ?? ""}
               />
             )}
             {page === "display" && (
@@ -174,7 +173,6 @@ function PlayerPage() {
                 gameName={gameName ?? "Moonrise"}
                 playerName={playerName ?? "silvanvs"}
                 card={selectedCard ?? cards[0] ?? init}
-                onIndex={onIndex}
               />
             )}
 
@@ -187,6 +185,10 @@ function PlayerPage() {
                 playerName={playerName ?? "silvanvs"}
                 onSuccess={(card: BaseCard) => {
                   setCards([...cards, card]);
+                  setSelectedCard(card);
+                  setPage("display");
+                  setSearching(false);
+                  indexRef.current = cards.length;
                 }}
               />
             )}
@@ -207,6 +209,7 @@ function PlayerPage() {
                 setColoring(!coloring);
                 setSearching(false);
               }}
+              onIndex={onIndex}
               showHome={page !== "home"}
               searching={searching}
               setting={coloring}

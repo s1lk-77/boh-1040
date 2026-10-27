@@ -53,6 +53,10 @@ afterAll(async () => {
  *
  * updateName
  * - partition on context: extant, nonexistent
+ *
+ * remove
+ * - partition on context: extant, nonexistent
+ * - partition on member: valid, invalid
  */
 
 describe("create", () => {
@@ -166,6 +170,39 @@ describe("updateName", () => {
   test("covers inalid context", async () => {
     await expect(
       joining.updateName({ id: "moonrise", name: "placeholder" }),
+    ).rejects.toThrow();
+  });
+});
+
+describe("remove", () => {
+  test("should remove member from context when both are valid", async () => {
+    await joining.create({ id: "moonrise", name: "Moonrise" });
+    await joining.join({ id: "moonrise", member: "s1lk77" });
+    await joining.join({ id: "moonrise", member: "yfnse" });
+    const res = await joining.remove({ id: "moonrise", member: "s1lk77" });
+    expect(res).toEqual({ member: "s1lk77" });
+    const memberFalse = await joining._isMember({
+      id: "moonrise",
+      member: "s1lk77",
+    });
+    expect(memberFalse).toEqual({ isMember: false });
+    const memberTrue = await joining._isMember({
+      id: "moonrise",
+      member: "yfnse",
+    });
+    expect(memberTrue).toEqual({ isMember: true });
+  });
+
+  test("covers invalid context", async () => {
+    await expect(
+      joining.remove({ id: "moonrise", member: "placeholder" }),
+    ).rejects.toThrow();
+  });
+
+  test("covers invalid member in valid context", async () => {
+    await joining.create({ id: "moonrise", name: "Moonrise" });
+    await expect(
+      joining.remove({ id: "moonrise", member: "placeholder" }),
     ).rejects.toThrow();
   });
 });

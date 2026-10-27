@@ -59,6 +59,15 @@ updateName(id: Identifier, name: String) : returns (name: String)
     where context does not exist
     then
         refuses NO_SUCH_CONTEXT "no such context."
+
+remove(id: Identifier, member: String) : returns (member: String)
+    where context with id exists and member is a member
+    then
+        removes member from context
+        returns member
+    where context does not exist or member is not member
+    then
+        refuses NO_SUCH_CONTEXT "no such context."
 ```
 
 ## Queries

@@ -14,7 +14,6 @@ interface DisplayProps {
   gameName: string;
   playerName: string;
   card: BaseCard;
-  onIndex: (dir: -1 | 1) => void;
   defaultFlipped?: boolean;
 }
 
@@ -23,7 +22,6 @@ const Display = ({
   playerName,
   card,
   defaultFlipped = false,
-  onIndex,
 }: DisplayProps) => {
   const [flipped, setFlipped] = useState<boolean>(false);
   const [isAnimating, setIsAnimating] = useState(false);

@@ -1,50 +1,51 @@
-import { Button, Box, Flex, Group, Stack, Text, Title } from "@mantine/core";
+import { Button, Group, Stack } from "@mantine/core";
 import "../../styles.css";
 import { motion } from "motion/react";
-import { Square, Check, Trash } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useThemeColor } from "../hooks/useThemeColor";
-import { MAGENTA, PINK, YELLOW } from "../../../shared/constants";
+import { Check, Trash } from "lucide-react";
+import React, { SetStateAction, useEffect } from "react";
 
-interface EntryProps {
-  name: string;
-  lookup: string;
-  onClick: () => void;
-  desc?: string;
-  selecting?: boolean;
-  onSelect?: (lookup: string) => void;
-  onDelete?: (lookup: string) => void;
+export interface EntryBaseProps {
+  selecting: boolean;
+  onSelect: (lookup: string) => void;
+  onDelete: (lookup: string) => void;
   selectionRef: React.RefObject<Set<string>>;
 }
 
-const Entry = ({
-  name,
-  lookup,
-  onClick,
-  desc = undefined,
-  selecting = false,
+export interface EntryProps extends EntryBaseProps {
+  identifier: string;
+  children: React.ReactNode;
+  selected: boolean;
+  setSelected: React.Dispatch<SetStateAction<boolean>>;
+}
+
+/**
+ * A Catalog Entry. This is a generic functionality component, providing all the functionalities of a catalog entry.
+ * For aesthetic stylings, see CardEntry.
+ * @param props
+ * @returns
+ */
+export const Entry = ({
+  identifier,
+  selecting,
   onSelect = () => {},
   onDelete = () => {},
   selectionRef,
+  children,
+  selected,
+  setSelected,
 }: EntryProps) => {
-  const { themeColor } = useThemeColor()!;
-  const [selected, setSelected] = useState<boolean>(false);
-
   useEffect(() => {
     if (!selecting) setSelected(false);
   }, [selecting]);
 
   useEffect(() => {
     if (!selectionRef) return;
-    if (selectionRef.current.has(lookup)) {
+    if (selectionRef.current.has(identifier)) {
       setSelected(true);
     } else {
       setSelected(false);
     }
-  }, [lookup]);
-
-  const resolvedDesc: string =
-    desc === undefined || desc === "" ? "no description text given" : desc;
+  }, [identifier]);
 
   return (
     <Group w="100%" gap={0}>
@@ -59,60 +60,7 @@ const Entry = ({
           touchAction: "pan-y",
         }}
       >
-        <Stack
-          flex={1}
-          className={
-            themeColor === "y"
-              ? "hoverButton"
-              : themeColor === "m"
-                ? "hoverMagentaButton"
-                : "hoverPinkButton"
-          }
-          component="div"
-          onClick={() => {
-            if (selecting) {
-              setSelected(!selected);
-              onSelect(lookup);
-            } else {
-              onClick();
-            }
-          }}
-          gap="lg"
-          pt="sm"
-          px={0}
-          ta="left"
-          bd="2px solid black"
-          bg={themeColor === "y" ? YELLOW : themeColor === "m" ? MAGENTA : PINK}
-          style={{
-            background: "white",
-            cursor: "pointer",
-            minWidth: 0,
-            touchAction: "pan-y",
-          }}
-          my="sm"
-        >
-          <Group justify="space-between" px="sm">
-            <Title size="h3" c="black">
-              {name === "" ? "Unnamed Ability" : name}
-            </Title>
-
-            <Text className="u-fira-code" c="black">
-              {"@" + lookup}
-            </Text>
-          </Group>
-          <Box flex={1} miw={0}>
-            <Text truncate="end" px="sm" c="black">
-              {resolvedDesc}
-            </Text>
-          </Box>
-          {/* <Divider size="sm" color="black" /> */}
-          <Flex direction="column" w="100%" align="flex-end">
-            <Text mr="0.2rem" c="gray.7" size="sm">
-              Ability
-            </Text>
-            {/* <Divider size="xs" color="black" /> */}
-          </Flex>
-        </Stack>
+        {children}
       </motion.div>
       {selecting && (
         <Stack>
@@ -127,7 +75,7 @@ const Entry = ({
             }}
             onClick={() => {
               setSelected(!selected);
-              onSelect(lookup);
+              onSelect(identifier);
             }}
           >
             {selected ? (
@@ -153,7 +101,7 @@ const Entry = ({
               },
             }}
             onClick={() => {
-              onDelete(lookup);
+              onDelete(identifier);
             }}
           >
             <Trash />
@@ -163,5 +111,3 @@ const Entry = ({
     </Group>
   );
 };
-
-export default Entry;

@@ -1,6 +1,13 @@
 import { Button, Group, GroupProps, Flex } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import { Palette, RefreshCcw, Plus, X } from "lucide-react";
+import {
+  Palette,
+  RefreshCcw,
+  Plus,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import "../../styles.css";
 import { useFlip } from "../hooks/useFlip";
 
@@ -10,6 +17,7 @@ interface NavBarProps extends GroupProps {
   showHome?: boolean;
   searching: boolean;
   setting: boolean;
+  onIndex: (dir: 1 | -1) => void;
 }
 
 const NavBar = ({
@@ -18,6 +26,7 @@ const NavBar = ({
   toggleSettings,
   searching,
   setting,
+  onIndex,
   ...props
 }: NavBarProps) => {
   const iFlip = useFlip();
@@ -28,6 +37,8 @@ const NavBar = ({
       justify="space-between"
       w={STANDARD_FRAME_WIDTH}
       pos="relative"
+      gap="xs"
+      wrap="nowrap"
     >
       <Button
         h="auto"
@@ -35,6 +46,7 @@ const NavBar = ({
         bg="none"
         className="hoverTransparentButton"
         onClick={toggleSettings}
+        pr={0}
       >
         {setting ? (
           <X color="var(--mantine-color-red-8)" className="hoverRotateXs" />
@@ -43,20 +55,43 @@ const NavBar = ({
         )}
       </Button>
       {showHome && (
-        <Button
-          h="auto"
-          c="black"
-          bg="none"
-          className="hoverTransparentButton"
-          onClick={() => {
-            iFlip?.flipRef.current?.();
-          }}
-        >
-          <Flex direction="column">
-            <RefreshCcw size={30} className="hoverRotate" />
-            Flip
-          </Flex>
-        </Button>
+        <>
+          <Button
+            p={0}
+            bg="gray.3"
+            c="black"
+            onClick={() => {
+              onIndex(-1);
+            }}
+          >
+            <ChevronLeft />
+          </Button>
+          <Button
+            h="auto"
+            c="black"
+            bg="none"
+            className="hoverTransparentButton"
+            p={0}
+            onClick={() => {
+              iFlip?.flipRef.current?.();
+            }}
+          >
+            <Flex direction="column">
+              <RefreshCcw size={30} className="hoverRotate" />
+              Flip
+            </Flex>
+          </Button>
+          <Button
+            p={0}
+            bg="gray.3"
+            c="black"
+            onClick={() => {
+              onIndex(1);
+            }}
+          >
+            <ChevronRight />
+          </Button>
+        </>
       )}
       <Button
         onClick={toggleSearch}
@@ -64,6 +99,7 @@ const NavBar = ({
         c="black"
         bg="none"
         className="hoverTransparentButton"
+        pl={0}
       >
         {searching ? (
           <X color="var(--mantine-color-red-8)" className="hoverRotateXs" />
