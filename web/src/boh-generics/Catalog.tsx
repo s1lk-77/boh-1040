@@ -9,8 +9,8 @@ import {
   Button,
 } from "@mantine/core";
 import { STANDARD_FRAME_WIDTH } from "../../../shared/constants";
-import Entry from "../boh-generics/Entry";
-import { AbilColor, BaseCard } from "../../../shared/types";
+import AbilEntry from "../boh-components/AbilEntry";
+import { AbilCard, AbilColor, BaseCard } from "../../../shared/types";
 import {
   ArrowDownZA,
   ArrowUpAZ,
@@ -336,10 +336,8 @@ const Catalog = ({
                       minWidth: 0,
                     }}
                   >
-                    <Entry
-                      name={entry.MYname}
-                      lookup={entry.MYlookup}
-                      desc={desc}
+                    <AbilEntry
+                      abil={entry as AbilCard}
                       onClick={() => onDisplay(entry.MYlookup)}
                       selecting={selecting}
                       onSelect={onSelect}

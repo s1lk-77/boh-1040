@@ -7,7 +7,7 @@ import { useClient } from "../ClientProvider";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BaseCard } from "../../../shared/types";
 import { unwrapCard } from "../utilities";
-import Catalog from "../boh-components/Catalog";
+import Catalog from "../boh-generics/Catalog";
 import { Edit, Upload, Eye } from "lucide-react";
 import "../../styles.css";
 import Display from "../boh-components/Display";

@@ -3,7 +3,7 @@ import { useClient } from "../ClientProvider";
 import MobileViewport from "../components/MobileViewport";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Flex, Group, Stack, Title, Text, Button } from "@mantine/core";
-import Catalog from "../boh-components/Catalog";
+import Catalog from "../boh-generics/Catalog";
 import NavBar from "../boh-components/NavBar";
 import { PlayerPage } from "../../../shared/constants";
 import SearchBar from "../boh-components/SearchBar";
