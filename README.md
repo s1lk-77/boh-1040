@@ -20,23 +20,23 @@ And for you lovely GMs:
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
-## Beta Version Notes
+## 0.0.1 Version Notes
 
-BoH's core functionality is complete with across-the-board UX improvements. The player's catalog now supports alphabetical sorting, and the ability card display flips with an animation that we hope is the crux of "making this still feel real." The GM interface supports GameTeX rendering ability entries, as well as batch uploading an ability list via a correctly formatted JSON. While we do not endorse the use of AI, we acknowledge that an LLM would now be able to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired JSON format. Building a dedicated integration pipeline is still among our top priorities.
+This is the launch version of BoH, with fully functional player and GM interfaces supporting the Ability card type and player management. The player interface supports retrieving and displaying abilities. The GM interface supports GameTeX-rendering ability entries, batch uploading ability lists in JSON format, and deleting abilities. While we do not endorse the use of AI, an LLM would suffice to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired upload format.
 
 Changelog:
 
 - Functionality
-  - [GM] JSON upload & template JSON download
-  - Alphabetical sorting
+  - \[GM] Playerlist, and the ability to remove players
 - UI
-  - Card flip animation
-  - Help button & help tool messages for all pages
-  - Color scheme polish
-  - Border weight adjustments
-  - Title font
-- KNOWN BUGS
-  - Mantine currently incorrectly trunacting long ability descriptions on the GM interface. Will be fixed in v0.0.1
+  - \[Player] Merged display interface buttons into navigation bar
+  - \[Player] Can change the color of ability cards
+
+**Demos**
+
+- [v0.0.1 demo]()
+- [Beta demo]()
+- [Alpha demo]()
 
 ## Why the Bag? <sub>User Journey</sub>
 
