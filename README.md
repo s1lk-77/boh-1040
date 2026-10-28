@@ -52,24 +52,24 @@ But now, armed with your personalized Bag of Holding, this is what your trip to 
 
 **Step 1: Click button**
 
-<img src="./documentations/images/StartSearchBeta.png" height="400">
+<img src="./documentations/images/v001add.png" height="400">
 
 **Step 2: Enter lookup code**
 
-<img src="./documentations/images/SearchBeta.png" height="400">
+<img src="./documentations/images/v001search.png" height="400">
 
 **Step 3: Profit**
 
 <p>
-<img src="./documentations/images/CardsBeta.png" height="400">
-<img src="./documentations/images/AbilFrontBeta.png" height="400">
+<img src="./documentations/images/v001abil.png" height="400">
+<img src="./documentations/images/v001added.png" height="400">
 </p>
 
 Notice how you did 0 walking and got ahold of your cookie much, much faster? All you need is your phone and the internet, which lucky for you is supported everywhere at MIT!
 
 The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just pop over to [bagofholding.mit-sdg.dev](https://bagofholding.mit-sdg.dev/#/), type in a (GM provided) game code, pick any name you choose, and the Bag is yours!
 
-<img src="./documentations/images/HomeBeta.png" height="400">
+<img src="./documentations/images/v001home.png" height="400">
 
 **Past Demos**
 
