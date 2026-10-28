@@ -2,21 +2,21 @@
 
 _Tired of holding 50 pieces of paper in your sweaty hands and emptying out four pockets worth of stuff just for that one elusive ability card you really wished you knew where you put? Fear no more. The Wizard of the Court hath forth with an offering. A Bag of Holding, if you may. The price, you ask? Only that you use your powers for good and **never for evil.**_
 
+[**Bag of Holding (BoH)**](bagofholding.mit-sdg.dev) is a digital assistant that inventories a your out-of-game documents and stores them in an accessible digital pocket, eliminating the tedium of physical cutouts while fully preserving the "GameTeX card" look. Primarily player-facing, BoH is designed for mobile devices smaller than an iPad, with a complementary wide-screen dashboard for GMs to upload game information.
+
 ---
 
 Live action roleplay (LARP) claims its standing as a one-of-a-kind genre in the cosmos of games. LARP games put you right into their world, physically, using a combination of cleverly demarcated real-life spaces and the vast remainder of your imagination. Here at [MIT Assassins' Guild](https://assassin.mit.edu/web/Who_are_we%3F), our signature LARP style is the information-dense, mechanics-heavy "secrets & powers" games. These games can feature a novel's worth of text, with up to hundreds of items, player abilities, puzzle clues, etc. Traditionally, game pieces like abilities are packaged as card-sized physical cutouts, which have not only been labor intensive to produce, but also adversarial to pocket space and difficult to inventory. Puzzle clues are even more laborious, often requiring a player to manually copy the clue text into their notes. This can get frustrating, especially when a game is ten days long...
 
-**Bag of Holding (BoH)** is a digital assistant that inventories a player’s out-of-game documents and stores them in an accessible digital pocket, eliminating the tedium of physical cutouts while fully preserving the "GameTeX ability card" look. Primarily player-facing, BoH is designed for mobile devices smaller than an iPad, with a complementary wide-screen dashboard for GMs to upload game information.
+With our Bag of Holding, you can:
 
-Here in this wonderous Bag, you can:
-
-- **Collect** the goodies you find in game by entering their _lookup code_ and retrieving a digital copy of your rewards! They stay with you as long as you log back in with the same player name.
+- **Collect** the goodies you find in game by entering their _lookup code_ and retrieving a digital copy of your rewards. They stay with you as long as you log back in with the same player name.
 - **Filter** your abilities by name and description! See them all in a list so you can find them fast!
 - **Display** any of your abilities as a card on your screen, which you can flip over and show other players just like you would normally!
 
 And for you lovely GMs:
 
-- All you have to do is create a game and upload your abilities into the Bag with whatever lookup codes _you_ designate so our behind-the-stage magic can find them again in the demiplane when your players ask!
+- All you have to do is [create a game and upload your abilities](/documentations/GM-guide.md) into the Bag with whatever lookup codes _you_ choose.
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
@@ -76,8 +76,6 @@ Notice how you did 0 walking and got ahold of your cookie much, much faster? All
 The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just pop over to [bagofholding.mit-sdg.dev](https://bagofholding.mit-sdg.dev/#/), type in a (GM provided) game code, pick any name you choose, and the Bag is yours!
 
 <img src="./documentations/images/HomeBeta.png" height="400">
-
-[I'm a GM, how do I set this up?](/documentations/GM-guide.md)
 
 ## [For Developers] Project Documentation
 
