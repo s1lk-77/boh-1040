@@ -177,6 +177,7 @@ const Editor = ({
                   }
                   flag={clearFlag}
                   strict={feature.name === "MYlookup"}
+                  help={feature.help}
                 />
               </Fragment>
             ))}

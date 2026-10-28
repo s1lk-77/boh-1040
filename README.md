@@ -20,23 +20,23 @@ And for you lovely GMs:
 
 \*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
 
-## Beta Version Notes
+## 0.0.1 Version Notes
 
-BoH's core functionality is complete with across-the-board UX improvements. The player's catalog now supports alphabetical sorting, and the ability card display flips with an animation that we hope is the crux of "making this still feel real." The GM interface supports GameTeX rendering ability entries, as well as batch uploading an ability list via a correctly formatted JSON. While we do not endorse the use of AI, we acknowledge that an LLM would now be able to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired JSON format. Building a dedicated integration pipeline is still among our top priorities.
+This is the launch version of BoH, with fully functional player and GM interfaces supporting the Ability card type and player management. The player interface supports retrieving and displaying abilities. The GM interface supports GameTeX-rendering ability entries, batch uploading ability lists in JSON format, and deleting abilities. While we do not endorse the use of AI, an LLM would suffice to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired upload format.
 
 Changelog:
 
 - Functionality
-  - [GM] JSON upload & template JSON download
-  - Alphabetical sorting
+  - \[GM] Playerlist, and the ability to remove players
 - UI
-  - Card flip animation
-  - Help button & help tool messages for all pages
-  - Color scheme polish
-  - Border weight adjustments
-  - Title font
-- KNOWN BUGS
-  - Mantine currently incorrectly trunacting long ability descriptions on the GM interface. Will be fixed in v0.0.1
+  - \[Player] Merged display interface buttons into navigation bar
+  - \[Player] Can change the color of ability cards
+
+**Demos**
+
+- [v0.0.1 demo]()
+- [Beta demo](https://docs.google.com/presentation/d/1mpz2GbUthOXwR5by4lyMFIwlDG5bw8eGG-uf0a1CIo4/edit?usp=sharing)
+- [Alpha demo](https://docs.google.com/presentation/d/1o2psisdYq41cwNL1Vo7YxIgbkZviVrQwV8c1CMJSl0Y/edit?usp=sharing)
 
 ## Why the Bag? <sub>User Journey</sub>
 
@@ -87,7 +87,43 @@ Bag of Holding is a webapp! It was built with several things:
 - Backend: [Sync Engine](https://github.com/mit-sdg/sync-engine), [Bun](https://bun.com/)
 - Database: [MongoDB](https://www.mongodb.com/)
 
+Necessary Software:
+
+- Bun v1.4.2
+- Podman
+- Compose
+
 **AI Disclosure:** Except for 3 test cases in `./tests/Integration.test.ts`, Bag of Holding was not created using generative AI.
+
+### Setting Up
+
+Install Bun and set up MongoDb to run in a local container via [this guide](https://61040.github.io/fa26/preps/mongodb/). Inject the `MONGO_URL` into your local environment.
+
+Clone this repository:
+
+```
+git clone git@github.com:s1lk-77/boh-1040.git
+```
+
+Run the `dev` command to enter dev mode and view your changes locally in a browser:
+
+```
+bun run dev
+```
+
+Run the `test` command to run all tests:
+
+```
+bun run test
+```
+
+To test that your MongoDb connection is functioning, run:
+
+```
+bun db:check
+```
+
+This runs the script in `scripts/check-db.ts`.
 
 ### Repository Structure
 
@@ -115,7 +151,7 @@ Bag of Holding is a webapp! It was built with several things:
 
 - Sync Engine's required design files are in `design/`. Their implementations live in `src/`, whose entry point is `src/main.ts`.
 - React's entry point is `web/src/main.tsx`. `web/src/ClientProvider.tsx` supplies the Sync client in a custom hook. All other components live in subdirectories with pages in `web/src/pages` and custom hooks in `web/src/hooks`.
-- Constants and type declarations are in `shared/`.
+- Constants and type declarations are in `shared/` (see Technical Design).
 - The global CSS file is `web/styles.css`, and all other CSS files are in `web/src/assets/`.
 - Tests are in `tests/`. See [test documentations](./documentations/testing/testing-README.md).
 
@@ -125,7 +161,11 @@ Bag of Holding is a webapp! It was built with several things:
 
 ### Technical Design
 
-[Concept Designs](documentations/concepts/concept-design.md)
+Bag of Holding is built on the Card data structure. Every game piece uses an interface that inherits from `BaseCard`, which contains a `MYlookup` field and a `MYname` field. Fields are named per GameTeX conventions and, where applicable, using their GameTeX names. The aim is for the GM interface to store lists of cards categorized by card type. The whole interface should feel reminiscent of the GameTeX repository.
+
+Ideally in the future, adding a card type to Bag of Holding would become as simple as declaring a new type, and all of Editor, Viewer, Catalog, Uploader, and the end points themselves would be parameterized off of card type. Currently, only the catalog is, and the next few version updates will focus on implementing an overlying architecture to modularize card type creation.
+
+Sync Engine concepts are documented in the [Concept Designs](documentations/concepts/concept-design.md) directory.
 
 ### UI/UX Design
 
