@@ -4,6 +4,8 @@ _Tired of holding 50 pieces of paper in your sweaty hands and emptying out four 
 
 [**Bag of Holding (BoH)**](https://bagofholding.mit-sdg.dev/) is a digital assistant that inventories a your out-of-game documents and stores them in an accessible digital pocket, eliminating the tedium of physical cutouts while fully preserving the "GameTeX card" look. Primarily player-facing, BoH is designed for mobile devices smaller than an iPad, with a complementary wide-screen dashboard for GMs to upload game information.
 
+[v0.0.1 demo]()
+
 ---
 
 Live action roleplay (LARP) claims its standing as a one-of-a-kind genre in the cosmos of games. LARP games put you right into their world, physically, using a combination of cleverly demarcated real-life spaces and the vast remainder of your imagination. Here at [MIT Assassins' Guild](https://assassin.mit.edu/web/Who_are_we%3F), our signature LARP style is the information-dense, mechanics-heavy "secrets & powers" games. These games can feature a novel's worth of text, with up to hundreds of items, player abilities, puzzle clues, etc. Traditionally, game pieces like abilities are packaged as card-sized physical cutouts, which have not only been labor intensive to produce, but also adversarial to pocket space and difficult to inventory. Puzzle clues are even more laborious, often requiring a player to manually copy the clue text into their notes. This can get frustrating, especially when a game is ten days long...
@@ -18,11 +20,9 @@ And for you lovely GMs:
 
 - All you have to do is [create a game and upload your abilities](/documentations/GM-guide.md) into the Bag with whatever lookup codes _you_ choose.
 
-\*Note: batch uploads from [GameTeX](https://web.mit.edu/kenclary/Public/Guild/GameTeX/) will (aim to) be supported if Ken Clary has time in the next three weeks.
-
 ## 0.0.1 Version Notes
 
-This is the launch version of BoH, with fully functional player and GM interfaces supporting the Ability card type and player management. The player interface supports retrieving and displaying abilities. The GM interface supports GameTeX-rendering ability entries, batch uploading ability lists in JSON format, and deleting abilities. While we do not endorse the use of AI, an LLM would suffice to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired upload format.
+The launch version of BoH has fully functional player and GM interfaces supporting the Ability card type and player management. The player interface supports retrieving and displaying abilities. The GM interface supports GameTeX-rendering ability entries, batch uploading ability lists in JSON format, and deleting abilities. While we do not endorse the use of AI, an LLM would suffice to parse an `abil-LIST.tex` or `abil-PRINT.pdf` into the desired upload format.
 
 Changelog:
 
@@ -31,12 +31,6 @@ Changelog:
 - UI
   - \[Player] Merged display interface buttons into navigation bar
   - \[Player] Can change the color of ability cards
-
-**Demos**
-
-- [v0.0.1 demo]()
-- [Beta demo](https://docs.google.com/presentation/d/1mpz2GbUthOXwR5by4lyMFIwlDG5bw8eGG-uf0a1CIo4/edit?usp=sharing)
-- [Alpha demo](https://docs.google.com/presentation/d/1o2psisdYq41cwNL1Vo7YxIgbkZviVrQwV8c1CMJSl0Y/edit?usp=sharing)
 
 ## Why the Bag? <sub>User Journey</sub>
 
@@ -76,6 +70,11 @@ Notice how you did 0 walking and got ahold of your cookie much, much faster? All
 The Bag is super easy to acquire. It's completely free, unlike all those MacGuffins you have to battle your opponents for. Just pop over to [bagofholding.mit-sdg.dev](https://bagofholding.mit-sdg.dev/#/), type in a (GM provided) game code, pick any name you choose, and the Bag is yours!
 
 <img src="./documentations/images/HomeBeta.png" height="400">
+
+**Past Demos**
+
+- [Beta demo](https://docs.google.com/presentation/d/1mpz2GbUthOXwR5by4lyMFIwlDG5bw8eGG-uf0a1CIo4/edit?usp=sharing)
+- [Alpha demo](https://docs.google.com/presentation/d/1o2psisdYq41cwNL1Vo7YxIgbkZviVrQwV8c1CMJSl0Y/edit?usp=sharing)
 
 ## [For Developers] Project Documentation
 
