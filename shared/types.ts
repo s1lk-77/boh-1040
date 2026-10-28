@@ -13,6 +13,7 @@ export interface Feature {
   name: string;
   isMultiline: boolean;
   required: boolean;
+  help?: string;
 }
 
 export type AbilColor = "y" | "m" | "p";
