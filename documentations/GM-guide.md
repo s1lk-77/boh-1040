@@ -13,11 +13,10 @@
 
 <img src="images/DashboardView.png" height="400">
 
-- A list of lookup-supported items appears in the right panel. There is a alternate tab to see a list of players.
+- A list of cards appears in the right panel. There is a alternate tab to see a list of players.
 - When you click on a list entry, a preview of its content displays on the left panel
-  - Click "Edit" to edit its contents
-  - Click "Add New" to add a new entry
-  - Click "Delete" to delete the current entry
+  - Click "Editor" to edit card content or add/delete cards
+  - Click "Uploader" to upload a JSON file containing a list of cards. The file format is specified on the website and in the downloadable template.
 
 ## How do I write a game with Bag of Holding support?
 
