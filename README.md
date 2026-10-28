@@ -35,8 +35,8 @@ Changelog:
 **Demos**
 
 - [v0.0.1 demo]()
-- [Beta demo]()
-- [Alpha demo]()
+- [Beta demo](https://docs.google.com/presentation/d/1mpz2GbUthOXwR5by4lyMFIwlDG5bw8eGG-uf0a1CIo4/edit?usp=sharing)
+- [Alpha demo](https://docs.google.com/presentation/d/1o2psisdYq41cwNL1Vo7YxIgbkZviVrQwV8c1CMJSl0Y/edit?usp=sharing)
 
 ## Why the Bag? <sub>User Journey</sub>
 
