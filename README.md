@@ -4,7 +4,7 @@ _Tired of holding 50 pieces of paper in your sweaty hands and emptying out four 
 
 [**Bag of Holding (BoH)**](https://bagofholding.mit-sdg.dev/) is a digital assistant that inventories a your out-of-game documents and stores them in an accessible digital pocket, eliminating the tedium of physical cutouts while fully preserving the "GameTeX card" look. Primarily player-facing, BoH is designed for mobile devices smaller than an iPad, with a complementary wide-screen dashboard for GMs to upload game information.
 
-[v0.0.1 demo]()
+v0.0.1 [player demo video](https://drive.google.com/file/d/1RfUSsse4gFzU1v3jV1chIyeEjZ_4j5OP/view?usp=sharing) & [GM demo video](https://drive.google.com/file/d/1PAWSm-oqI6JtIsJDtoZXJVkE3hgQnCxT/view?usp=sharing)
 
 ---
 
@@ -31,6 +31,7 @@ Changelog:
 - UI
   - \[Player] Merged display interface buttons into navigation bar
   - \[Player] Can change the color of ability cards
+- [v0.0.1 design summary](documentations/design-docs/v001-design-summary.md)
 
 ## Why the Bag? <sub>User Journey</sub>
 
@@ -154,7 +155,7 @@ This runs the script in `scripts/check-db.ts`.
 
 ### High Level Design Doc
 
-[Problem Framing](/documentations/HLDD.md)
+[Problem Framing](/documentations/design-docs/HLDD.md)
 
 ### Technical Design
 
@@ -166,4 +167,4 @@ Sync Engine concepts are documented in the [Concept Designs](documentations/conc
 
 ### UI/UX Design
 
-See [UI Documentations](documentations/) and the files within.
+See [UI Documentations](documentations/ui-ux/) and the files within.
