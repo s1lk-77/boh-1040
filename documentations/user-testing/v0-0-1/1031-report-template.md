@@ -25,3 +25,5 @@
 - Were the help buttons helpful and do you wish there was more?
 - What would you change about the looks of this app?
 - Did the buttons do what you think they did? Were the icons intuitive?
+
+## Reflection
