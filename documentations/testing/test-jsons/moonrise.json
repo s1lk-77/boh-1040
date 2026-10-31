@@ -28,5 +28,53 @@
     "MYname": "Spell: Detach 739",
     "MYtext": "This is secretly the most powerful spell in game. You can remove items now. You're welcome.",
     "MYeffect": "739\n\nYou see me doing this very cool thing called removing stuck items."
+  },
+  {
+    "MYlookup": "sp-595",
+    "MYname": "Spell: Test Alignment 595ρ",
+    "MYtext": "Hold a continuous discussion on anything related to Alignment for 2 minutes with another player during which you ask at least 2 relevant questions. Then, show them the reverse side of this card. They must tell you their Alignment.",
+    "MYeffect": "595ρ\nTell me your Alignment."
+  },
+  {
+    "MYlookup": "sp-968",
+    "MYname": "Spell: Deathflare 968ω",
+    "MYtext": "Once per game, you may throw a spell packet with incant wound. In the Sanctum, this incant is knockout. GM Note: a canonical instant kill, nerfed for game balance :3",
+    "MYeffect": "968ω"
+  },
+  {
+    "MYlookup": "sp-847",
+    "MYname": "Spell: Imperium 847Ω",
+    "MYtext": "You may show an undead the reverse side of this card and issue a verbal command. It must be an imperative statement with at most one condition. The undead will obey a valid command and, if it can see you, protect you.",
+    "MYeffect": "847Ω\nMy word is god. Do what I say."
+  },
+  {
+    "MYlookup": "funds-s",
+    "MYname": "Official Funds",
+    "MYtext": "You may manage transactions of the 100,000 Denarii in Renegea's reserves under the name Silvanus. This is a shared resource that may also be manageable by others. Your city's laws require you to do so for official matters only. Leaving your city in debt has consequences.",
+    "MYeffect": "010"
+  },
+  {
+    "MYlookup": "pact",
+    "MYname": "Pact Weapon",
+    "MYtext": "You own a staff 720 that gives +1 RA while held, which Lord Silvanus bound to your soul. It is the reason you have a psi Packet. At game start, this staff is not on your person. If you summon it, it instantly materializes and can then be used by you alone.",
+    "MYeffect": "This ability has no effect."
+  },
+  {
+    "MYlookup": "katharsis2",
+    "MYname": "Katharsis",
+    "MYtext": "Your alignment is Dark and cannot change.",
+    "MYeffect": "This ability has no effect."
+  },
+  {
+    "MYlookup": "sp-645",
+    "MYname": "Spell: Destroy 645",
+    "MYtext": "Every hour, you may spend 2 interruptible minutes within ZoC to destroy a sign that can be destroyed. If it is an entrance which you have the means to enter, you may enter it as you cast the spell, before its complete destruction.",
+    "MYeffect": "645"
+  },
+  {
+    "MYlookup": "sp-505",
+    "MYname": "Spell: Shadow 505",
+    "MYtext": "Your dart gun deals 1 damage per shot. You must pass it twice behind your back.",
+    "MYeffect": "505\n1 damage!"
   }
 ]
