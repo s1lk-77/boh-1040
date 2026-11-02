@@ -169,7 +169,7 @@ Sync Engine concepts are documented in the [Concept Designs](documentations/conc
 
 See [UI Documentations](documentations/ui-ux/) and the files within.
 
-### User Acceptance Testing
+## User Acceptance Testing
 
 v0.0.1
 
