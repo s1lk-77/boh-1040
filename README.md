@@ -168,3 +168,11 @@ Sync Engine concepts are documented in the [Concept Designs](documentations/conc
 ### UI/UX Design
 
 See [UI Documentations](documentations/ui-ux/) and the files within.
+
+### User Acceptance Testing
+
+v0.0.1
+
+- [Test Report 1](./documentations/user-testing/v0-0-1/report-kkb.md)
+- [Test Report 2](./documentations/user-testing/v0-0-1/report-yaniel.md)
+- [Issues](./documentations/user-testing/v0-0-1/issues.md)
