@@ -2,6 +2,10 @@
 
 Participant name: kkb.
 
+## Tasklist
+
+[Link to tasklist](https://docs.google.com/spreadsheets/d/15ygL74QtJ30-m8UGXvbND0-o6a1svp0NZqSARqr-_o4/edit?usp=sharing).
+
 ## Feedback Questions
 
 ### Design
